@@ -1,0 +1,77 @@
++----------------------+
+|      Homepage        |
+| (Hero, Stats, CTA)   |
++----------+-----------+
+           |
+           v
++----------------------+
+| Wizard Step 1        |
+| Channel              |
+| (Courier vs Postal)  |
++----+-----------------+
+     |Courier          |Postal
+     v                 v
++------------------+   +------------------+
+| Wizard Step 2    |   | BOR286 Postal    |
+| VAT Status       |   | Screen (Form +   |
+| (Yes / No)       |   | Charge Ref)      |
++----+-------------+   +---------+--------+
+     |Yes (VAT Reg)      |
+     v                   |
++-------------------+    |
+| VAT Return Info   |    |
+| (Redirect screen) |    |
++-------------------+    |
+     |No (Not VAT Reg)   |
+     v                   |
++----------------------------+
+| Wizard Step 3: Claim Type  |
+| (Overpayment / Rejected /  |
+| Withdrawal / <=£135)       |
++---+------------+-----------+
+    |<=£135      |
+    v            v
++-------------------+  +--------------------+
+| Seller Refund     |  | Wizard Step 4:     |
+| Info Screen       |  | Identifiers        |
+| (Ask seller /     |  | (MRN, EORI fields) |
+| marketplace)      |  +--------+-----------+
++-------------------+           |
+                                |
+          +---------------------+----------------------+
+          |                    |                      |
+          v                    v                      v
+ +------------------+   +-------------------+   +------------------+
+ | DHL Playbook     |   | FedEx Playbook    |   | UPS Playbook     |
+ | (Help + template)|   | (Billing portal)  |   | (Billing centre) |
+ +------------------+   +-------------------+   +------------------+
+          ^                    ^                      ^
+          +--------------------+----------------------+
+                                |
+                                v
++-----------------------------+
+| Wizard Step 5: Evidence     |
+| (Checklist + Uploads)       |
++-------------+---------------+
+              |
+              v
++-----------------------------+
+| Wizard Step 6: Review &     |
+| Export (Summary + Pack)     |
++-------------+---------------+
+              |
+              v
++-----------------------------+
+| My Claims Dashboard         |
+| (Statuses, Reminders,       |
+| Resume Incomplete Claims)   |
++-------------+---------------+
+              |
+    +---------+---------+
+    |                   |
+    v                   v
++------------------+  +--------------------+
+| Outcome Stats    |  | Support & Updates  |
+| (Approval %,     |  | (Gov.uk changelog, |
+| Median days, £)  |  | escalation help)   |
++------------------+  +--------------------+

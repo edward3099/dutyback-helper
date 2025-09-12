@@ -1,0 +1,139 @@
+
+
+# ⚙️ Technical PRD — Dutyback Helper
+
+---
+
+## 1. Tech Stack
+
+* **Frontend**: Next.js (App Router), Shadcn/UI for components, Lucide icons.
+* **Backend**: Supabase (Postgres DB, Supabase Auth, Supabase Storage).
+* **Deployment**: Vercel (frontend), Supabase cloud (backend).
+
+---
+
+## 2. Data Model (Supabase tables)
+
+### Users
+
+* Unique ID, email, role (user/admin).
+* Managed via Supabase Auth.
+
+### Claims
+
+* Links to a user.
+* Stores route chosen (CDS, C285, BOR286, C\&E1179, VAT Return, Seller Refund).
+* Tracks status (draft, identifiers pending, evidence missing, exported, submitted, decided).
+* Timestamps for created and updated.
+
+### Identifiers
+
+* Linked to a claim.
+* Stores MRN, EORI, and courier name (DHL, FedEx, UPS, Royal Mail).
+* Tracks when identifiers were requested and obtained.
+
+### Evidence
+
+* Linked to a claim.
+* Stores file references in Supabase Storage.
+* Tracks type (invoice, packing list, transport doc) and validation status.
+
+### Outcomes
+
+* Linked to a claim.
+* Stores decision result (approved/rejected), decision time in days, refund amount.
+
+### Updates (Policy Drift Log)
+
+* Stores scraped GOV.UK change logs.
+* Tracks when each rule was last checked.
+
+---
+
+## 3. API Endpoints (via Supabase RPC / REST)
+
+* **Auth**: login, signup, logout (Supabase Auth).
+* **Claims**: create, update, list, get by ID.
+* **Identifiers**: add MRN/EORI, update courier info.
+* **Evidence**: upload file, mark mandatory docs complete.
+* **Export**: generate claim pack (server-side PDF/ZIP).
+* **Outcomes**: log decision and refund stats.
+* **Stats**: aggregate approval %, median days, avg refund.
+* **Updates**: fetch latest GOV.UK policy changes.
+
+---
+
+## 4. Frontend UI (Next.js + Shadcn)
+
+### Global
+
+* Navbar: logo + nav links (Features, Stats, Start Claim).
+* Footer: “Last checked vs GOV.UK guidance” + Support link.
+
+### Homepage
+
+* Hero (value prop, CTA).
+* How it works (Router → MRN/EORI Assistant → Evidence Pack).
+* Stats preview.
+* FAQ + pricing.
+* CTA → “Start Claim”.
+
+### Wizard (Sliding Steps)
+
+1. **Channel selection**: courier vs postal.
+2. **VAT status**: VAT-registered vs not.
+3. **Claim type**: overpayment, rejected import, withdrawal, ≤£135 (seller refund).
+4. **Identifiers**: MRN/EORI fields, courier playbook modals.
+5. **Evidence**: checklist upload (block continue until complete).
+6. **Review & Export**: summary, export pack, reminders setup.
+
+### Branch Screens
+
+* **BOR286 Postal**: charge reference capture + BOR286 PDF link.
+* **VAT Return Info**: message + link to GOV.UK VAT return guidance.
+* **Seller Refund Info**: message + link to GOV.UK seller refund rules.
+
+### Courier Playbooks (Modals)
+
+* DHL, FedEx, UPS → prewritten request templates + self-serve links.
+
+### Dashboard
+
+* List of claims with statuses.
+* Reminder timers for HMRC deadlines.
+* “Resume” button to re-enter wizard at last incomplete step.
+
+### Outcome Stats
+
+* Approval rate %, median decision days, avg refund £ by courier.
+
+### Support & Updates
+
+* Last checked date vs GOV.UK.
+* Changelog of policy diffs.
+* Escalation email templates.
+
+---
+
+## 5. Internal Logic
+
+* **Router**: enforces HMRC rules (e.g., postal → BOR286, VAT-registered → VAT Return).
+* **Validation**: MRN format (18 characters), block export until mandatory evidence uploaded.
+* **Deadlines**: 3 years (overpayments), 1 year (rejected imports), 90 days (withdrawal).
+* **Telemetry**: logs approval % and decision times into Outcomes table.
+
+---
+
+## 6. Risks & Mitigation
+
+* **Policy drift**: weekly scrape/diff GOV.UK → Updates table.
+* **Wrong routing**: strict branching logic based on HMRC rules.
+* **Courier delays**: provide prefilled email templates and show average wait times.
+* **Small claims**: keep pricing modest, focus on micro-seller retention.
+
+---
+
+✅ this is the **technical prd**: schema + apis + ui + logic + risks, all mapped to stack (supabase + nextjs + shadcn + lucide).
+
+---
+

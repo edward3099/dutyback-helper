@@ -1,0 +1,1187 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Setup Project Repository",
+        "description": "Initialize the project repository for the Dutyback Helper web application.",
+        "details": "Create a new Git repository and set up the project structure. Include directories for frontend and backend code, as well as documentation. Initialize package.json for Node.js and install necessary dependencies like Express for the backend and React for the frontend.",
+        "testStrategy": "Ensure the repository is correctly initialized by checking the presence of essential files and directories.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Implement User Authentication",
+        "description": "Create user authentication for the Dutyback Helper application.",
+        "details": "Use JWT for user authentication. Implement registration and login endpoints in the backend. Store user data securely in a database. Use bcrypt for password hashing.",
+        "testStrategy": "Test user registration and login flows, ensuring that valid credentials allow access and invalid credentials are rejected.",
+        "priority": "medium",
+        "dependencies": [],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Develop Claim Wizard Steps",
+        "description": "Implement the claim wizard that guides users through the claim process.",
+        "details": "Create a multi-step form in React that captures user input for each step of the claim process. Each step should validate inputs according to the PRD specifications. Use React Router for navigation between steps.",
+        "testStrategy": "Conduct user testing to ensure that the wizard flows correctly and that users cannot proceed without completing required fields.",
+        "priority": "high",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Implement Routing Logic",
+        "description": "Develop the routing logic to direct users to the correct HMRC process based on their inputs.",
+        "details": "Implement the logic to route users based on their selections in the claim wizard. Ensure that the routing adheres to the rules specified in the PRD, including handling different claim types and VAT statuses.",
+        "testStrategy": "Create unit tests to verify that the routing logic correctly directs users based on various input scenarios.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Create Evidence Checklist Enforcement",
+        "description": "Enforce evidence checklist requirements based on the selected HMRC process.",
+        "details": "Implement validation rules that check for required evidence items based on the selected claim type. Display error messages if mandatory items are missing before allowing users to proceed to export.",
+        "testStrategy": "Test the evidence checklist enforcement by attempting to submit claims with missing evidence and ensuring appropriate error messages are displayed.",
+        "priority": "high",
+        "dependencies": [
+          3
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Develop Claim Pack Generation",
+        "description": "Implement functionality to generate a claim pack for users.",
+        "details": "Create a backend endpoint that compiles user inputs and uploaded evidence into a downloadable ZIP or PDF claim pack. Use libraries like jsPDF or PDFKit for PDF generation.",
+        "testStrategy": "Test the claim pack generation by creating various claims and ensuring the output is correctly formatted and includes all required information.",
+        "priority": "high",
+        "dependencies": [
+          5
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Build Dashboard for Claim Tracking",
+        "description": "Develop a dashboard for users to track their claims and receive reminders.",
+        "details": "Create a dashboard interface in React that displays active claims, their statuses, and deadlines. Implement backend endpoints to fetch claim data for the logged-in user.",
+        "testStrategy": "Conduct user acceptance testing to ensure that the dashboard accurately reflects the user's claims and that reminders are displayed as expected.",
+        "priority": "medium",
+        "dependencies": [
+          2
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Implement Outcome Stats Telemetry",
+        "description": "Build functionality to display anonymized outcome statistics to users.",
+        "details": "Create backend logic to calculate and store outcome statistics such as approval rates and average refund amounts. Display these statistics on the homepage and dashboard.",
+        "testStrategy": "Verify that the statistics are calculated correctly by comparing them against known data sets and ensuring they update in real-time.",
+        "priority": "medium",
+        "dependencies": [
+          7
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Test Task to Verify Task Master Functionality",
+        "description": "Conduct tests to ensure that the Task Master system is functioning as intended and meets all specified requirements.",
+        "details": "This task involves creating a comprehensive test suite for the Task Master functionality. The tests should cover all critical paths, including task creation, updating, deletion, and retrieval. Utilize automated testing frameworks such as Jest or Mocha for unit tests, and consider using Cypress for end-to-end testing. Ensure that edge cases are considered, such as invalid inputs and concurrent modifications. Document any bugs or issues found during testing and provide recommendations for fixes.",
+        "testStrategy": "Verify the Task Master functionality by executing the test suite and ensuring all tests pass. Additionally, perform manual testing to cover scenarios that may not be fully automated. Review the output logs for any errors and ensure that the system behaves as expected under various conditions. Confirm that all user stories related to Task Master are validated through the tests.",
+        "status": "pending",
+        "dependencies": [
+          8,
+          7
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 10,
+        "title": "Test DeepSeek Model Task Creation",
+        "description": "Conduct tests to verify the functionality of the DeepSeek model for task creation, ensuring it meets all specified requirements.",
+        "details": "This task involves creating a comprehensive test suite for the DeepSeek model's task creation functionality. The tests should cover critical paths, including task creation with valid and invalid inputs, edge cases such as concurrent modifications, and error handling. Utilize automated testing frameworks like Jest or Mocha for unit tests and consider using Cypress for end-to-end testing. Ensure the model correctly integrates with the Task Master system and handles dependencies as expected. Document any bugs or issues found during testing and provide recommendations for fixes.",
+        "testStrategy": "Verify the DeepSeek model's task creation functionality by executing the test suite and ensuring all tests pass. Perform manual testing to cover scenarios that may not be fully automated, such as user interactions and real-time updates. Review the output logs for errors and validate that the system behaves as expected under various conditions. Compare the model's output against expected results for known test cases.",
+        "status": "pending",
+        "dependencies": [
+          9
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 11,
+        "title": "Test Qwen Free Model Task Creation",
+        "description": "Conduct tests to verify the functionality of the Qwen free model for task creation, ensuring it meets all specified requirements.",
+        "details": "This task involves creating a comprehensive test suite for the Qwen free model's task creation functionality. The tests should cover critical paths, including task creation with valid and invalid inputs, edge cases such as concurrent modifications, and error handling. Utilize automated testing frameworks like Jest or Mocha for unit tests and consider using Cypress for end-to-end testing. Ensure the model correctly integrates with the Task Master system and handles dependencies as expected. Document any bugs or issues found during testing and provide recommendations for fixes.",
+        "testStrategy": "Verify the Qwen free model's task creation functionality by executing the test suite and ensuring all tests pass. Perform manual testing to cover scenarios that may not be fully automated, such as user interactions and real-time updates. Review the output logs for errors and validate that the system behaves as expected under various conditions.",
+        "status": "pending",
+        "dependencies": [
+          10
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 12,
+        "title": "Test Ollama Qwen Free Model",
+        "description": "Conduct tests to verify the functionality of the Ollama Qwen free model, ensuring it meets all specified requirements.",
+        "details": "This task involves creating a comprehensive test suite for the Ollama Qwen free model's functionality. The tests should cover critical paths, including model response accuracy, handling of valid and invalid inputs, edge cases, and error handling. Utilize automated testing frameworks like Jest or Mocha for unit tests and consider using Cypress for end-to-end testing. Ensure the model integrates correctly with the Task Master system and handles dependencies as expected. Document any bugs or issues found during testing and provide recommendations for fixes.",
+        "testStrategy": "Verify the Ollama Qwen free model's functionality by executing the test suite and ensuring all tests pass. Perform manual testing to cover scenarios that may not be fully automated, such as user interactions and real-time updates. Review the output logs for errors and validate that the system behaves as expected under various conditions.",
+        "status": "pending",
+        "dependencies": [
+          11
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 13,
+        "title": "Define HMRC Routing Logic",
+        "description": "Implement the core routing logic to direct users to the correct HMRC process based on their inputs.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "Create a decision tree or state machine that evaluates user inputs (channel, VAT status, claim type) and routes them to the appropriate HMRC process (CDS, C285, BOR286, C&E1179, VAT return, seller refund).",
+        "testStrategy": "Write unit tests for all routing scenarios, including edge cases like invalid inputs or missing data.",
+        "subtasks": []
+      },
+      {
+        "id": 14,
+        "title": "Implement Courier Playbook Templates",
+        "description": "Create templates for courier-specific instructions to help users retrieve MRN/EORI.",
+        "status": "pending",
+        "dependencies": [
+          13
+        ],
+        "priority": "medium",
+        "details": "Develop a system to display courier-specific playbooks (DHL, FedEx, UPS) with contact details, billing portals, and step-by-step instructions for retrieving MRN/EORI.",
+        "testStrategy": "Test each playbook template with sample user inputs to ensure correct display and usability.",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Design Evidence Checklist Enforcement",
+        "description": "Implement a system to enforce HMRC evidence requirements based on the selected claim type.",
+        "status": "pending",
+        "dependencies": [
+          13
+        ],
+        "priority": "high",
+        "details": "Create a checklist system that validates user uploads against HMRC requirements for each claim type (CDS, C285, C&E1179, BOR286).",
+        "testStrategy": "Test each claim type with different evidence combinations to ensure proper validation and error handling.",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Develop Claim Pack Export Functionality",
+        "description": "Implement the ability to generate and export a claim pack as a ZIP or PDF file.",
+        "status": "pending",
+        "dependencies": [
+          13,
+          15
+        ],
+        "priority": "high",
+        "details": "Create a system to compile validated user inputs, evidence, and routing information into a downloadable claim pack.",
+        "testStrategy": "Test the export functionality with different claim types and evidence sets to ensure correct formatting and content.",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Create Dashboard with Claim Tracking",
+        "description": "Build a dashboard to track active claims, their statuses, and deadlines.",
+        "status": "pending",
+        "dependencies": [
+          13,
+          16
+        ],
+        "priority": "medium",
+        "details": "Design a dashboard that displays claim progress, deadlines, and status updates for users.",
+        "testStrategy": "Test the dashboard with multiple claim scenarios to ensure accurate tracking and display.",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Implement Outcome Statistics Display",
+        "description": "Add anonymized outcome telemetry to the dashboard and homepage.",
+        "status": "pending",
+        "dependencies": [
+          17
+        ],
+        "priority": "medium",
+        "details": "Display anonymized statistics such as approval percentage, median days, and average refund amount on the homepage and dashboard.",
+        "testStrategy": "Validate that the statistics are correctly calculated and displayed for different claim types.",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Design Support & Updates Screen",
+        "description": "Create a screen to show last checked government updates and policy diffs.",
+        "status": "pending",
+        "dependencies": [
+          13
+        ],
+        "priority": "medium",
+        "details": "Implement a screen that displays the last checked date for HMRC policies and any changes since the last check.",
+        "testStrategy": "Test the screen with simulated policy changes to ensure accurate display of updates.",
+        "subtasks": []
+      },
+      {
+        "id": 20,
+        "title": "Implement MRN Format Validation",
+        "description": "Enforce MRN format validation (18 characters) before claim export.",
+        "status": "pending",
+        "dependencies": [
+          13
+        ],
+        "priority": "high",
+        "details": "Add a validation step to check that the MRN entered by the user is exactly 18 characters long.",
+        "testStrategy": "Test with valid and invalid MRN inputs to ensure proper validation and error messages.",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Create User Onboarding Flow",
+        "description": "Design a guided onboarding flow for new users to start a claim.",
+        "status": "pending",
+        "dependencies": [
+          13
+        ],
+        "priority": "medium",
+        "details": "Develop a simple onboarding process that guides users through the initial steps of starting a claim.",
+        "testStrategy": "Test the onboarding flow with different user scenarios to ensure smooth navigation.",
+        "subtasks": []
+      },
+      {
+        "id": 22,
+        "title": "Implement Claim Status Tracking",
+        "description": "Add functionality to track the status of each claim (e.g., in progress, completed).",
+        "status": "pending",
+        "dependencies": [
+          17
+        ],
+        "priority": "medium",
+        "details": "Create a system to update and display the status of each claim as it progresses through the wizard.",
+        "testStrategy": "Test the status tracking with multiple claim scenarios to ensure accurate updates.",
+        "subtasks": []
+      },
+      {
+        "id": 23,
+        "title": "Design Reminder System",
+        "description": "Implement a reminder system for claim deadlines and next steps.",
+        "status": "pending",
+        "dependencies": [
+          17
+        ],
+        "priority": "medium",
+        "details": "Develop a system to notify users of upcoming deadlines and next steps in their claim process.",
+        "testStrategy": "Test the reminder system with different deadlines to ensure timely notifications.",
+        "subtasks": []
+      },
+      {
+        "id": 24,
+        "title": "Create Evidence Upload Interface",
+        "description": "Build an interface for users to upload required evidence documents.",
+        "status": "pending",
+        "dependencies": [
+          15
+        ],
+        "priority": "medium",
+        "details": "Design a user-friendly interface for uploading evidence, with validation for file types and sizes.",
+        "testStrategy": "Test the upload interface with different file types and sizes to ensure proper handling.",
+        "subtasks": []
+      },
+      {
+        "id": 25,
+        "title": "Implement User Authentication",
+        "description": "Add user authentication to secure claim data and dashboard access.",
+        "status": "pending",
+        "dependencies": [
+          17
+        ],
+        "priority": "high",
+        "details": "Create a secure login and registration system to protect user data and claim history.",
+        "testStrategy": "Test the authentication system with different user scenarios to ensure security and usability.",
+        "subtasks": []
+      },
+      {
+        "id": 26,
+        "title": "Design Data Model for Claims",
+        "description": "Define the database schema for storing claim data, identifiers, and evidence.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "high",
+        "details": "Create a relational database schema for claims, identifiers, evidence, outcomes, and updates.",
+        "testStrategy": "Validate the schema with sample data to ensure it meets all requirements.",
+        "subtasks": []
+      },
+      {
+        "id": 27,
+        "title": "Implement Claim Creation Endpoint",
+        "description": "Develop a backend endpoint to create and store new claims.",
+        "status": "pending",
+        "dependencies": [
+          26
+        ],
+        "priority": "high",
+        "details": "Build a REST API endpoint to handle claim creation, including validation and storage in the database.",
+        "testStrategy": "Test the endpoint with different claim inputs to ensure correct storage and validation.",
+        "subtasks": []
+      },
+      {
+        "id": 28,
+        "title": "Create Identifier Retrieval Endpoint",
+        "description": "Develop a backend endpoint to store and retrieve MRN/EORI identifiers.",
+        "status": "pending",
+        "dependencies": [
+          26
+        ],
+        "priority": "medium",
+        "details": "Build an API endpoint to handle the storage and retrieval of MRN/EORI identifiers for each claim.",
+        "testStrategy": "Test the endpoint with different identifier inputs to ensure correct storage and retrieval.",
+        "subtasks": []
+      },
+      {
+        "id": 29,
+        "title": "Implement Evidence Storage Endpoint",
+        "description": "Develop a backend endpoint to store and manage evidence files for claims.",
+        "status": "pending",
+        "dependencies": [
+          26
+        ],
+        "priority": "medium",
+        "details": "Create an API endpoint to handle the storage and management of evidence files, including validation and access control.",
+        "testStrategy": "Test the endpoint with different evidence files to ensure proper handling and storage.",
+        "subtasks": []
+      },
+      {
+        "id": 30,
+        "title": "Design Outcome Tracking Endpoint",
+        "description": "Develop a backend endpoint to track and store claim outcomes.",
+        "status": "pending",
+        "dependencies": [
+          26
+        ],
+        "priority": "medium",
+        "details": "Build an API endpoint to store claim outcomes, including decision status, days to decision, and refund amount.",
+        "testStrategy": "Test the endpoint with different outcome scenarios to ensure accurate tracking.",
+        "subtasks": []
+      },
+      {
+        "id": 31,
+        "title": "Implement Policy Diff Monitoring",
+        "description": "Add functionality to monitor and display changes in HMRC policies.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "Create a system to fetch and compare HMRC policy updates, displaying changes to users.",
+        "testStrategy": "Test the policy diff monitoring with simulated policy changes to ensure accurate display.",
+        "subtasks": []
+      },
+      {
+        "id": 32,
+        "title": "Add User Feedback Mechanism",
+        "description": "Implement a way for users to provide feedback on the claim process.",
+        "status": "pending",
+        "dependencies": [
+          25
+        ],
+        "priority": "low",
+        "details": "Design and implement a feedback system to collect user input on the claim process and app usability.",
+        "testStrategy": "Test the feedback mechanism with different user scenarios to ensure proper functionality.",
+        "subtasks": []
+      },
+      {
+        "id": 33,
+        "title": "Initialize Supabase Project",
+        "description": "Set up the Supabase project with required tables and relationships for Users, Claims, Identifiers, Evidence, Outcomes, and Updates.",
+        "details": "Create the following tables in Supabase: Users (with email and role), Claims (with route, status, timestamps), Identifiers (with MRN, EORI, courier, and timestamps), Evidence (with file references, type, and validation status), Outcomes (with decision, days, and refund amount), and Updates (with policy change logs). Define relationships between tables (e.g., Claims to Users, Claims to Identifiers, etc.).",
+        "testStrategy": "Verify that all tables are created with the correct schema and relationships using Supabase dashboard and API calls.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 34,
+        "title": "Implement Supabase Auth Integration",
+        "description": "Integrate Supabase Auth for user login, signup, and logout functionality.",
+        "details": "Use Supabase Auth SDK to implement login, signup, and logout flows. Store user data in the Users table and manage session state in the frontend.",
+        "testStrategy": "Test user signup, login, and logout flows to ensure they work correctly and user data is stored in the Users table.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 35,
+        "title": "Create Claim Management API Endpoints",
+        "description": "Implement API endpoints for creating, updating, listing, and retrieving claims via Supabase RPC or REST.",
+        "details": "Create endpoints for Claims: create, update, list, and get by ID. Use Supabase's REST API or RPC to handle these operations. Ensure that the endpoints validate claim data and update the Claims table accordingly.",
+        "testStrategy": "Test each endpoint with sample data to ensure they create, update, list, and retrieve claims correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 36,
+        "title": "Implement Identifier Management API",
+        "description": "Create API endpoints for adding MRN/EORI and updating courier information for claims.",
+        "details": "Implement endpoints for Identifiers: add MRN/EORI, update courier info. Use Supabase's REST API or RPC to handle these operations. Ensure that the endpoints validate identifier data and update the Identifiers table accordingly.",
+        "testStrategy": "Test the endpoints with sample data to ensure they add and update identifiers correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 37,
+        "title": "Set Up Evidence Upload and Validation",
+        "description": "Implement API endpoints for uploading evidence files and marking mandatory documents as complete.",
+        "details": "Create endpoints for Evidence: upload file, mark mandatory docs complete. Use Supabase Storage to store files and update the Evidence table with file references and validation status.",
+        "testStrategy": "Test file uploads and validation marking to ensure they work correctly and files are stored in Supabase Storage.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 38,
+        "title": "Develop Claim Export Functionality",
+        "description": "Implement a server-side export feature to generate claim packs (PDF/ZIP).",
+        "details": "Create an endpoint for exporting claims. Use a server-side library (e.g., Puppeteer or PDFKit) to generate PDFs and ZIP archives. Store the exported files in Supabase Storage and update the Claims table with the export status.",
+        "testStrategy": "Test the export endpoint with sample claims to ensure the generated files are correct and stored in Supabase Storage.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 39,
+        "title": "Implement Outcome Logging",
+        "description": "Create API endpoints for logging claim outcomes (approved/rejected, decision time, refund amount).",
+        "details": "Implement an endpoint for Outcomes: log decision and refund stats. Use Supabase's REST API or RPC to handle this operation. Ensure that the endpoint validates outcome data and updates the Outcomes table accordingly.",
+        "testStrategy": "Test the endpoint with sample data to ensure outcomes are logged correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 40,
+        "title": "Build Policy Updates Module",
+        "description": "Implement functionality to fetch and store GOV.UK policy updates in the Updates table.",
+        "details": "Create an endpoint to scrape and store GOV.UK policy changes. Use a server-side scheduler (e.g., cron job) to fetch updates weekly. Store the updates in the Updates table and display them in the UI.",
+        "testStrategy": "Test the policy update endpoint to ensure it fetches and stores updates correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 41,
+        "title": "Design and Implement Frontend UI Components",
+        "description": "Create UI components for the homepage, wizard, dashboard, and other screens using Next.js and Shadcn/UI.",
+        "details": "Implement the following components: Navbar, Footer, Hero, How it works, Stats preview, FAQ, CTA, Wizard steps, Branch screens, Courier playbooks, Dashboard, Outcome stats, Support & Updates. Use Shadcn/UI for consistent styling and Lucide icons for visual elements.",
+        "testStrategy": "Test each UI component to ensure it renders correctly and matches the design specifications.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 42,
+        "title": "Implement Claim Wizard Flow",
+        "description": "Develop the multi-step claim wizard with routing logic based on user selections.",
+        "details": "Implement the wizard with the following steps: Channel selection, VAT status, Claim type, Identifiers, Evidence, Review & Export. Use routing logic to enforce HMRC rules (e.g., postal → BOR286, VAT-registered → VAT Return). Store user progress in the Claims table.",
+        "testStrategy": "Test the wizard flow with different user selections to ensure routing logic works correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 43,
+        "title": "Add Validation and Deadlines Logic",
+        "description": "Implement validation rules for MRN format and enforce deadlines for claim submissions.",
+        "details": "Add validation for MRN format (18 characters) and block export until mandatory evidence is uploaded. Implement deadline logic based on claim type (e.g., 3 years for overpayments, 1 year for rejected imports). Store deadlines in the Claims table.",
+        "testStrategy": "Test validation and deadline logic with different claim scenarios to ensure they work correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 44,
+        "title": "Implement Telemetry and Stats Aggregation",
+        "description": "Log claim approval rates, decision times, and refund amounts into the Outcomes table.",
+        "details": "Implement telemetry to log approval rates, median decision days, and average refund amounts. Use Supabase to aggregate and store these stats in the Outcomes table. Display them in the Dashboard and Stats preview.",
+        "testStrategy": "Test telemetry and stats aggregation to ensure they are logged and displayed correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 45,
+        "title": "Add Reminder Timers for HMRC Deadlines",
+        "description": "Implement reminder timers for HMRC deadlines in the Dashboard.",
+        "details": "Add a feature to track and display reminders for HMRC deadlines (e.g., 3 years for overpayments, 1 year for rejected imports). Use a server-side scheduler to trigger reminders and update the Claims table with reminder status.",
+        "testStrategy": "Test reminder timers with different claim scenarios to ensure they trigger correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 46,
+        "title": "Implement Support and Updates UI",
+        "description": "Create UI for displaying policy updates, last checked date, and escalation email templates.",
+        "details": "Implement a Support & Updates section in the Dashboard. Display the last checked date vs GOV.UK, policy diffs, and escalation email templates. Use the Updates table to fetch and display policy changes.",
+        "testStrategy": "Test the Support & Updates UI to ensure it displays policy updates and escalation templates correctly.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 47,
+        "title": "Deploy Application",
+        "description": "Deploy the frontend and backend to Vercel and Supabase cloud respectively.",
+        "details": "Deploy the Next.js frontend to Vercel and the Supabase backend to Supabase cloud. Ensure all API endpoints, database tables, and UI components are correctly deployed and accessible.",
+        "testStrategy": "Test the deployed application to ensure all features work as expected in the production environment.",
+        "status": "pending",
+        "priority": "medium",
+        "dependencies": [],
+        "subtasks": []
+      },
+      {
+        "id": 48,
+        "title": "Create Homepage Component",
+        "description": "Implement the homepage with hero section, stats, and call-to-action (CTA) elements.",
+        "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "Create a responsive homepage component with a hero section, key stats, and a CTA button. Use a modern UI framework like React or Vue.js. Ensure the layout is mobile-friendly and visually appealing.",
+        "testStrategy": "Validate the homepage layout, content, and CTA functionality across different screen sizes.",
+        "subtasks": []
+      },
+      {
+        "id": 49,
+        "title": "Implement Channel Selection Wizard Step 1",
+        "description": "Build the first step of the wizard for selecting the channel (Courier vs Postal).",
+        "status": "pending",
+        "dependencies": [
+          48
+        ],
+        "priority": "medium",
+        "details": "Create a form with options for 'Courier' and 'Postal' channels. Implement conditional rendering based on the selected channel. Use a state management library like Redux or Vuex for managing the wizard state.",
+        "testStrategy": "Verify that the channel selection form renders correctly and that the selected channel triggers the appropriate next step.",
+        "subtasks": []
+      },
+      {
+        "id": 50,
+        "title": "Create BOR286 Postal Screen",
+        "description": "Implement the BOR286 postal screen with form fields and charge reference.",
+        "status": "pending",
+        "dependencies": [
+          49
+        ],
+        "priority": "medium",
+        "details": "Design a form for the BOR286 postal screen, including fields for charge reference and any other required data. Ensure the form is validated before proceeding to the next step.",
+        "testStrategy": "Validate that the form fields are displayed correctly and that the submission process works as expected.",
+        "subtasks": []
+      },
+      {
+        "id": 51,
+        "title": "Implement VAT Status Step 2",
+        "description": "Build the VAT status selection step for the wizard.",
+        "status": "pending",
+        "dependencies": [
+          49
+        ],
+        "priority": "medium",
+        "details": "Create a form with options for 'Yes' (VAT Registered) and 'No' (Not VAT Registered). Implement conditional rendering based on the selected option. Use a state management library for managing the wizard state.",
+        "testStrategy": "Verify that the VAT status form renders correctly and that the selected option triggers the appropriate next step.",
+        "subtasks": []
+      },
+      {
+        "id": 52,
+        "title": "Create VAT Return Info Redirect Screen",
+        "description": "Implement the redirect screen for VAT-registered users.",
+        "status": "pending",
+        "dependencies": [
+          51
+        ],
+        "priority": "medium",
+        "details": "Design a redirect screen that sends users to the VAT return info page. Ensure the redirect is seamless and the user is informed of the next steps.",
+        "testStrategy": "Validate that the redirect screen appears correctly and that the user is redirected to the appropriate page.",
+        "subtasks": []
+      },
+      {
+        "id": 53,
+        "title": "Implement Claim Type Selection Step 3",
+        "description": "Build the claim type selection step for the wizard.",
+        "status": "pending",
+        "dependencies": [
+          51
+        ],
+        "priority": "medium",
+        "details": "Create a form with options for 'Overpayment', 'Rejected', 'Withdrawal', and '£135 or less'. Implement conditional rendering based on the selected claim type. Use a state management library for managing the wizard state.",
+        "testStrategy": "Verify that the claim type form renders correctly and that the selected option triggers the appropriate next step.",
+        "subtasks": []
+      },
+      {
+        "id": 54,
+        "title": "Create Seller Refund Info Screen",
+        "description": "Implement the seller refund info screen for £135 or less claims.",
+        "status": "pending",
+        "dependencies": [
+          53
+        ],
+        "priority": "medium",
+        "details": "Design a screen that asks the user to provide seller refund information. Include a marketplace field and a 'Ask seller' button. Ensure the screen is user-friendly and intuitive.",
+        "testStrategy": "Validate that the seller refund info screen is displayed correctly and that the 'Ask seller' button functions as expected.",
+        "subtasks": []
+      },
+      {
+        "id": 55,
+        "title": "Implement Identifiers Step 4",
+        "description": "Build the identifiers step for the wizard.",
+        "status": "pending",
+        "dependencies": [
+          53
+        ],
+        "priority": "medium",
+        "details": "Create a form for entering identifiers such as MRN and EORI. Ensure the form is validated before proceeding to the next step. Use a state management library for managing the wizard state.",
+        "testStrategy": "Verify that the identifiers form is displayed correctly and that the submission process works as expected.",
+        "subtasks": []
+      },
+      {
+        "id": 56,
+        "title": "Create Playbook Screens",
+        "description": "Implement the DHL, FedEx, and UPS playbook screens.",
+        "status": "pending",
+        "dependencies": [
+          55
+        ],
+        "priority": "medium",
+        "details": "Design and implement three separate playbook screens for DHL, FedEx, and UPS. Each screen should include help content and templates. Ensure the content is clear and easy to understand.",
+        "testStrategy": "Validate that the playbook screens are displayed correctly and that the help content and templates are accessible.",
+        "subtasks": []
+      },
+      {
+        "id": 57,
+        "title": "Implement Evidence Upload Step 5",
+        "description": "Build the evidence upload step for the wizard.",
+        "status": "pending",
+        "dependencies": [
+          56
+        ],
+        "priority": "medium",
+        "details": "Create a step where users can upload evidence. Include a checklist and a file upload feature. Ensure the upload functionality is secure and user-friendly.",
+        "testStrategy": "Verify that the evidence upload step is displayed correctly and that the file upload functionality works as expected.",
+        "subtasks": []
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-12T16:20:57.733Z",
+      "updated": "2025-09-12T16:30:04.683Z",
+      "description": "Tasks for master context"
+    }
+  },
+  "frontend-dev": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Set up Next.js project with App Router, TypeScript, and Tailwind CSS",
+        "description": "Initialize a new Next.js project with App Router, TypeScript, and Tailwind CSS for the Dutyback Helper webapp. Include Shadcn/UI component library and Lucide icons, and configure the project structure with proper folders for components, pages, and utilities.",
+        "details": "1. Use the `create-next-app` CLI to initialize a new Next.js project with the App Router and TypeScript template.\n2. Install Tailwind CSS and configure it with the necessary `tailwind.config.js` and `postcss.config.js` files.\n3. Add the Shadcn/UI component library by following their installation instructions, including the necessary dependencies and configuration.\n4. Integrate Lucide icons by installing the `lucide` package and setting up the icon components.\n5. Organize the project structure with folders for components, pages, and utilities, ensuring a clean and scalable architecture.\n6. Verify that all dependencies are correctly installed and the project runs without errors.",
+        "testStrategy": "1. Run the Next.js development server and ensure the app starts without errors.\n2. Check that Tailwind CSS is applied correctly by adding a styled component and verifying it renders as expected.\n3. Confirm that Shadcn/UI components are available and can be imported and used in the app.\n4. Verify that Lucide icons are rendered correctly by using an icon component in a page or component.\n5. Ensure the project structure is organized as described, with clear separation of components, pages, and utilities.",
+        "status": "done",
+        "dependencies": [
+          1
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 2,
+        "title": "Create the homepage component with hero section, value proposition, how it works section, stats preview, FAQ, pricing, and call-to-action button",
+        "description": "Develop the homepage component with all required sections and ensure it uses Shadcn/UI components for a modern, responsive UI.",
+        "details": "1. Create a new file for the homepage component in the appropriate directory (e.g., `app/homepage/page.tsx`).\n2. Implement the hero section with a visually appealing layout, including a headline, subheadline, and a call-to-action button using Shadcn/UI components.\n3. Add a value proposition section that highlights the key benefits of the product or service.\n4. Implement a 'How It Works' section with a step-by-step explanation, using a card layout or similar.\n5. Include a stats preview section with key metrics or numbers, using Shadcn/UI components like cards or badges.\n6. Add an FAQ section with collapsible items, using Shadcn/UI's accordion component.\n7. Implement a pricing section with different plans, using Shadcn/UI's card or table components.\n8. Ensure all sections are responsive and work across different screen sizes.\n9. Use Tailwind CSS for styling and ensure the UI is modern and visually consistent with the rest of the application.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the homepage to ensure it renders without errors.\n2. Verify that all sections (hero, value proposition, how it works, stats, FAQ, pricing, and CTA) are visible and correctly styled.\n3. Test the responsiveness of the homepage by resizing the browser window and ensuring the layout adapts appropriately.\n4. Confirm that Shadcn/UI components are used correctly and that the UI looks consistent with the design guidelines.\n5. Check that the call-to-action button is functional and styled as expected.",
+        "status": "done",
+        "dependencies": [
+          1
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 3,
+        "title": "Build the claim wizard component with 6 sliding steps",
+        "description": "Develop the claim wizard component with 6 sliding steps, including step navigation, form validation, and state management.",
+        "details": "1. Create a new file for the claim wizard component in the appropriate directory (e.g., `app/claim-wizard/page.tsx`).\n2. Implement the 6 sliding steps as described: Channel selection (Courier vs Postal), VAT status (Yes/No), Claim type (Overpayment/Rejected/Withdrawal/≤£135), Identifiers (MRN/EORI fields), Evidence checklist, and Review & Export.\n3. Add step navigation (e.g., 'Previous' and 'Next' buttons) to allow users to move between steps.\n4. Implement form validation for each step to ensure required fields are filled and data is correct.\n5. Use state management (e.g., React's useState or a state management library) to track the current step and form data.\n6. Ensure the component is responsive and uses Shadcn/UI components for a consistent UI.\n7. Add error handling and feedback for invalid input.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component to ensure it renders without errors.\n2. Verify that all 6 steps are visible and functional, with proper navigation between them.\n3. Test form validation by submitting incomplete or invalid data and ensure appropriate error messages are displayed.\n4. Confirm that the state management correctly tracks the current step and form data.\n5. Test the responsiveness of the component by resizing the browser window.\n6. Ensure that the component integrates well with the rest of the application and uses Shadcn/UI components consistently.",
+        "status": "done",
+        "dependencies": [
+          1,
+          2
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 4,
+        "title": "Create branch screens for special routing",
+        "description": "Develop three branch screens for special routing: BOR286 Postal screen with charge reference form and PDF link, VAT Return Info screen with guidance message, and Seller Refund Info screen with marketplace instructions. Ensure these screens are accessible from the claim wizard based on user selections.",
+        "details": "1. Create three new screen components: BOR286PostalScreen, VATReturnInfoScreen, and SellerRefundInfoScreen.\n2. Implement the BOR286 Postal screen with a charge reference form and a PDF link.\n3. Implement the VAT Return Info screen with a guidance message.\n4. Implement the Seller Refund Info screen with marketplace instructions.\n5. Integrate these screens into the claim wizard component, making them accessible based on user selections.\n6. Ensure the screens are styled consistently with Shadcn/UI components and Tailwind CSS.\n7. Add appropriate state management to handle screen transitions and user input.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component.\n2. Verify that the three branch screens are accessible based on user selections.\n3. Test the functionality of the charge reference form, PDF link, guidance message, and marketplace instructions.\n4. Ensure the screens are styled correctly and responsive.\n5. Confirm that the screens are properly integrated with the claim wizard's state management.",
+        "status": "done",
+        "dependencies": [
+          1,
+          2,
+          3
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 5,
+        "title": "Build courier playbook modals for DHL, FedEx, and UPS",
+        "description": "Develop modals for DHL, FedEx, and UPS that include prewritten request templates, self-serve portal links, contact information, and step-by-step instructions for obtaining MRN and EORI numbers. Add copy-to-clipboard functionality for templates.",
+        "details": "1. Create three modal components for DHL, FedEx, and UPS, each containing prewritten request templates, self-serve portal links, contact information, and step-by-step instructions for obtaining MRN and EORI numbers.\n2. Implement copy-to-clipboard functionality for the request templates using JavaScript.\n3. Ensure the modals are accessible from the claim wizard component, based on user selections.\n4. Style the modals consistently with Shadcn/UI components.\n5. Add event handlers to open and close the modals based on user interactions.\n6. Ensure the modals are responsive and accessible on all device sizes.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component.\n2. Verify that the DHL, FedEx, and UPS modals are accessible based on user selections.\n3. Test the copy-to-clipboard functionality for the request templates.\n4. Confirm that the modals display the correct content, including portal links, contact information, and instructions.\n5. Ensure the modals are styled consistently with the rest of the application and are responsive on different screen sizes.",
+        "status": "done",
+        "dependencies": [
+          3
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 6,
+        "title": "Create the claims dashboard component with list view of user claims, status indicators, reminder timers for HMRC deadlines, and resume functionality to continue incomplete claims",
+        "description": "Develop the claims dashboard component with a list view of user claims, status indicators, reminder timers for HMRC deadlines, and resume functionality to continue incomplete claims. Include filtering, sorting, and search capabilities.",
+        "details": "1. Create a new component for the claims dashboard, ensuring it is accessible from the claim wizard or a dedicated route.\n2. Implement a list view of user claims, displaying key information such as claim type, status, and deadline.\n3. Add status indicators (e.g., 'Pending', 'Completed', 'Overdue') to visually represent the claim's state.\n4. Implement reminder timers for HMRC deadlines, showing countdowns or alerts when deadlines are approaching.\n5. Add resume functionality to allow users to continue incomplete claims by loading their progress from the claim wizard.\n6. Include filtering, sorting, and search capabilities to help users navigate the list of claims efficiently.\n7. Ensure the component is styled consistently with Shadcn/UI components and integrates with the existing application state management.\n8. Implement necessary API calls or state management logic to fetch and update claim data.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the claims dashboard component.\n2. Verify that the list view of claims is displayed correctly with all relevant information.\n3. Test the status indicators to ensure they reflect the correct state of each claim.\n4. Confirm that the reminder timers for HMRC deadlines are functioning as expected.\n5. Test the resume functionality by starting a claim in the claim wizard, then resuming it from the dashboard.\n6. Verify that filtering, sorting, and search capabilities work as intended.\n7. Ensure the component is responsive and styled consistently with the rest of the application.",
+        "status": "done",
+        "dependencies": [
+          3,
+          4,
+          5
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 7,
+        "title": "Build outcome stats component with interactive charts and responsive design",
+        "description": "Develop a component to display approval rate percentage, median decision days, and average refund amount by courier, including interactive charts and responsive design for both homepage preview and dedicated stats page.",
+        "details": "1. Create a new component for the outcome stats, ensuring it can be embedded in the homepage preview and a dedicated stats page.\n2. Implement interactive charts (e.g., using Chart.js or D3.js) to visualize approval rate percentage, median decision days, and average refund amount by courier.\n3. Ensure the component is responsive and adapts to different screen sizes and layouts.\n4. Integrate the component into the homepage's stats preview section and a dedicated stats page.\n5. Use Shadcn/UI components for styling and ensure consistency with the rest of the application.\n6. Add data fetching logic to retrieve the required statistics from the backend or a mock data source.\n7. Implement filtering or sorting options if needed, based on user preferences or data availability.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the homepage to verify that the stats preview section renders correctly and displays the expected data.\n2. Navigate to the dedicated stats page and ensure the component is displayed and functions as expected.\n3. Test the responsiveness of the component by resizing the browser window and verifying that the layout adjusts appropriately.\n4. Confirm that the interactive charts update and display the correct data based on the underlying dataset.\n5. Validate that the component is styled consistently with the rest of the application using Shadcn/UI components.",
+        "status": "done",
+        "dependencies": [
+          2,
+          6
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 8,
+        "title": "Create support and updates page with last checked date comparison, changelog, escalation templates, and help documentation",
+        "description": "Develop a support and updates page that displays the last checked date versus GOV.UK, a changelog of policy differences, escalation email templates, and help documentation. Include search functionality and categorized help sections.",
+        "details": "1. Create a new page component for the support and updates section.\n2. Implement a section to display the last checked date compared to GOV.UK.\n3. Add a changelog that lists policy differences, including dates and descriptions.\n4. Include escalation email templates for different scenarios.\n5. Develop help documentation with categorized sections (e.g., 'How to Submit a Claim', 'Understanding Refunds').\n6. Implement a search functionality that allows users to search through help documentation and changelog.\n7. Ensure the page is styled consistently with Shadcn/UI components.\n8. Integrate the page into the application's navigation or a dedicated support route.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the support and updates page.\n2. Verify that the last checked date is displayed correctly and compared to GOV.UK.\n3. Check that the changelog is updated with policy differences and dates.\n4. Confirm that escalation email templates are visible and correctly formatted.\n5. Test the help documentation sections to ensure they are categorized and accessible.\n6. Use the search functionality to verify that it correctly filters and displays relevant content.\n7. Ensure the page is responsive and styled consistently with the rest of the application.",
+        "status": "done",
+        "dependencies": [
+          3,
+          6
+        ],
+        "priority": "medium",
+        "subtasks": []
+      },
+      {
+        "id": 9,
+        "title": "Implement global navigation with logo, nav links, and footer",
+        "description": "Develop a global navigation system with a logo, navigation links (Features, Stats, Start Claim), and a footer that displays the last checked GOV.UK guidance date and a support link. Include a responsive mobile menu and ensure consistent branding throughout the app.",
+        "status": "done",
+        "dependencies": [
+          3,
+          6
+        ],
+        "priority": "medium",
+        "details": "1. Create a navigation component that includes a logo, navigation links (Features, Stats, Start Claim), and a responsive mobile menu.\n2. Implement a footer that displays the last checked GOV.UK guidance date and a support link.\n3. Ensure the navigation and footer are consistent with the app's branding, including colors, fonts, and spacing.\n4. Use a responsive design approach to ensure the navigation works on all screen sizes, including mobile.\n5. Integrate the navigation and footer into the main layout of the app, ensuring they are accessible on all pages.\n6. Use Shadcn/UI or a similar component library for consistent UI elements.\n7. Add event handlers for mobile menu toggling and ensure accessibility standards are met.",
+        "testStrategy": "1. Run the Next.js development server and navigate to multiple pages of the app to verify that the navigation and footer are consistently displayed.\n2. Check that the mobile menu toggles correctly and is accessible on smaller screens.\n3. Confirm that the last checked GOV.UK guidance date is displayed correctly in the footer.\n4. Verify that the support link in the footer is functional and leads to the correct page.\n5. Ensure the navigation links (Features, Stats, Start Claim) are correctly implemented and lead to the appropriate sections or pages.\n6. Test the responsiveness of the navigation and footer across different screen sizes.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Global Layout Integration",
+            "description": "Added Navigation and Footer components to the root layout (`layout.tsx`)",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "Responsive Design Implementation",
+            "description": "Implemented navigation with mobile menu and hamburger button",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Consistent Branding",
+            "description": "Ensured logo, colors, fonts, and spacing are consistent throughout the app",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Navigation Links Implementation",
+            "description": "Added Features, Stats, Detailed Stats, Support, and Start Claim links",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Footer Content Implementation",
+            "description": "Added last checked GOV.UK guidance date, support links, and resources",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Page Cleanup",
+            "description": "Removed duplicate Navigation/Footer from individual pages",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Sticky Navigation Implementation",
+            "description": "Implemented sticky navigation with backdrop blur effect",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Mobile Menu Functionality",
+            "description": "Implemented responsive hamburger menu that toggles correctly",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "Logo Navigation",
+            "description": "Enabled clicking logo to return to homepage",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Active States Implementation",
+            "description": "Highlighted current page in navigation",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Footer Resources",
+            "description": "Added links to HMRC guidance and contact information",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 12,
+            "title": "GOV.UK Date Display",
+            "description": "Implemented display of last checked guidance date (currently shows '12 September 2025')",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 13,
+            "title": "Navigation and Footer Testing",
+            "description": "Verified all navigation links work correctly (Home, Support, Stats, Wizard)",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 14,
+            "title": "Mobile Menu Testing",
+            "description": "Confirmed mobile menu opens/closes and navigates properly",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 15,
+            "title": "Global Navigation and Footer Testing",
+            "description": "Verified global navigation and footer appear on all pages",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 16,
+            "title": "Responsive Design Testing",
+            "description": "Tested responsive design on mobile (375px width)",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 17,
+            "title": "Logo Navigation Testing",
+            "description": "Confirmed logo navigation returns to homepage",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 18,
+            "title": "Footer Date Testing",
+            "description": "Verified footer displays correct GOV.UK guidance date",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 19,
+            "title": "Technical Implementation",
+            "description": "Used flexbox layout with `flex-1` for main content area",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 20,
+            "title": "Sticky Navigation Styling",
+            "description": "Implemented sticky navigation with `top-0 z-50`",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 21,
+            "title": "Mobile Menu State Management",
+            "description": "Used state management for mobile menu toggle",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 22,
+            "title": "Footer Link Implementation",
+            "description": "Added external links with proper `target=\"_blank\"` and `rel=\"noopener noreferrer\"`",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 23,
+            "title": "UI Consistency",
+            "description": "All components use Shadcn/UI for consistent styling",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Build form validation and routing logic components",
+        "description": "Implement MRN format validation (18 characters), evidence checklist enforcement, HMRC routing rules (postal→BOR286, VAT-registered→VAT Return), and deadline calculations (3 years overpayments, 1 year rejected imports, 90 days withdrawal).",
+        "status": "done",
+        "dependencies": [
+          3,
+          6
+        ],
+        "priority": "medium",
+        "details": "1. Create a form validation module that enforces MRN format (18 characters) and validates evidence checklist requirements.\n2. Implement HMRC routing logic that maps postal claims to BOR286 and VAT-registered claims to VAT Return.\n3. Add deadline calculation logic for overpayments (3 years), rejected imports (1 year), and withdrawal (90 days) based on claim submission date.\n4. Integrate the validation and routing logic into the claim wizard component, ensuring it works with the existing claims dashboard and courier playbook modals.\n5. Use TypeScript for type safety and ensure the logic is reusable across different claim types.\n6. Add error handling and user feedback for invalid inputs or missing evidence.",
+        "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component.\n2. Submit a claim with an invalid MRN (e.g., 17 characters) and verify that the validation error is displayed.\n3. Submit a claim with missing evidence and ensure the checklist enforcement prevents submission.\n4. Test HMRC routing logic by submitting a postal claim and verifying it is routed to BOR286, and a VAT-registered claim is routed to VAT Return.\n5. Verify deadline calculations by submitting claims with different dates and confirming the calculated deadlines match the expected values.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Enhanced Validation System",
+            "description": "Created comprehensive validation logic with detailed error messages",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 2,
+            "title": "HMRC Routing Logic",
+            "description": "Implemented complete routing system with all HMRC forms and processes",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 3,
+            "title": "Form Validation Hook",
+            "description": "Created `useFormValidation` hook for real-time validation",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 4,
+            "title": "Route Logic Hook",
+            "description": "Created `useRouteLogic` hook for HMRC routing decisions",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 5,
+            "title": "Validation Display Components",
+            "description": "Built comprehensive validation UI components",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 6,
+            "title": "Enhanced Wizard Integration",
+            "description": "Updated wizard to use new validation and routing system",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 7,
+            "title": "Deadline Calculation Implementation",
+            "description": "Added deadline calculation logic for overpayments (3 years), rejected imports (1 year), and withdrawal (90 days) based on claim submission date",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 8,
+            "title": "Real-time Validation Enhancement",
+            "description": "Implemented step-by-step validation with detailed error messages",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 9,
+            "title": "HMRC Route Determination",
+            "description": "Automatic routing to correct HMRC forms (CDS, C285, BOR286, etc.)",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 10,
+            "title": "Evidence Requirements Implementation",
+            "description": "Dynamic evidence requirements based on claim route",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 11,
+            "title": "Field-level Error Display",
+            "description": "Individual field validation with specific error messages",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 12,
+            "title": "Route Information Cards",
+            "description": "Detailed information about each HMRC route",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          },
+          {
+            "id": 13,
+            "title": "Eligibility Checking",
+            "description": "Comprehensive eligibility criteria validation",
+            "status": "done",
+            "dependencies": [],
+            "details": "",
+            "testStrategy": ""
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-09-12T16:30:07.346Z",
+      "updated": "2025-09-12T18:04:29.645Z",
+      "description": "Frontend development tasks for Dutyback Helper webapp"
+    }
+  }
+}

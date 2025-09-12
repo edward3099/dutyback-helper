@@ -1,0 +1,211 @@
+here’s the **full product requirements document (prd)** for *dutyback helper*, rebuilt cleanly for you as a single reference. it captures product scope, user flows, screens, logic, and constraints — ready for development.
+
+---
+
+# 📄 dutyback helper — product requirements document (prd)
+
+---
+
+## 1. product overview
+
+**problem**
+uk consumers and micro-sellers are often overcharged import vat/duty by couriers. reclaiming is possible via hmrc (cds, c285, bor286, c\&e1179, vat return), but users get stuck because:
+
+* they don’t know the correct route
+* they lack required identifiers (mrn, declarant eori)
+* they miss mandatory evidence items
+* hmrc rules change often
+
+**solution**
+a guided webapp that routes users to the right hmrc process, helps retrieve identifiers from couriers, enforces evidence checklists, and generates a clean claim pack.
+
+---
+
+## 2. goals (v1)
+
+* always route users to the **correct hmrc process** (cds / c285 / bor286 / c\&e1179 / vat return / seller refund).
+* provide **courier-specific playbooks** for mrn/eori acquisition.
+* enforce **evidence guardrails** that mirror hmrc “what you’ll need” lists.
+* generate a **claim pack** that’s correct and complete.
+* build **trust** with anonymised outcome telemetry (approval %, median days, avg refund £).
+* keep **pricing accessible** for small claim values (£10–£60).
+
+---
+
+## 3. non-goals
+
+* filing claims as an authorised agent.
+* deep courier api integrations (playbooks/manual templates only).
+* legal/tariff advisory services.
+
+---
+
+## 4. users
+
+* **consumers** importing goods via couriers or post.
+* **micro-sellers** and hobby traders under vat threshold.
+* **small businesses** with occasional imports, not using enterprise customs platforms.
+
+---
+
+## 5. user flow (high-level)
+
+1. homepage → start claim.
+2. wizard:
+
+   * step 1: channel (courier vs postal).
+   * step 2: vat status.
+   * step 3: claim type.
+   * step 4: identifiers (mrn/eori, courier playbooks).
+   * step 5: evidence upload (checklists).
+   * step 6: review & export.
+3. dashboard: track claims, reminders.
+4. outcome stats: telemetry.
+5. support & updates: last checked gov.uk + policy diffs.
+
+---
+
+## 6. key flows & routing rules
+
+### step 1: channel
+
+* courier → go to vat status.
+* postal (royal mail/parcelforce) → bor286 branch.
+
+### step 2: vat status
+
+* yes (vat registered) → vat return info (import vat adjustments must be done in vat return, not c285).
+* no → continue to claim type.
+
+### step 3: claim type
+
+* ≤ £135 + vat charged at checkout → seller refund info screen.
+* overpayment / rejected import / withdrawal → identifiers step.
+
+### step 4: identifiers
+
+* collect mrn + eori.
+* validate mrn format (18 chars).
+* “need help?” → courier playbooks (dhl, fedex, ups).
+
+### step 5: evidence
+
+* enforce hmrc checklists per route:
+
+  * cds → mrn + eori + invoice + transport docs (if applicable).
+  * c285 → mrn + importer/agent eori + invoice.
+  * c\&e1179 → import invoice + entitlement proof + worksheet.
+  * bor286 → charge ref, invoice.
+
+### step 6: review & export
+
+* summary of route + inputs validated.
+* export zip/pdf pack.
+* reminder diary created.
+
+---
+
+## 7. supporting screens
+
+* **bor286 postal screen**: captures charge reference, links pdf form.
+* **vat return info screen**: explains reclaim via vat return only.
+* **seller refund info screen**: explains refund must come from seller/marketplace.
+* **courier playbooks**: dhl (contacts), fedex (billing portal), ups (billing centre).
+* **dashboard**: tracks active claims with statuses + deadlines.
+* **outcome stats**: anonymised approval %, median time, avg refund £.
+* **support & updates**: changelog of gov.uk rules, escalation templates.
+
+---
+
+## 8. features
+
+**must-have (mvp)**
+
+* router (correctly enforces hmrc paths).
+* courier playbooks + templates.
+* evidence checklist enforcement.
+* claim pack export.
+* dashboard with reminders.
+
+**nice-to-have (later)**
+
+* success fee pricing tier.
+* concierge add-on for high-value claims.
+* shared anonymised results from users.
+
+---
+
+## 9. ui screens (total 16)
+
+1. homepage
+2. wizard step 1: channel
+3. wizard step 2: vat status
+4. wizard step 3: claim type
+5. wizard step 4: identifiers
+6. wizard step 5: evidence
+7. wizard step 6: review & export
+8. bor286 postal screen
+9. vat return info screen
+10. seller refund info screen
+11. courier playbook: dhl
+12. courier playbook: fedex
+13. courier playbook: ups
+14. dashboard
+15. outcome stats
+16. support & updates
+
+---
+
+## 10. data model
+
+* **claims**: id, user id, route, status, created at, updated at.
+* **identifiers**: mrn, declarant eori, courier, request date, obtained date.
+* **evidence**: claim id, file type (invoice, transport doc, packing list), status.
+* **outcomes**: claim id, decision, days to decision, refund £.
+* **updates**: gov.uk diff log.
+
+---
+
+## 11. analytics / telemetry
+
+* routing accuracy %
+* avg courier response time for mrn/eori
+* evidence completion rate
+* decision outcomes: approval %, median days, avg refund
+
+---
+
+## 12. pricing
+
+* free triage + courier templates.
+* £9 basic claim pack.
+* £19 pack + reminders + qc.
+* micro-seller subscription plan.
+
+---
+
+## 13. risks
+
+* **policy drift** → weekly diffs of gov.uk pages, show “last checked” in app.
+* **wrong routing** → enforce airtight branching logic.
+* **courier delays** → give templates + self-serve instructions, show median wait times.
+* **small claim economics** → keep pricing modest, upsell micro-sellers.
+
+---
+
+## 14. acceptance criteria
+
+* no user can continue past wizard without being routed to the correct hmrc process.
+* evidence uploads must match mandatory hmrc lists before export.
+* mrn format validation enforced before pack export.
+* dashboard displays deadlines for every claim.
+* outcome stats visible both on homepage and dashboard.
+* support screen shows last gov.uk update check.
+
+---
+
+✅ this prd = **scope + rules + ui + data model + risks** → you can now use it to build frontend and backend.
+
+---
+
+do you want me to now break this prd into a **developer task list (frontend components + backend endpoints)** so you can start building in code straight away?
