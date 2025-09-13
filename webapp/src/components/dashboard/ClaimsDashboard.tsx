@@ -24,6 +24,7 @@ import {
 import { ClaimCard } from "./ClaimCard";
 import { ClaimFilters } from "./ClaimFilters";
 import { ClaimStats } from "./ClaimStats";
+import AnimatedList from "@/components/ui/AnimatedList";
 // import { mockClaims } from "@/lib/mockData";
 
 export interface Claim {
@@ -56,10 +57,40 @@ export function ClaimsDashboard() {
   const [sortBy, setSortBy] = useState<string>("updatedAt");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
+  // Sample claims data for demonstration
+  const sampleClaims = [
+    { id: "1", title: "Amazon Import Duty Refund", status: "submitted", claimType: "overpayment" },
+    { id: "2", title: "eBay VAT Reclaim", status: "under_review", claimType: "low_value" },
+    { id: "3", title: "Etsy Customs Refund", status: "approved", claimType: "overpayment" },
+    { id: "4", title: "Wish.com Duty Claim", status: "draft", claimType: "rejected" },
+    { id: "5", title: "AliExpress Import Refund", status: "completed", claimType: "withdrawal" },
+    { id: "6", title: "Shopify VAT Claim", status: "submitted", claimType: "overpayment" },
+    { id: "7", title: "Etsy Customs Duty", status: "under_review", claimType: "low_value" },
+    { id: "8", title: "Amazon FBA Refund", status: "approved", claimType: "overpayment" },
+  ];
+
   // Filter and sort claims
   const filteredClaims = useMemo(() => {
-    // Return empty array since we removed mock data
-    return [];
+    let filtered = sampleClaims;
+
+    // Apply search filter
+    if (searchQuery) {
+      filtered = filtered.filter(claim =>
+        claim.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Apply status filter
+    if (statusFilter !== "all") {
+      filtered = filtered.filter(claim => claim.status === statusFilter);
+    }
+
+    // Apply claim type filter
+    if (claimTypeFilter !== "all") {
+      filtered = filtered.filter(claim => claim.claimType === claimTypeFilter);
+    }
+
+    return filtered;
   }, [searchQuery, statusFilter, claimTypeFilter, sortBy, sortOrder]);
 
   const getStatusCounts = () => {
@@ -73,13 +104,18 @@ export function ClaimsDashboard() {
       total: 0
     };
     
+    sampleClaims.forEach(claim => {
+      counts[claim.status]++;
+      counts.total++;
+    });
+    
     return counts;
   };
 
   const statusCounts = getStatusCounts();
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <div className="min-h-screen bg-gray-50 py-8 pt-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
@@ -160,11 +196,17 @@ export function ClaimsDashboard() {
                     </Button>
                   </div>
                 ) : (
-                  <div className="space-y-4">
-                    {filteredClaims.map((claim) => (
-                      <ClaimCard key={claim.id} claim={claim} />
-                    ))}
-                  </div>
+                  <AnimatedList
+                    items={filteredClaims.map(claim => claim.title)}
+                    onItemSelect={(item, index) => {
+                      console.log('Selected claim:', item, 'at index:', index);
+                    }}
+                    showGradients={true}
+                    enableArrowNavigation={true}
+                    displayScrollbar={true}
+                    className="claims-animated-list"
+                    itemClassName="claim-item"
+                  />
                 )}
               </CardContent>
             </Card>

@@ -2,6 +2,7 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import CountUp from "@/components/ui/CountUp";
 import { 
   FileText, 
   Clock, 
@@ -79,7 +80,15 @@ export function ClaimStats({ statusCounts }: ClaimStatsProps) {
                 </div>
                 <div className="ml-4">
                   <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    <CountUp 
+                      to={stat.value} 
+                      from={0} 
+                      duration={1.5}
+                      delay={0.2}
+                      className="count-up-text"
+                    />
+                  </p>
                 </div>
               </div>
             </CardContent>
@@ -97,7 +106,15 @@ export function ClaimStats({ statusCounts }: ClaimStatsProps) {
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-red-800">Overdue Claims</p>
-                <p className="text-2xl font-bold text-red-900">{overdueCount}</p>
+                <p className="text-2xl font-bold text-red-900">
+                  <CountUp 
+                    to={overdueCount} 
+                    from={0} 
+                    duration={1.5}
+                    delay={0.8}
+                    className="count-up-text"
+                  />
+                </p>
                 <Badge variant="destructive" className="mt-1">
                   Action Required
                 </Badge>

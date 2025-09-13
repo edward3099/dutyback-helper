@@ -142,9 +142,9 @@ function WizardContent() {
 
         {/* Progress Bar */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4 overflow-x-auto">
+          <div className="flex items-center justify-between mb-4">
             {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center flex-shrink-0">
+              <div key={step.id} className="flex items-center flex-1 min-w-0">
                 <div className="flex items-center">
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
@@ -161,14 +161,13 @@ function WizardContent() {
                       step.id
                     )}
                   </div>
-                  <div className="ml-2 sm:ml-3">
+                  <div className="ml-2 sm:ml-3 min-w-0 flex-shrink">
                     <p className="text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap">{step.title}</p>
-                    <p className="text-xs text-gray-500 hidden sm:block whitespace-nowrap">{step.description}</p>
                   </div>
                 </div>
                 {index < steps.length - 1 && (
                   <div
-                    className={`hidden sm:block w-8 lg:w-16 h-0.5 mx-2 lg:mx-4 ${
+                    className={`hidden sm:block w-4 lg:w-8 h-0.5 mx-1 lg:mx-2 ${
                       currentStep > step.id ? "bg-green-500" : "bg-gray-200"
                     }`}
                   />

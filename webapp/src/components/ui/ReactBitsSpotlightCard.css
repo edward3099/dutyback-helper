@@ -21,6 +21,13 @@
   background-color: #ffffff !important;
   border: none !important;
   color: #1f2937 !important;
+  padding: 0 !important;
+}
+
+/* Remove wrapper border when containing card-spotlight */
+.reactbits-spotlight-card:has(.card-spotlight) {
+  border: none !important;
+  padding: 0 !important;
 }
 
 .reactbits-spotlight-card .card-spotlight * {

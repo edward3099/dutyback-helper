@@ -3,6 +3,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ReactBitsSpotlightCard from "@/components/ui/ReactBitsSpotlightCard";
 import { 
   BarChart, 
   Bar, 
@@ -123,48 +124,54 @@ export function OutcomeStats({
   if (variant === 'homepage') {
     return (
       <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 ${className}`}>
-        {/* Quick Stats Cards */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Success Rate</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-600">
-              {formatPercentage(overallStats.totalApprovalRate)}
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Average across all couriers
-            </p>
-          </CardContent>
-        </Card>
+        {/* Quick Stats Cards with Spotlight Effect */}
+        <ReactBitsSpotlightCard variant="vat">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">Success Rate</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-green-600">
+                {formatPercentage(overallStats.totalApprovalRate)}
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Average across all couriers
+              </p>
+            </CardContent>
+          </Card>
+        </ReactBitsSpotlightCard>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Avg Decision Time</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-blue-600">
-              {overallStats.averageDecisionDays.toFixed(0)} days
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Median processing time
-            </p>
-          </CardContent>
-        </Card>
+        <ReactBitsSpotlightCard variant="channel">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">Avg Decision Time</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-blue-600">
+                {overallStats.averageDecisionDays.toFixed(0)} days
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Median processing time
+              </p>
+            </CardContent>
+          </Card>
+        </ReactBitsSpotlightCard>
 
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">Avg Refund</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-purple-600">
-              {formatCurrency(overallStats.averageRefundAmount)}
-            </div>
-            <p className="text-xs text-gray-500 mt-1">
-              Per successful claim
-            </p>
-          </CardContent>
-        </Card>
+        <ReactBitsSpotlightCard variant="claim">
+          <Card>
+            <CardHeader className="pb-2">
+              <CardTitle className="text-sm font-medium text-gray-600">Avg Refund</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold text-purple-600">
+                {formatCurrency(overallStats.averageRefundAmount)}
+              </div>
+              <p className="text-xs text-gray-500 mt-1">
+                Per successful claim
+              </p>
+            </CardContent>
+          </Card>
+        </ReactBitsSpotlightCard>
       </div>
     );
   }

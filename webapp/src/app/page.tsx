@@ -2,14 +2,15 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { OutcomeStats } from '@/components/stats/OutcomeStats';
 import { HeroBackground } from '@/components/ui/HeroBackground';
 import SplitText from '@/components/ui/SplitText';
 import ScrollReveal from '@/components/ui/ScrollReveal';
 import { ScrollStack, ScrollStackItem } from '@/components/ui/ScrollStack';
-import { AnimatedList, AnimatedListItem } from '@/components/ui/AnimatedList';
+import AnimatedList from '@/components/ui/AnimatedList';
 import FadeContent from '@/components/ui/FadeContent';
-import { mockCourierStats } from '@/lib/statsData';
+import ReactBitsSpotlightCard from '@/components/ui/ReactBitsSpotlightCard';
+import HowItWorksMagicBento from '@/components/ui/HowItWorksMagicBento';
+import RealPerformanceCards from '@/components/ui/RealPerformanceCards';
 import { 
   CheckCircle, 
   ArrowRight, 
@@ -93,11 +94,7 @@ export default function Home() {
               </p>
             </FadeContent>
           </div>
-          <OutcomeStats 
-            courierStats={mockCourierStats}
-            variant="homepage"
-            showTitle={false}
-          />
+          <RealPerformanceCards />
           <div className="text-center mt-8">
             <Button asChild variant="outline" size="lg">
               <Link href="/stats">
@@ -129,57 +126,7 @@ export default function Home() {
             </FadeContent>
           </div>
           
-          <ScrollStack
-            itemDistance={120}
-            itemScale={0.05}
-            itemStackDistance={20}
-            stackPosition="30%"
-            baseScale={0.9}
-            rotationAmount={2}
-            blurAmount={1}
-          >
-            <ScrollStackItem>
-              <Card className="text-center">
-                <CardHeader>
-                  <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <FileText className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle>1. Answer Questions</CardTitle>
-                  <CardDescription>
-                    Tell us about your import and we'll route you to the correct HMRC process
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </ScrollStackItem>
-            
-            <ScrollStackItem>
-              <Card className="text-center">
-                <CardHeader>
-                  <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <Shield className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle>2. Get Identifiers</CardTitle>
-                  <CardDescription>
-                    We help you obtain MRN and EORI numbers from your courier with templates
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </ScrollStackItem>
-            
-            <ScrollStackItem>
-              <Card className="text-center">
-                <CardHeader>
-                  <div className="mx-auto w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <CheckCircle className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle>3. Submit Claim</CardTitle>
-                  <CardDescription>
-                    Upload evidence and we generate your complete claim pack for HMRC
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </ScrollStackItem>
-          </ScrollStack>
+          <HowItWorksMagicBento />
         </div>
       </section>
 
@@ -203,8 +150,8 @@ export default function Home() {
             </FadeContent>
           </div>
           
-          <AnimatedList className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto" staggerDelay={0.2}>
-            <AnimatedListItem>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <ReactBitsSpotlightCard variant="vat">
               <Card>
                 <CardHeader>
                   <CardTitle>Free Triage</CardTitle>
@@ -228,9 +175,9 @@ export default function Home() {
                   </ul>
                 </CardContent>
               </Card>
-            </AnimatedListItem>
+            </ReactBitsSpotlightCard>
             
-            <AnimatedListItem>
+            <ReactBitsSpotlightCard variant="channel" isSelected={true}>
               <Card className="border-primary">
                 <CardHeader>
                   <CardTitle>Basic Claim Pack</CardTitle>
@@ -254,9 +201,9 @@ export default function Home() {
                   </ul>
                 </CardContent>
               </Card>
-            </AnimatedListItem>
+            </ReactBitsSpotlightCard>
             
-            <AnimatedListItem>
+            <ReactBitsSpotlightCard variant="claim">
               <Card>
                 <CardHeader>
                   <CardTitle>Premium Pack + QC</CardTitle>
@@ -284,8 +231,8 @@ export default function Home() {
                   </ul>
                 </CardContent>
               </Card>
-            </AnimatedListItem>
-          </AnimatedList>
+            </ReactBitsSpotlightCard>
+          </div>
         </div>
       </section>
 
