@@ -1,10 +1,8 @@
-"use client";
+'use client';
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, CheckCircle, Circle } from "lucide-react";
 import { ClaimWizardProvider, useClaimWizard } from "@/hooks/useWizard";
 import { Step1ChannelSelection } from "@/components/wizard/Step1ChannelSelection";
 import { Step2VATStatus } from "@/components/wizard/Step2VATStatus";
@@ -17,28 +15,17 @@ import { VATReturnInfoScreen } from "@/components/screens/VATReturnInfoScreen";
 import { SellerRefundInfoScreen } from "@/components/screens/SellerRefundInfoScreen";
 import { ValidationDisplay } from "@/components/validation/ValidationDisplay";
 
-const steps = [
-  { id: 1, title: "Channel", description: "How did you receive your package?" },
-  { id: 2, title: "VAT Status", description: "Are you VAT registered?" },
-  { id: 3, title: "Claim Type", description: "What type of claim?" },
-  { id: 4, title: "Identifiers", description: "MRN & EORI numbers" },
-  { id: 5, title: "Evidence", description: "Required documents" },
-  { id: 6, title: "Review", description: "Submit claim" },
-];
-
-function WizardContent() {
-  const { 
-    currentStep, 
+function EnhancedWizardContent() {
+  const {
+    currentStep,
     currentBranchScreen,
-    goToStep, 
-    canGoNext, 
-    canGoPrevious, 
-    isStepComplete,
+    goToStep,
+    canGoNext,
+    canGoPrevious,
     updateClaimData,
     closeBranchScreen,
     validation,
     routing,
-    isReady
   } = useClaimWizard();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -56,11 +43,9 @@ function WizardContent() {
 
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    // TODO: Implement submission logic
     console.log("Submitting claim...");
     setTimeout(() => {
       setIsSubmitting(false);
-      // TODO: Navigate to success page or dashboard
     }, 2000);
   };
 
@@ -79,7 +64,7 @@ function WizardContent() {
     closeBranchScreen();
   };
 
-  const renderStep = () => {
+  const renderStepContent = () => {
     switch (currentStep) {
       case 1:
         return <Step1ChannelSelection />;
@@ -128,9 +113,8 @@ function WizardContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-8">
+    <div className="min-h-screen bg-gray-50 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
             Import Duty Refund Claim
@@ -140,71 +124,37 @@ function WizardContent() {
           </p>
         </div>
 
-        {/* Progress Bar */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4 overflow-x-auto">
-            {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center flex-shrink-0">
-                <div className="flex items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                      currentStep > step.id
-                        ? "bg-green-500 text-white"
-                        : currentStep === step.id
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-600"
-                    }`}
-                  >
-                    {currentStep > step.id ? (
-                      <CheckCircle className="w-5 h-5" />
-                    ) : (
-                      step.id
-                    )}
-                  </div>
-                  <div className="ml-2 sm:ml-3">
-                    <p className="text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap">{step.title}</p>
-                    <p className="text-xs text-gray-500 hidden sm:block whitespace-nowrap">{step.description}</p>
-                  </div>
-                </div>
-                {index < steps.length - 1 && (
-                  <div
-                    className={`hidden sm:block w-8 lg:w-16 h-0.5 mx-2 lg:mx-4 ${
-                      currentStep > step.id ? "bg-green-500" : "bg-gray-200"
-                    }`}
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-          <Progress value={(currentStep / steps.length) * 100} className="h-2" />
-        </div>
-
-        {/* Step Content */}
-        <Card className="mb-2">
+        <Card className="mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center">
-              <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium mr-3">
-                {currentStep}
-              </span>
-              Step {currentStep}: {steps[currentStep - 1].title}
-            </CardTitle>
+            <CardTitle>Step {currentStep}</CardTitle>
             <CardDescription>
-              {steps[currentStep - 1].description}
+              {currentStep === 1 && "How did you receive your package?"}
+              {currentStep === 2 && "Are you VAT registered?"}
+              {currentStep === 3 && "What type of claim?"}
+              {currentStep === 4 && "MRN & EORI numbers"}
+              {currentStep === 5 && "Required documents"}
+              {currentStep === 6 && "Submit claim"}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            {renderStep()}
+            {renderStepContent()}
           </CardContent>
-          
-          {/* Navigation */}
-          <div className="flex justify-between px-6 pb-6">
+        </Card>
+
+        <ValidationDisplay
+          errors={validation.errors}
+          routeInfo={routing.routeInfo}
+          deadlineInfo={routing.deadlineInfo}
+          nextSteps={routing.nextSteps}
+          className="mb-6"
+        />
+
+        <div className="flex justify-between">
           <Button
             variant="outline"
             onClick={handlePrevious}
             disabled={!canGoPrevious()}
-            className="flex items-center"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
             Previous
           </Button>
 
@@ -213,51 +163,28 @@ function WizardContent() {
               <Button
                 onClick={handleNext}
                 disabled={!canGoNext()}
-                className="flex items-center"
               >
                 Next
-                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             ) : (
               <Button
                 onClick={handleSubmit}
                 disabled={!canGoNext() || isSubmitting}
-                className="flex items-center"
               >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                    Submitting...
-                  </>
-                ) : (
-                  <>
-                    Submit Claim
-                    <CheckCircle className="w-4 h-4 ml-2" />
-                  </>
-                )}
+                {isSubmitting ? "Submitting..." : "Submit Claim"}
               </Button>
             )}
           </div>
-          </div>
-        </Card>
-
-        {/* Validation Display */}
-        <ValidationDisplay
-          errors={validation.errors}
-          routeInfo={routing.routeInfo}
-          deadlineInfo={routing.deadlineInfo}
-          nextSteps={routing.nextSteps}
-          className="mb-2"
-        />
+        </div>
       </div>
     </div>
   );
 }
 
-export default function WizardPage() {
+export default function EnhancedWizardPage() {
   return (
     <ClaimWizardProvider>
-      <WizardContent />
+      <EnhancedWizardContent />
     </ClaimWizardProvider>
   );
 }

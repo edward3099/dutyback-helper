@@ -1,0 +1,70 @@
+.reactbits-option-button {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 12px;
+  padding: 16px 20px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.reactbits-option-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.reactbits-option-button:active {
+  transform: translateY(0);
+}
+
+.reactbits-option-button .inner-content {
+  background: transparent !important;
+  border: none !important;
+  color: inherit !important;
+  font-size: inherit !important;
+  text-align: inherit !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  z-index: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override StarBorder styles for our use case */
+.reactbits-option-button.star-border-container {
+  border-radius: 12px !important;
+  overflow: visible !important;
+  padding: 0 !important;
+}
+
+.reactbits-option-button .border-gradient-bottom,
+.reactbits-option-button .border-gradient-top {
+  opacity: 0.4 !important;
+  z-index: 0 !important;
+}
+
+/* Variant-specific styles */
+.reactbits-option-button[data-variant="channel"] {
+  background-color: var(--channel-bg, #ffffff);
+  border: 2px solid var(--channel-border, #e5e7eb);
+  color: var(--channel-text, #1f2937);
+}
+
+.reactbits-option-button[data-variant="vat"] {
+  background-color: var(--vat-bg, #ffffff);
+  border: 2px solid var(--vat-border, #e5e7eb);
+  color: var(--vat-text, #1f2937);
+}
+
+.reactbits-option-button[data-variant="claim"] {
+  background-color: var(--claim-bg, #ffffff);
+  border: 2px solid var(--claim-border, #e5e7eb);
+  color: var(--claim-text, #1f2937);
+}

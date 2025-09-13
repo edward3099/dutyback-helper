@@ -4,6 +4,7 @@ import { useClaimWizard } from "@/hooks/useWizard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Truck, Mail, FileText } from "lucide-react";
+import ReactBitsSpotlightCard from "@/components/ui/ReactBitsSpotlightCard";
 
 export function Step1ChannelSelection() {
   const { claimData, updateClaimData, openBranchScreen } = useClaimWizard();
@@ -28,55 +29,45 @@ export function Step1ChannelSelection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Courier Option */}
-        <Card 
-          className={`cursor-pointer transition-all duration-200 ${
-            claimData.channel === 'courier' 
-              ? 'ring-2 ring-blue-500 bg-blue-50' 
-              : 'hover:shadow-md'
-          }`}
+        <ReactBitsSpotlightCard
+          isSelected={claimData.channel === 'courier'}
           onClick={() => handleChannelSelect('courier')}
+          variant="channel"
         >
-          <CardHeader className="text-center">
+          <div className="text-center">
             <div className="mx-auto w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
               <Truck className="w-6 h-6 text-blue-600" />
             </div>
-            <CardTitle className="text-xl">Courier Delivery</CardTitle>
-            <CardDescription>
+            <h3 className="text-xl font-semibold mb-2">Courier Delivery</h3>
+            <p className="text-sm opacity-80 mb-4">
               Delivered by DHL, FedEx, UPS, or other courier service
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm text-gray-600 space-y-2">
+            </p>
+            <ul className="text-xs space-y-1 text-left">
               <li>• You have a tracking number</li>
               <li>• Package was delivered to your address</li>
               <li>• You received customs charges</li>
               <li>• You can contact the courier directly</li>
             </ul>
-          </CardContent>
-        </Card>
+          </div>
+        </ReactBitsSpotlightCard>
 
         {/* Postal Option */}
-        <Card 
-          className={`cursor-pointer transition-all duration-200 ${
-            claimData.channel === 'postal' 
-              ? 'ring-2 ring-blue-500 bg-blue-50' 
-              : 'hover:shadow-md'
-          }`}
+        <ReactBitsSpotlightCard
+          isSelected={claimData.channel === 'postal'}
           onClick={() => handleChannelSelect('postal')}
+          variant="channel"
         >
-          <CardHeader className="text-center">
+          <div className="text-center">
             <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
               <Mail className="w-6 h-6 text-green-600" />
             </div>
-            <CardTitle className="text-xl">Postal Delivery</CardTitle>
-            <CardDescription>
+            <h3 className="text-xl font-semibold mb-2">Postal Delivery</h3>
+            <p className="text-sm opacity-80 mb-4">
               Delivered by Royal Mail or other postal service
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+            </p>
+            <ul className="text-xs space-y-1 text-left mb-4">
               <li>• Delivered through postal system</li>
               <li>• May have customs charges</li>
               <li>• Different claim process</li>
@@ -86,13 +77,13 @@ export function Step1ChannelSelection() {
               variant="outline"
               size="sm"
               onClick={handleBOR286Click}
-              className="w-full flex items-center gap-2"
+              className="w-full flex items-center gap-2 text-xs"
             >
-              <FileText className="w-4 h-4" />
+              <FileText className="w-3 h-3" />
               BOR286 Postal Process
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </ReactBitsSpotlightCard>
       </div>
 
       {claimData.channel && (

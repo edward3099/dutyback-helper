@@ -4,6 +4,7 @@ import { useClaimWizard } from "@/hooks/useWizard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, XCircle, Calculator } from "lucide-react";
+import ReactBitsSpotlightCard from "@/components/ui/ReactBitsSpotlightCard";
 
 export function Step2VATStatus() {
   const { claimData, updateClaimData, openBranchScreen } = useClaimWizard();
@@ -28,27 +29,22 @@ export function Step2VATStatus() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* VAT Registered Option */}
-        <Card 
-          className={`cursor-pointer transition-all duration-200 ${
-            claimData.isVATRegistered === true 
-              ? 'ring-2 ring-blue-500 bg-blue-50' 
-              : 'hover:shadow-md'
-          }`}
+        <ReactBitsSpotlightCard
+          isSelected={claimData.isVATRegistered === true}
           onClick={() => handleVATStatusSelect(true)}
+          variant="vat"
         >
-          <CardHeader className="text-center">
+          <div className="text-center">
             <div className="mx-auto w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
               <CheckCircle className="w-6 h-6 text-green-600" />
             </div>
-            <CardTitle className="text-xl">Yes, VAT Registered</CardTitle>
-            <CardDescription>
+            <h3 className="text-xl font-semibold mb-2">Yes, VAT Registered</h3>
+            <p className="text-sm opacity-80 mb-4">
               I have a valid VAT registration number
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm text-gray-600 space-y-2 mb-4">
+            </p>
+            <ul className="text-xs space-y-1 text-left mb-4">
               <li>• You have a VAT registration number</li>
               <li>• You submit VAT returns to HMRC</li>
               <li>• You can claim VAT on business expenses</li>
@@ -58,41 +54,36 @@ export function Step2VATStatus() {
               variant="outline"
               size="sm"
               onClick={handleVATReturnClick}
-              className="w-full flex items-center gap-2"
+              className="w-full flex items-center gap-2 text-xs"
             >
-              <Calculator className="w-4 h-4" />
+              <Calculator className="w-3 h-3" />
               VAT Return Information
             </Button>
-          </CardContent>
-        </Card>
+          </div>
+        </ReactBitsSpotlightCard>
 
         {/* Not VAT Registered Option */}
-        <Card 
-          className={`cursor-pointer transition-all duration-200 ${
-            claimData.isVATRegistered === false 
-              ? 'ring-2 ring-blue-500 bg-blue-50' 
-              : 'hover:shadow-md'
-          }`}
+        <ReactBitsSpotlightCard
+          isSelected={claimData.isVATRegistered === false}
           onClick={() => handleVATStatusSelect(false)}
+          variant="vat"
         >
-          <CardHeader className="text-center">
+          <div className="text-center">
             <div className="mx-auto w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-4">
               <XCircle className="w-6 h-6 text-orange-600" />
             </div>
-            <CardTitle className="text-xl">No, Not VAT Registered</CardTitle>
-            <CardDescription>
+            <h3 className="text-xl font-semibold mb-2">No, Not VAT Registered</h3>
+            <p className="text-sm opacity-80 mb-4">
               I don't have a VAT registration number
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-sm text-gray-600 space-y-2">
+            </p>
+            <ul className="text-xs space-y-1 text-left">
               <li>• You don't have a VAT number</li>
               <li>• You don't submit VAT returns</li>
               <li>• You're a private individual or small business</li>
               <li>• Different claim process applies</li>
             </ul>
-          </CardContent>
-        </Card>
+          </div>
+        </ReactBitsSpotlightCard>
       </div>
 
       {claimData.isVATRegistered !== null && (

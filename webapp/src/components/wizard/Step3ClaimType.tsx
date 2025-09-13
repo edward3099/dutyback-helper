@@ -4,6 +4,7 @@ import { useClaimWizard } from "@/hooks/useWizard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Clock, DollarSign, Package, ShoppingBag } from "lucide-react";
+import ReactBitsSpotlightCard from "@/components/ui/ReactBitsSpotlightCard";
 
 export function Step3ClaimType() {
   const { claimData, updateClaimData, openBranchScreen } = useClaimWizard();
@@ -83,30 +84,25 @@ export function Step3ClaimType() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {claimTypes.map((type) => {
           const Icon = type.icon;
           return (
-            <Card 
+            <ReactBitsSpotlightCard
               key={type.id}
-              className={`cursor-pointer transition-all duration-200 ${
-                claimData.claimType === type.id 
-                  ? 'ring-2 ring-blue-500 bg-blue-50' 
-                  : 'hover:shadow-md'
-              }`}
+              isSelected={claimData.claimType === type.id}
               onClick={() => handleClaimTypeSelect(type.id)}
+              variant="claim"
             >
-              <CardHeader className="text-center">
+              <div className="text-center">
                 <div className={`mx-auto w-12 h-12 ${type.color} rounded-full flex items-center justify-center mb-4`}>
                   <Icon className="w-6 h-6" />
                 </div>
-                <CardTitle className="text-xl">{type.title}</CardTitle>
-                <CardDescription>
+                <h3 className="text-xl font-semibold mb-2">{type.title}</h3>
+                <p className="text-sm opacity-80 mb-4">
                   {type.description}
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="text-sm text-gray-600 space-y-2 mb-4">
+                </p>
+                <ul className="text-xs space-y-1 text-left mb-4">
                   {type.details.map((detail, index) => (
                     <li key={index}>• {detail}</li>
                   ))}
@@ -116,14 +112,14 @@ export function Step3ClaimType() {
                     variant="outline"
                     size="sm"
                     onClick={handleSellerRefundClick}
-                    className="w-full flex items-center gap-2"
+                    className="w-full flex items-center gap-2 text-xs"
                   >
-                    <ShoppingBag className="w-4 h-4" />
+                    <ShoppingBag className="w-3 h-3" />
                     Try Seller Refund First
                   </Button>
                 )}
-              </CardContent>
-            </Card>
+              </div>
+            </ReactBitsSpotlightCard>
           );
         })}
       </div>

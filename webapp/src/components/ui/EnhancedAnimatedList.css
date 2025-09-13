@@ -1,0 +1,11 @@
+.enhanced-animated-list {
+  width: 100%;
+}
+
+.animated-list-item {
+  will-change: transform, opacity;
+}
+
+.animated-list-item + .animated-list-item {
+  margin-top: 0.5rem;
+}

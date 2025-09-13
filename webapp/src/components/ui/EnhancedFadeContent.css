@@ -1,0 +1,7 @@
+.enhanced-fade-content {
+  width: 100%;
+}
+
+.enhanced-fade-content > * {
+  will-change: transform, opacity;
+}

@@ -1,0 +1,15 @@
+.click-spark-wrapper {
+  position: relative;
+  cursor: pointer;
+}
+
+.click-spark-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.click-spark {
+  position: absolute;
+  border-radius: 1px;
+}
