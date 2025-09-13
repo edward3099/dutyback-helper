@@ -23,13 +23,31 @@ export interface ClaimData {
     correspondence: boolean;
   };
   
+  // Evidence files
+  evidenceFiles?: {
+    [key: string]: Array<{
+      id: string;
+      name: string;
+      size: number;
+      type: string;
+      url: string;
+      uploadedAt: string;
+    }>;
+  };
+  
   // Additional data
   courier?: string;
   packageValue?: number;
   dutyPaid?: number;
   vatPaid?: number;
+  dutyAmount?: number;
+  vatAmount?: number;
+  totalAmount?: number;
   importDate?: string;
+  trackingNumber?: string;
   rejectionReason?: string;
+  reason?: string;
+  additionalNotes?: string;
   
   // Branch screen data
   bor286ChargeReference?: string;
@@ -44,12 +62,15 @@ interface ClaimWizardContextType {
   claimData: ClaimData;
   currentBranchScreen: BranchScreen;
   goToStep: (step: number) => void;
+  goToNextStep: () => void;
   updateClaimData: (updates: Partial<ClaimData>) => void;
   canGoNext: () => boolean;
   canGoPrevious: () => boolean;
   isStepComplete: (step: number) => boolean;
   openBranchScreen: (screen: BranchScreen) => void;
   closeBranchScreen: () => void;
+  shouldShowBranchScreen: () => BranchScreen;
+  getNextStep: (currentStep: number) => number;
   // Enhanced validation and routing
   validation: any;
   routing: any;
@@ -84,6 +105,14 @@ export const ClaimWizardProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
+
+  const goToNextStep = useCallback(() => {
+    const nextStep = getNextStep(currentStep);
+    if (nextStep >= 1 && nextStep <= 6) {
+      setCurrentStep(nextStep);
+    }
+  }, [currentStep, getNextStep]);
+
   const updateClaimData = useCallback((updates: Partial<ClaimData>) => {
     setClaimData(prev => ({ ...prev, ...updates }));
   }, []);
@@ -92,6 +121,27 @@ export const ClaimWizardProvider = ({ children }: { children: ReactNode }) => {
     // Use enhanced validation for step validation
     return validation.isStepValid(currentStep);
   }, [currentStep, validation]);
+
+  // Determine if we should show a branch screen based on current selections
+  const shouldShowBranchScreen = useCallback(() => {
+    // Postal claims go to BOR286
+    if (claimData.channel === 'postal') {
+      return 'bor286';
+    }
+    
+    // VAT registered users go to VAT Return
+    if (claimData.isVATRegistered === true) {
+      return 'vat-return';
+    }
+    
+    // Low value claims go to Seller Refund
+    if (claimData.claimType === 'low_value') {
+      return 'seller-refund';
+    }
+    
+    return null;
+  }, [claimData]);
+
 
   const canGoPrevious = useCallback(() => {
     return currentStep > 1;
@@ -115,12 +165,15 @@ export const ClaimWizardProvider = ({ children }: { children: ReactNode }) => {
     claimData,
     currentBranchScreen,
     goToStep,
+    goToNextStep,
     updateClaimData,
     canGoNext,
     canGoPrevious,
     isStepComplete,
     openBranchScreen,
     closeBranchScreen,
+    shouldShowBranchScreen,
+    getNextStep,
     // Enhanced validation and routing
     validation,
     routing,

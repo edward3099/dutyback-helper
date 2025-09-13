@@ -128,6 +128,61 @@ export interface ValidationError {
   message: string;
 }
 
+// Claim data interface for wizard
+export interface ClaimData {
+  // Channel selection
+  channel: 'courier' | 'postal' | null;
+
+  // VAT status
+  isVATRegistered: boolean | null;
+
+  // Claim type
+  claimType: 'overpayment' | 'rejected' | 'withdrawal' | 'low_value' | null;
+
+  // Identifiers
+  mrn: string;
+  eori: string;
+
+  // Evidence
+  evidence: {
+    invoice: boolean;
+    customsDeclaration: boolean;
+    paymentProof: boolean;
+    correspondence: boolean;
+  };
+
+  // Evidence files
+  evidenceFiles?: {
+    [key: string]: Array<{
+      id: string;
+      name: string;
+      size: number;
+      type: string;
+      url: string;
+      uploadedAt: string;
+    }>;
+  };
+
+  // Additional data
+  courier?: string;
+  packageValue?: number;
+  dutyPaid?: number;
+  vatPaid?: number;
+  dutyAmount?: number;
+  vatAmount?: number;
+  totalAmount?: number;
+  importDate?: string;
+  trackingNumber?: string;
+  rejectionReason?: string;
+  reason?: string;
+  additionalNotes?: string;
+  
+  // Branch screen data
+  bor286ChargeReference?: string;
+  sellerRefundAcknowledged?: boolean;
+  vatReturnAcknowledged?: boolean;
+}
+
 export interface FormState {
   isValid: boolean;
   errors: ValidationError[];

@@ -1,19 +1,84 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useClaimWizard } from "@/hooks/useWizard";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Receipt, Mail, CreditCard } from "lucide-react";
+import { FileUpload } from "@/components/ui/FileUpload";
+import { FileText, Receipt, Mail, CreditCard, Upload } from "lucide-react";
+import { StorageService, UploadedFile } from "@/lib/storage";
 
 export function Step5Evidence() {
   const { claimData, updateClaimData } = useClaimWizard();
+  const [uploadedFiles, setUploadedFiles] = useState<Record<string, UploadedFile[]>>({});
+  const [uploading, setUploading] = useState<Record<string, boolean>>({});
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  // Generate a temporary claim ID for file organization
+  const tempClaimId = `temp-${Date.now()}`;
 
   const handleEvidenceChange = (key: keyof typeof claimData.evidence, checked: boolean) => {
     updateClaimData({
       evidence: {
         ...claimData.evidence,
         [key]: checked
+      }
+    });
+  };
+
+  const handleFileUpload = async (files: UploadedFile[], evidenceType: string) => {
+    setUploading(prev => ({ ...prev, [evidenceType]: true }));
+    setUploadError(null);
+
+    try {
+      // In a real implementation, you would upload to Supabase Storage here
+      // For now, we'll just add the files to local state
+      setUploadedFiles(prev => ({
+        ...prev,
+        [evidenceType]: [...(prev[evidenceType] || []), ...files]
+      }));
+
+      // Update claim data with file information
+      updateClaimData({
+        evidenceFiles: {
+          ...claimData.evidenceFiles,
+          [evidenceType]: files.map(file => ({
+            id: file.id,
+            name: file.name,
+            size: file.size,
+            type: file.type,
+            url: file.url,
+            uploadedAt: file.uploadedAt
+          }))
+        }
+      });
+    } catch (error: any) {
+      setUploadError(error.message || 'Upload failed');
+    } finally {
+      setUploading(prev => ({ ...prev, [evidenceType]: false }));
+    }
+  };
+
+  const handleFileRemove = (fileId: string, evidenceType: string) => {
+    setUploadedFiles(prev => ({
+      ...prev,
+      [evidenceType]: prev[evidenceType]?.filter(file => file.id !== fileId) || []
+    }));
+
+    // Update claim data
+    const updatedFiles = uploadedFiles[evidenceType]?.filter(file => file.id !== fileId) || [];
+    updateClaimData({
+      evidenceFiles: {
+        ...claimData.evidenceFiles,
+        [evidenceType]: updatedFiles.map(file => ({
+          id: file.id,
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          url: file.url,
+          uploadedAt: file.uploadedAt
+        }))
       }
     });
   };
@@ -25,7 +90,8 @@ export function Step5Evidence() {
       description: 'Original invoice from the seller showing item value',
       icon: FileText,
       required: true,
-      help: 'This shows the actual value of the goods and is essential for calculating the correct duty.'
+      help: 'This shows the actual value of the goods and is essential for calculating the correct duty.',
+      evidenceType: 'invoice'
     },
     {
       key: 'customsDeclaration' as const,
@@ -33,7 +99,8 @@ export function Step5Evidence() {
       description: 'The official customs declaration form',
       icon: FileText,
       required: true,
-      help: 'This shows what duty and VAT was actually charged by HMRC.'
+      help: 'This shows what duty and VAT was actually charged by HMRC.',
+      evidenceType: 'customs_declaration'
     },
     {
       key: 'paymentProof' as const,
@@ -41,7 +108,8 @@ export function Step5Evidence() {
       description: 'Receipt or bank statement showing duty/VAT payment',
       icon: CreditCard,
       required: true,
-      help: 'This proves you actually paid the charges you\'re claiming back.'
+      help: 'This proves you actually paid the charges you\'re claiming back.',
+      evidenceType: 'receipt'
     },
     {
       key: 'correspondence' as const,
@@ -49,7 +117,8 @@ export function Step5Evidence() {
       description: 'Any emails or letters from courier/HMRC',
       icon: Mail,
       required: false,
-      help: 'This can help support your claim, especially for rejected imports.'
+      help: 'This can help support your claim, especially for rejected imports.',
+      evidenceType: 'other'
     }
   ];
 
@@ -92,7 +161,7 @@ export function Step5Evidence() {
                 </div>
               </CardHeader>
               <CardContent className="pt-0">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 mb-4">
                   <Checkbox
                     id={item.key}
                     checked={claimData.evidence[item.key]}
@@ -102,6 +171,22 @@ export function Step5Evidence() {
                     I have this document
                   </Label>
                 </div>
+                
+                {claimData.evidence[item.key] && (
+                  <div className="mt-4">
+                    <FileUpload
+                      onUpload={(files) => handleFileUpload(files, item.evidenceType)}
+                      onRemove={(fileId) => handleFileRemove(fileId, item.evidenceType)}
+                      uploadedFiles={uploadedFiles[item.evidenceType] || []}
+                      maxFiles={3}
+                      maxSizeBytes={10 * 1024 * 1024} // 10MB
+                      acceptedTypes={['application/pdf', 'image/jpeg', 'image/png', 'image/gif']}
+                      disabled={uploading[item.evidenceType]}
+                      className="text-sm"
+                    />
+                  </div>
+                )}
+                
                 <p className="text-xs text-gray-500 mt-2">
                   {item.help}
                 </p>

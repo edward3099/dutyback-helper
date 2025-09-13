@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { ArrowLeft, ArrowRight, CheckCircle, Circle } from "lucide-react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { claimsAPI } from "@/lib/api/supabase";
 import { ClaimWizardProvider, useClaimWizard } from "@/hooks/useWizard";
 import { Step1ChannelSelection } from "@/components/wizard/Step1ChannelSelection";
 import { Step2VATStatus } from "@/components/wizard/Step2VATStatus";
@@ -12,39 +11,66 @@ import { Step3ClaimType } from "@/components/wizard/Step3ClaimType";
 import { Step4Identifiers } from "@/components/wizard/Step4Identifiers";
 import { Step5Evidence } from "@/components/wizard/Step5Evidence";
 import { Step6Review } from "@/components/wizard/Step6Review";
-import { BOR286PostalScreen } from "@/components/screens/BOR286PostalScreen";
-import { VATReturnInfoScreen } from "@/components/screens/VATReturnInfoScreen";
-import { SellerRefundInfoScreen } from "@/components/screens/SellerRefundInfoScreen";
-import { ValidationDisplay } from "@/components/validation/ValidationDisplay";
+import { BranchBOR286 } from "@/components/wizard/BranchBOR286";
+import { BranchVATReturn } from "@/components/wizard/BranchVATReturn";
+import { BranchSellerRefund } from "@/components/wizard/BranchSellerRefund";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertTriangle, CheckCircle } from "lucide-react";
 
 const steps = [
-  { id: 1, title: "Channel", description: "How did you receive your package?" },
+  { id: 1, title: "Channel", description: "How did you import?" },
   { id: 2, title: "VAT Status", description: "Are you VAT registered?" },
   { id: 3, title: "Claim Type", description: "What type of claim?" },
-  { id: 4, title: "Identifiers", description: "MRN & EORI numbers" },
+  { id: 4, title: "Identifiers", description: "Import details" },
   { id: 5, title: "Evidence", description: "Required documents" },
   { id: 6, title: "Review", description: "Submit claim" },
 ];
 
 function WizardContent() {
+  const { user, loading: authLoading } = useAuth();
+  const router = useRouter();
   const { 
     currentStep, 
-    currentBranchScreen,
     goToStep, 
+    goToNextStep,
     canGoNext, 
     canGoPrevious, 
     isStepComplete,
     updateClaimData,
-    closeBranchScreen,
-    validation,
-    routing,
-    isReady
+    claimData,
+    currentBranchScreen,
+    shouldShowBranchScreen,
+    openBranchScreen,
+    closeBranchScreen
   } = useClaimWizard();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  // Redirect if not authenticated
+  React.useEffect(() => {
+    if (!authLoading && !user) {
+      router.push('/');
+    }
+  }, [user, authLoading, router]);
+
+  // Check for branch screens when moving to next step
+  React.useEffect(() => {
+    const branchScreen = shouldShowBranchScreen();
+    if (branchScreen && !currentBranchScreen) {
+      openBranchScreen(branchScreen);
+    }
+  }, [claimData, shouldShowBranchScreen, currentBranchScreen, openBranchScreen]);
 
   const handleNext = () => {
     if (canGoNext()) {
-      goToStep(currentStep + 1);
+      // Check if we should show a branch screen
+      const branchScreen = shouldShowBranchScreen();
+      if (branchScreen && !currentBranchScreen) {
+        openBranchScreen(branchScreen);
+      } else {
+        goToNextStep();
+      }
     }
   };
 
@@ -55,31 +81,76 @@ function WizardContent() {
   };
 
   const handleSubmit = async () => {
+    if (!user) return;
+    
     setIsSubmitting(true);
-    // TODO: Implement submission logic
-    console.log("Submitting claim...");
-    setTimeout(() => {
+    setSubmitError(null);
+    
+    try {
+      const { data, error } = await claimsAPI.createClaim({
+        claim_type: claimData.claimType as 'duty' | 'vat' | 'both',
+        channel: claimData.channel as 'courier' | 'postal',
+        vat_status: claimData.isVATRegistered ? 'registered' : 'not_registered',
+        mrn: claimData.mrn || undefined,
+        eori: claimData.eori || undefined,
+        courier_name: claimData.courier || undefined,
+        tracking_number: claimData.trackingNumber || undefined,
+        import_date: claimData.importDate || undefined,
+        duty_amount: claimData.dutyAmount || undefined,
+        vat_amount: claimData.vatAmount || undefined,
+        total_amount: claimData.totalAmount || undefined,
+        reason: claimData.reason || undefined,
+        additional_notes: claimData.additionalNotes || undefined,
+      });
+
+      if (error) throw new Error(error);
+      
+      setSubmitSuccess(true);
+      
+      // Redirect to dashboard after 2 seconds
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 2000);
+      
+    } catch (error: any) {
+      console.error("Error submitting claim:", error);
+      setSubmitError(error.message || 'Failed to submit claim');
+    } finally {
       setIsSubmitting(false);
-      // TODO: Navigate to success page or dashboard
-    }, 2000);
+    }
   };
 
-  const handleBOR286Continue = (chargeReference: string) => {
-    updateClaimData({ bor286ChargeReference: chargeReference });
-    closeBranchScreen();
-  };
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-  const handleVATReturnContinue = () => {
-    updateClaimData({ vatReturnAcknowledged: true });
-    closeBranchScreen();
-  };
+  if (!user) {
+    return null; // Will redirect
+  }
 
-  const handleSellerRefundContinue = () => {
-    updateClaimData({ sellerRefundAcknowledged: true });
-    closeBranchScreen();
-  };
+  const renderStepContent = () => {
+    // Show branch screens if they're open
+    if (currentBranchScreen) {
+      switch (currentBranchScreen) {
+        case 'bor286':
+          return <BranchBOR286 />;
+        case 'vat-return':
+          return <BranchVATReturn />;
+        case 'seller-refund':
+          return <BranchSellerRefund />;
+        default:
+          return null;
+      }
+    }
 
-  const renderStep = () => {
+    // Show regular wizard steps
     switch (currentStep) {
       case 1:
         return <Step1ChannelSelection />;
@@ -98,156 +169,108 @@ function WizardContent() {
     }
   };
 
-  // Render branch screens if active
-  if (currentBranchScreen) {
-    switch (currentBranchScreen) {
-      case 'bor286':
-        return (
-          <BOR286PostalScreen
-            onBack={closeBranchScreen}
-            onContinue={handleBOR286Continue}
-          />
-        );
-      case 'vat-return':
-        return (
-          <VATReturnInfoScreen
-            onBack={closeBranchScreen}
-            onContinue={handleVATReturnContinue}
-          />
-        );
-      case 'seller-refund':
-        return (
-          <SellerRefundInfoScreen
-            onBack={closeBranchScreen}
-            onContinue={handleSellerRefundContinue}
-          />
-        );
-      default:
-        return null;
-    }
-  }
-
   return (
-    <div className="min-h-screen bg-gray-50 pt-24 pb-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Import Duty Refund Claim
+          <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Import Duty Refund Wizard
           </h1>
-          <p className="text-lg text-gray-600">
-            Follow our guided process to reclaim your overpaid import charges
+          <p className="text-lg text-gray-600 dark:text-gray-400">
+            Follow these steps to submit your import duty refund claim
           </p>
         </div>
 
-        {/* Progress Bar */}
+        {/* Progress Steps */}
         <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between">
             {steps.map((step, index) => (
-              <div key={step.id} className="flex items-center flex-1 min-w-0">
-                <div className="flex items-center">
-                  <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
-                      currentStep > step.id
-                        ? "bg-green-500 text-white"
-                        : currentStep === step.id
-                        ? "bg-blue-500 text-white"
-                        : "bg-gray-200 text-gray-600"
-                    }`}
-                  >
-                    {currentStep > step.id ? (
-                      <CheckCircle className="w-5 h-5" />
-                    ) : (
-                      step.id
-                    )}
-                  </div>
-                  <div className="ml-2 sm:ml-3 min-w-0 flex-shrink">
-                    <p className="text-xs sm:text-sm font-medium text-gray-900 whitespace-nowrap">{step.title}</p>
-                  </div>
+              <div key={step.id} className="flex flex-col items-center">
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${
+                    currentStep >= step.id
+                      ? "bg-blue-600"
+                      : "bg-gray-300 dark:bg-gray-600"
+                  }`}
+                >
+                  {step.id}
+                </div>
+                <div className="mt-2 text-center">
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">
+                    {step.title}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    {step.description}
+                  </p>
                 </div>
                 {index < steps.length - 1 && (
                   <div
-                    className={`hidden sm:block w-4 lg:w-8 h-0.5 mx-1 lg:mx-2 ${
-                      currentStep > step.id ? "bg-green-500" : "bg-gray-200"
+                    className={`hidden md:block absolute top-6 left-12 w-full h-0.5 ${
+                      currentStep > step.id
+                        ? "bg-blue-600"
+                        : "bg-gray-300 dark:bg-gray-600"
                     }`}
+                    style={{ width: "calc(100% - 3rem)" }}
                   />
                 )}
               </div>
             ))}
           </div>
-          <Progress value={(currentStep / steps.length) * 100} className="h-2" />
         </div>
 
         {/* Step Content */}
-        <Card className="mb-2">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-medium mr-3">
-                {currentStep}
-              </span>
-              Step {currentStep}: {steps[currentStep - 1].title}
-            </CardTitle>
-            <CardDescription>
-              {steps[currentStep - 1].description}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {renderStep()}
-          </CardContent>
-          
-          {/* Navigation */}
-          <div className="flex justify-between px-6 pb-6">
-          <Button
-            variant="outline"
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mb-8">
+          {submitSuccess ? (
+            <div className="text-center py-12">
+              <CheckCircle className="w-16 h-16 text-green-500 mx-auto mb-4" />
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Claim Submitted Successfully!</h3>
+              <p className="text-gray-600 mb-4">
+                Your claim has been submitted and is being processed. You'll be redirected to your dashboard shortly.
+              </p>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+            </div>
+          ) : (
+            <>
+              {submitError && (
+                <Alert className="mb-6">
+                  <AlertTriangle className="h-4 w-4" />
+                  <AlertDescription>{submitError}</AlertDescription>
+                </Alert>
+              )}
+              {renderStepContent()}
+            </>
+          )}
+        </div>
+
+        {/* Navigation */}
+        <div className="flex justify-between">
+          <button
             onClick={handlePrevious}
             disabled={!canGoPrevious()}
-            className="flex items-center"
+            className="px-6 py-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            <ArrowLeft className="w-4 h-4 mr-2" />
             Previous
-          </Button>
-
-          <div className="flex space-x-3">
-            {currentStep < 6 ? (
-              <Button
-                onClick={handleNext}
-                disabled={!canGoNext()}
-                className="flex items-center"
-              >
-                Next
-                <ArrowRight className="w-4 h-4 ml-2" />
-              </Button>
-            ) : (
-              <Button
-                onClick={handleSubmit}
-                disabled={!canGoNext() || isSubmitting}
-                className="flex items-center"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2" />
-                    Submitting...
-                  </>
-                ) : (
-                  <>
-                    Submit Claim
-                    <CheckCircle className="w-4 h-4 ml-2" />
-                  </>
-                )}
-              </Button>
-            )}
-          </div>
-          </div>
-        </Card>
-
-        {/* Validation Display */}
-        <ValidationDisplay
-          errors={validation.errors}
-          routeInfo={routing.routeInfo}
-          deadlineInfo={routing.deadlineInfo}
-          nextSteps={routing.nextSteps}
-          className="mb-2"
-        />
+          </button>
+          
+          {currentStep === 6 ? (
+            <button
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="px-8 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {isSubmitting ? "Submitting..." : "Submit Claim"}
+            </button>
+          ) : (
+            <button
+              onClick={handleNext}
+              disabled={!canGoNext()}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

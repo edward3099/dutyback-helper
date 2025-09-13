@@ -3,710 +3,196 @@
     "tasks": [
       {
         "id": 1,
-        "title": "Setup Project Repository",
-        "description": "Initialize the project repository for the Dutyback Helper web application.",
-        "details": "Create a new Git repository and set up the project structure. Include directories for frontend and backend code, as well as documentation. Initialize package.json for Node.js and install necessary dependencies like Express for the backend and React for the frontend.",
-        "testStrategy": "Ensure the repository is correctly initialized by checking the presence of essential files and directories.",
-        "priority": "medium",
-        "dependencies": [],
+        "title": "Verify OpenRouter API Key with DeepSeek Model",
+        "description": "Test task to ensure the new OpenRouter API key is correctly configured and can successfully interact with the DeepSeek model.",
+        "details": "1. Obtain the new OpenRouter API key from the configuration settings. 2. Set up a test environment with the necessary dependencies installed. 3. Write a test script in Python to send a sample request to the DeepSeek model using the OpenRouter API key. 4. Include error handling to catch and log any issues with the API key or request. 5. Verify the response from the DeepSeek model to ensure it matches the expected output. 6. Document the results and any issues encountered.",
+        "testStrategy": "1. Run the test script in the test environment. 2. Check the console output for any error messages related to the API key or request. 3. Verify that the response from the DeepSeek model is correct and matches the expected output. 4. Review the logs to ensure all steps were executed without errors. 5. If any issues are found, document them and retest after making necessary adjustments.",
         "status": "pending",
+        "dependencies": [],
+        "priority": "medium",
         "subtasks": []
       },
       {
         "id": 2,
-        "title": "Implement User Authentication",
-        "description": "Create user authentication for the Dutyback Helper application.",
-        "details": "Use JWT for user authentication. Implement registration and login endpoints in the backend. Store user data securely in a database. Use bcrypt for password hashing.",
-        "testStrategy": "Test user registration and login flows, ensuring that valid credentials allow access and invalid credentials are rejected.",
-        "priority": "medium",
+        "title": "Build Comprehensive Pure Supabase Backend for Dutyback Helper Application",
+        "description": "Create a complete, production-ready Supabase backend to power the existing Next.js frontend webapp, including Edge Functions, Auth, Database with RLS, Storage, and Realtime.",
+        "details": "1. Set up a new Supabase project and configure the necessary services (Auth, Database, Storage, Realtime). 2. Design and implement the PostgreSQL database schema with Row Level Security (RLS) policies for Users, Claims, Identifiers (MRN/EORI), Evidence, Outcomes, and Updates tables. 3. Develop Supabase Edge Functions to handle API logic for user authentication, claim creation and management, evidence upload and validation, MRN/EORI identifier management, PDF export, policy monitoring, outcome tracking, and real-time notifications. 4. Implement Supabase Auth for user registration, login, and profile management. 5. Configure Supabase Storage for secure file uploads and downloads. 6. Set up Supabase Realtime for live updates and notifications. 7. Ensure GDPR compliance and HMRC integration requirements are met. 8. Write TypeScript code throughout the backend implementation.",
+        "testStrategy": "1. Verify that the Supabase project is correctly set up and all services are operational. 2. Test the database schema and RLS policies by creating, reading, updating, and deleting records for each table. 3. Test each Edge Function by sending requests from the frontend and verifying the responses. 4. Test user authentication and profile management by registering, logging in, and updating user profiles. 5. Test file uploads and downloads using Supabase Storage. 6. Verify real-time updates and notifications using Supabase Realtime. 7. Conduct security and compliance checks to ensure GDPR and HMRC requirements are met.",
+        "status": "done",
         "dependencies": [],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up Supabase Project",
+            "description": "Create and configure a new Supabase project with necessary services including Auth, Database, Storage, and Realtime.",
+            "dependencies": [],
+            "details": "Set up a new Supabase project and configure the necessary services (Auth, Database, Storage, Realtime).\n<info added on 2025-09-13T22:00:52.548Z>\nSupabase Project Analysis Complete:\n\n✅ **Project Status**: Active and operational\n- Project URL: https://rrlfoisdeoalfbmtzdoj.supabase.co\n- Anon Key: Available and configured\n- Service Role Key: Available and configured\n\n✅ **Database Schema**: Already implemented with RLS enabled\n- users table: User profiles with auth integration\n- claims table: Main claims with all required fields (channel, vat_status, amounts, etc.)\n- evidence table: File management with required/optional flags\n- identifiers table: MRN/EORI tracking\n- outcomes table: Decision tracking and refunds\n- policy_updates & policy_diffs: Policy monitoring system\n\n✅ **RLS Policies**: All tables have Row Level Security enabled\n\n❌ **Edge Functions**: None currently deployed - need to create\n❌ **Storage Buckets**: Need to verify and configure for evidence files\n❌ **Realtime**: Need to verify configuration\n\n**Next Steps**: \n1. Create Edge Functions for API logic\n2. Configure Storage buckets for evidence files\n3. Set up Realtime for live updates\n4. Test all services integration\n</info added on 2025-09-13T22:00:52.548Z>\n<info added on 2025-09-13T22:01:06.303Z>\n✅ **Storage**: Evidence bucket configured and ready\n- Bucket name: \"evidence\" \n- Public access: false (secure)\n\n✅ **Realtime**: Configured and operational\n- Publication: \"supabase_realtime\" active\n- Supports: INSERT, UPDATE, DELETE operations\n\n**All Supabase Services Status:**\n✅ Database with RLS policies\n✅ Auth integration ready\n✅ Storage bucket configured\n✅ Realtime enabled\n❌ Edge Functions (need to create)\n\n**Subtask 2.1 Complete** - Supabase project is fully configured and ready for Edge Functions development.\n</info added on 2025-09-13T22:01:06.303Z>",
+            "status": "done",
+            "testStrategy": "Verify that the Supabase project is correctly set up and all services are operational."
+          },
+          {
+            "id": 2,
+            "title": "Design Database Schema",
+            "description": "Design and implement the PostgreSQL database schema with Row Level Security (RLS) policies for Users, Claims, Identifiers (MRN/EORI), Evidence, Outcomes, and Updates tables.",
+            "dependencies": [],
+            "details": "Design and implement the PostgreSQL database schema with Row Level Security (RLS) policies for Users, Claims, Identifiers (MRN/EORI), Evidence, Outcomes, and Updates tables.",
+            "status": "done",
+            "testStrategy": "Test the database schema and RLS policies by creating, reading, updating, and deleting records for each table."
+          },
+          {
+            "id": 3,
+            "title": "Develop Edge Functions",
+            "description": "Develop Supabase Edge Functions to handle API logic for user authentication, claim creation and management, evidence upload and validation, MRN/EORI identifier management, PDF export, policy monitoring, outcome tracking, and real-time notifications.",
+            "dependencies": [],
+            "details": "Develop Supabase Edge Functions to handle API logic for user authentication, claim creation and management, evidence upload and validation, MRN/EORI identifier management, PDF export, policy monitoring, outcome tracking, and real-time notifications.\n<info added on 2025-09-13T22:04:03.921Z>\nSuccessfully deployed 5 core Edge Functions: create-claim, get-claims, update-claim, upload-evidence, and user-profile. Each function includes JWT authentication, comprehensive error handling, CORS support, TypeScript type definitions, input validation, and business rule enforcement. The create-claim function validates claim type, channel, and VAT status while creating default evidence requirements. The get-claims function supports status filtering, pagination, and sorting with full CORS support. The update-claim function prevents modification of submitted/approved/rejected claims and validates enum values and business rules. The upload-evidence function validates file size and types, uploads to Supabase Storage, and updates evidence records. The user-profile function manages user profile data with validation for phone numbers and address fields. Additionally, the claim-statistics function generates comprehensive claim analytics including total claims, status breakdown, type breakdown, channel breakdown, total refund amounts, success rates, and average processing times. All core API endpoints are now ready for frontend integration with the Next.js application.\n</info added on 2025-09-13T22:04:03.921Z>",
+            "status": "done",
+            "testStrategy": "Test each Edge Function by sending requests from the frontend and verifying the responses."
+          },
+          {
+            "id": 4,
+            "title": "Implement Supabase Auth",
+            "description": "Implement Supabase Auth for user registration, login, and profile management.",
+            "dependencies": [],
+            "details": "Implement Supabase Auth for user registration, login, and profile management.\n<info added on 2025-09-13T22:06:10.991Z>\nSuccessfully deployed 4 authentication edge functions: register-user, login-user, reset-password, and logout-user. Features include complete user registration and login flow, password reset with email verification, JWT token management and validation, user profile integration, security best practices, CORS support, and comprehensive error handling. Ready for frontend integration with Next.js.\n</info added on 2025-09-13T22:06:10.991Z>",
+            "status": "done",
+            "testStrategy": "Verify user registration, login, and profile management functionalities."
+          },
+          {
+            "id": 5,
+            "title": "Configure Supabase Storage and Realtime",
+            "description": "Configure Supabase Storage for secure file uploads and downloads, and set up Supabase Realtime for live updates and notifications.",
+            "dependencies": [],
+            "details": "Configure Supabase Storage for secure file uploads and downloads. Set up Supabase Realtime for live updates and notifications.\n<info added on 2025-09-13T22:06:53.727Z>\n✅ **Supabase Storage Configuration:**\n- **Evidence Bucket**: Properly configured and operational\n  - Name: \"evidence\"\n  - Public access: false (secure)\n  - File size limit: 10MB\n  - Allowed MIME types: PDF, JPEG, PNG, GIF, Word docs, text files\n  - RLS policies: Users can only access their own files\n\n✅ **Storage RLS Policies Implemented:**\n- Service role can manage all evidence files\n- Users can upload own evidence files (with user ID folder structure)\n- Users can view own evidence files\n- Users can update own evidence files\n- Users can delete own evidence files\n\n✅ **Supabase Realtime Configuration:**\n- **Publication**: \"supabase_realtime\" active and operational\n- **Enabled Tables**: \n  - public.claims (for real-time claim updates)\n  - public.evidence (for real-time evidence upload status)\n  - public.outcomes (for real-time decision notifications)\n- **Operations**: INSERT, UPDATE, DELETE, TRUNCATE supported\n\n✅ **Integration Ready:**\n- Storage bucket ready for evidence file uploads\n- Realtime ready for live updates and notifications\n- All policies properly configured for security\n- Frontend can now implement real-time features\n\n**All Supabase Services Fully Operational** - Database, Auth, Storage, and Realtime are all configured and ready for production use.\n</info added on 2025-09-13T22:06:53.727Z>",
+            "status": "done",
+            "testStrategy": "Test file uploads and downloads, and verify real-time updates and notifications."
+          }
+        ]
       },
       {
         "id": 3,
-        "title": "Develop Claim Wizard Steps",
-        "description": "Implement the claim wizard that guides users through the claim process.",
-        "details": "Create a multi-step form in React that captures user input for each step of the claim process. Each step should validate inputs according to the PRD specifications. Use React Router for navigation between steps.",
-        "testStrategy": "Conduct user testing to ensure that the wizard flows correctly and that users cannot proceed without completing required fields.",
-        "priority": "high",
+        "title": "Build Comprehensive Homepage for Dutyback Helper",
+        "description": "Create a responsive and visually appealing homepage for Dutyback Helper, including Hero Section, How It Works, Stats Preview, FAQ, Pricing, Trust Indicators, and Navigation.",
+        "details": "1. **Hero Section**: Implement a clear value proposition with a compelling headline and a prominent CTA button to start claims. Use responsive design to ensure it looks great on all devices. 2. **How It Works**: Create a visual explanation of the 3-step process (Router → MRN/EORI Assistant → Evidence Pack) using icons and brief descriptions. 3. **Stats Preview**: Display key metrics like approval rates, average refund amounts, and processing times using dynamic data from the backend. 4. **FAQ Section**: List common questions about duty refunds, HMRC processes, and the service with collapsible answers. 5. **Pricing Section**: Clearly present pricing tiers (Free triage, £9 basic pack, £19 premium pack) with a comparison table. 6. **Trust Indicators**: Include testimonials, security badges, and other credibility markers to build trust. 7. **Navigation**: Implement a navigation bar with links to all major sections (Wizard, Dashboard, Stats, Support). Ensure the homepage is fully responsive and optimized for performance.",
+        "testStrategy": "1. Verify that the Hero Section displays correctly on all devices and the CTA button redirects to the claims page. 2. Check that the How It Works section accurately represents the 3-step process and is visually clear. 3. Ensure the Stats Preview dynamically updates with data from the backend. 4. Test the FAQ Section to confirm that questions expand and collapse correctly. 5. Verify that the Pricing Section displays all tiers correctly and any interactive elements work as expected. 6. Check that Trust Indicators are visible and correctly placed. 7. Test the Navigation bar to ensure all links redirect to the correct sections. 8. Perform cross-browser and cross-device testing to ensure responsiveness and visual consistency.",
+        "status": "pending",
         "dependencies": [
           2
         ],
-        "status": "pending",
+        "priority": "high",
         "subtasks": []
       },
       {
         "id": 4,
-        "title": "Implement Routing Logic",
-        "description": "Develop the routing logic to direct users to the correct HMRC process based on their inputs.",
-        "details": "Implement the logic to route users based on their selections in the claim wizard. Ensure that the routing adheres to the rules specified in the PRD, including handling different claim types and VAT statuses.",
-        "testStrategy": "Create unit tests to verify that the routing logic correctly directs users based on various input scenarios.",
-        "priority": "high",
+        "title": "Build Comprehensive Dashboard with Claim Tracking and Reminder System",
+        "description": "Create a user dashboard that provides complete claim management functionality, including claim list view, status tracking, reminder system, resume functionality, filtering & sorting, quick actions, progress indicators, deadline alerts, claim details, and bulk actions.",
+        "details": "1. **Claim List View**: Implement a table or grid to display all user claims with status indicators, creation dates, and current progress. Use Supabase real-time updates to keep the data current. 2. **Status Tracking**: Add visual indicators (e.g., icons, colors) for each claim status (draft, identifiers pending, evidence missing, exported, submitted, decided). 3. **Reminder System**: Integrate HMRC deadline timers with countdown displays and notifications. Use Supabase Edge Functions to calculate deadlines and send notifications. 4. **Resume Functionality**: Add 'Resume' buttons to re-enter the claim wizard at the last incomplete step. Store the last step in the Supabase database. 5. **Filtering & Sorting**: Implement filters for status, date, courier, and claim type. Add sorting options for date and status. 6. **Quick Actions**: Add buttons for exporting claim packs, updating evidence, and contacting support. Use Supabase Edge Functions for these actions. 7. **Progress Indicators**: Add visual progress bars showing the completion status of each claim. 8. **Deadline Alerts**: Display prominent warnings for approaching deadlines. Use Supabase real-time updates to trigger alerts. 9. **Claim Details**: Implement expandable cards showing full claim information. 10. **Bulk Actions**: Add functionality to select multiple claims for batch operations like exporting or updating status.",
+        "testStrategy": "1. Verify that the Claim List View displays all user claims with correct status indicators, creation dates, and progress. 2. Check that the Status Tracking visual indicators correctly reflect each claim status. 3. Test the Reminder System by verifying that HMRC deadline timers and notifications work as expected. 4. Ensure the Resume Functionality correctly re-enters the claim wizard at the last incomplete step. 5. Test the Filtering & Sorting functionality by applying various filters and sorting options. 6. Verify that Quick Actions (export, update evidence, contact support) work correctly. 7. Check that Progress Indicators accurately show the completion status of each claim. 8. Test Deadline Alerts by verifying that warnings are displayed for approaching deadlines. 9. Ensure that Claim Details expandable cards show full claim information. 10. Verify that Bulk Actions work correctly for selected claims.",
+        "status": "pending",
         "dependencies": [
+          2,
           3
         ],
-        "status": "pending",
+        "priority": "high",
         "subtasks": []
       },
       {
         "id": 5,
-        "title": "Create Evidence Checklist Enforcement",
-        "description": "Enforce evidence checklist requirements based on the selected HMRC process.",
-        "details": "Implement validation rules that check for required evidence items based on the selected claim type. Display error messages if mandatory items are missing before allowing users to proceed to export.",
-        "testStrategy": "Test the evidence checklist enforcement by attempting to submit claims with missing evidence and ensuring appropriate error messages are displayed.",
-        "priority": "high",
-        "dependencies": [
-          3
-        ],
+        "title": "Build Outcome Stats Page with Analytics and Telemetry",
+        "description": "Create a comprehensive analytics page that displays anonymized outcome data to provide insights and build trust.",
+        "details": "1. **Approval Rate Statistics**: Fetch and display overall approval percentage and breakdown by claim type from the Outcomes table in Supabase. 2. **Decision Time Analytics**: Calculate and show median days to decision and average processing times by courier. 3. **Refund Amount Analysis**: Display average refund amounts and success rates by claim value. 4. **Courier Performance**: Compare success rates and response times across DHL, FedEx, UPS, Royal Mail. 5. **Claim Type Success Rates**: Show performance metrics for CDS, C285, BOR286, C&E1179, VAT Return, Seller Refund. 6. **Time-based Trends**: Implement monthly/quarterly performance trends and seasonal patterns. 7. **Interactive Charts**: Use charting libraries (e.g., Chart.js) to create visual representations. 8. **Filtering Options**: Add filters for date range, courier, claim type, and refund amount. 9. **Export Functionality**: Implement report download options in CSV and PDF formats. 10. **Real-time Updates**: Use Supabase Realtime to keep data current. Ensure all data is anonymized to protect user privacy.",
+        "testStrategy": "1. Verify that all statistics and analytics are correctly fetched and displayed from the Outcomes table. 2. Test the accuracy of decision time analytics and refund amount analysis. 3. Check that courier performance and claim type success rates are correctly compared and displayed. 4. Validate time-based trends and ensure they reflect accurate monthly/quarterly data. 5. Test interactive charts for correct data representation and responsiveness. 6. Verify filtering options work as expected and update the displayed data accordingly. 7. Test export functionality to ensure reports are correctly generated and downloadable. 8. Confirm real-time updates are functioning and data is current.",
         "status": "pending",
+        "dependencies": [
+          2
+        ],
+        "priority": "high",
         "subtasks": []
       },
       {
         "id": 6,
-        "title": "Develop Claim Pack Generation",
-        "description": "Implement functionality to generate a claim pack for users.",
-        "details": "Create a backend endpoint that compiles user inputs and uploaded evidence into a downloadable ZIP or PDF claim pack. Use libraries like jsPDF or PDFKit for PDF generation.",
-        "testStrategy": "Test the claim pack generation by creating various claims and ensuring the output is correctly formatted and includes all required information.",
-        "priority": "high",
-        "dependencies": [
-          5
-        ],
+        "title": "Build Support & Updates Page with GOV.UK Policy Tracking",
+        "description": "Create a comprehensive support page that monitors HMRC policy changes and provides user assistance, including policy drift monitoring, changelog system, escalation templates, FAQ section, contact support, documentation links, status page, update notifications, search functionality, and feedback system.",
+        "details": "1. **Policy Drift Monitoring**: Implement a system to scrape GOV.UK for policy changes and store them in the Updates table. Display 'Last checked vs GOV.UK guidance' with timestamps. 2. **Changelog System**: Develop a feature to show policy differences and updates from GOV.UK scraping. 3. **Escalation Templates**: Create pre-written email templates for contacting HMRC or couriers. 4. **FAQ Section**: Build a comprehensive FAQ section with answers to common questions about duty refunds. 5. **Contact Support**: Integrate direct communication channels for user assistance. 6. **Documentation Links**: Provide links to official HMRC guidance and forms. 7. **Status Page**: Implement a system status page showing any known issues. 8. **Update Notifications**: Set up alerts to notify users when new policy changes are detected. 9. **Search Functionality**: Develop a search feature to allow users to search through FAQ and documentation. 10. **Feedback System**: Create a system for collecting and responding to user feedback.",
+        "testStrategy": "1. Verify that the policy drift monitoring system correctly scrapes GOV.UK and updates the Updates table. 2. Test the changelog system to ensure it accurately displays policy differences and updates. 3. Check that the escalation templates are correctly formatted and functional. 4. Validate the FAQ section to ensure all answers are accurate and relevant. 5. Test the contact support channels to ensure they are functional and responsive. 6. Verify that the documentation links are correct and lead to the appropriate resources. 7. Check the status page to ensure it accurately reflects system status and known issues. 8. Test the update notifications to ensure they are triggered correctly when new policy changes are detected. 9. Validate the search functionality to ensure it correctly searches through FAQ and documentation. 10. Test the feedback system to ensure it collects and responds to user feedback appropriately.",
         "status": "pending",
+        "dependencies": [
+          2
+        ],
+        "priority": "high",
         "subtasks": []
       },
       {
         "id": 7,
-        "title": "Build Dashboard for Claim Tracking",
-        "description": "Develop a dashboard for users to track their claims and receive reminders.",
-        "details": "Create a dashboard interface in React that displays active claims, their statuses, and deadlines. Implement backend endpoints to fetch claim data for the logged-in user.",
-        "testStrategy": "Conduct user acceptance testing to ensure that the dashboard accurately reflects the user's claims and that reminders are displayed as expected.",
-        "priority": "medium",
+        "title": "Implement Claim Pack Export System with PDF/ZIP Generation",
+        "description": "Build a comprehensive claim pack export system that generates professional, HMRC-compliant documentation, including PDF generation, ZIP archive creation, HMRC form integration, evidence compilation, and custom branding.",
+        "details": "1. **PDF Generation**: Use a library like PDFKit or Puppeteer to create professional PDF documents with claim details, evidence, and pre-filled HMRC forms. Ensure the documents are formatted with professional letterhead and Dutyback Helper branding. 2. **ZIP Archive Creation**: Use a library like JSZip to package all generated documents and uploaded evidence files into a downloadable ZIP file. 3. **HMRC Form Integration**: Pre-fill official HMRC forms (CDS, C285, BOR286, C&E1179) based on the claim route using form templates and dynamic data from the Supabase database. 4. **Evidence Compilation**: Include all uploaded evidence files in the correct format within the ZIP archive. 5. **Validation Checks**: Implement server-side validation to ensure all mandatory documents are included before export. 6. **Custom Branding**: Include Dutyback Helper branding and contact information in all documents. 7. **Multiple Formats**: Support both PDF and ZIP export options. 8. **Progress Tracking**: Show export progress and completion status to the user. 9. **Email Delivery**: Implement an option to email claim packs directly to users using Supabase Edge Functions.",
+        "testStrategy": "1. Verify that PDF documents are correctly generated with all claim details, evidence, and pre-filled HMRC forms. 2. Test ZIP archive creation to ensure all documents and evidence files are included and correctly formatted. 3. Validate HMRC form integration by checking that forms are pre-filled with accurate data based on the claim route. 4. Ensure evidence compilation includes all uploaded files in the correct format. 5. Test validation checks to confirm that mandatory documents are included before export. 6. Verify custom branding is correctly applied to all documents. 7. Check that both PDF and ZIP export options are functional. 8. Test progress tracking to ensure export progress and completion status are displayed correctly. 9. Validate email delivery functionality by sending test claim packs to users.",
+        "status": "pending",
         "dependencies": [
           2
         ],
-        "status": "pending",
+        "priority": "high",
         "subtasks": []
       },
       {
         "id": 8,
-        "title": "Implement Outcome Stats Telemetry",
-        "description": "Build functionality to display anonymized outcome statistics to users.",
-        "details": "Create backend logic to calculate and store outcome statistics such as approval rates and average refund amounts. Display these statistics on the homepage and dashboard.",
-        "testStrategy": "Verify that the statistics are calculated correctly by comparing them against known data sets and ensuring they update in real-time.",
-        "priority": "medium",
-        "dependencies": [
-          7
-        ],
+        "title": "Implement Real-time Updates and Notification System",
+        "description": "Build a comprehensive real-time notification system using Supabase Realtime to provide live updates, alerts, and notifications for various claim-related events and system updates.",
+        "details": "1. **Real-time Claim Updates**: Use Supabase Realtime to listen for changes in the Claims table and push live updates to the frontend when claim status changes. 2. **Deadline Notifications**: Implement a system to calculate HMRC deadlines and send alerts when deadlines are approaching. Use Supabase Edge Functions to trigger notifications. 3. **Evidence Reminders**: Monitor the Evidence table and send notifications when evidence is missing or incomplete. 4. **Policy Change Alerts**: Integrate with the Updates table to send notifications when HMRC rules change. 5. **Courier Response Updates**: Listen for updates in the Identifiers table and send alerts when couriers respond to MRN/EORI requests. 6. **System Notifications**: Implement a system to send notifications for maintenance windows and feature updates. 7. **Email Notifications**: Configure Supabase to send backup email notifications for critical updates. 8. **Push Notifications**: Implement browser push notifications for immediate alerts. 9. **Notification Preferences**: Create a user-configurable notification settings interface. 10. **Notification History**: Store all notifications in the database for audit purposes.",
+        "testStrategy": "1. Verify that real-time claim updates are correctly pushed to the frontend when claim status changes. 2. Test deadline notifications by checking that alerts are sent when HMRC deadlines are approaching. 3. Validate evidence reminders by ensuring notifications are sent when evidence is missing or incomplete. 4. Check that policy change alerts are sent when HMRC rules change. 5. Test courier response updates by verifying that alerts are sent when couriers respond to MRN/EORI requests. 6. Validate system notifications by checking that maintenance and feature update notifications are sent. 7. Verify that email notifications are sent for critical updates. 8. Test push notifications by ensuring they are received in the browser. 9. Check that notification preferences are configurable and respected. 10. Validate that all notifications are stored in the database for audit purposes.",
         "status": "pending",
+        "dependencies": [
+          2
+        ],
+        "priority": "medium",
         "subtasks": []
       },
       {
         "id": 9,
-        "title": "Test Task to Verify Task Master Functionality",
-        "description": "Conduct tests to ensure that the Task Master system is functioning as intended and meets all specified requirements.",
-        "details": "This task involves creating a comprehensive test suite for the Task Master functionality. The tests should cover all critical paths, including task creation, updating, deletion, and retrieval. Utilize automated testing frameworks such as Jest or Mocha for unit tests, and consider using Cypress for end-to-end testing. Ensure that edge cases are considered, such as invalid inputs and concurrent modifications. Document any bugs or issues found during testing and provide recommendations for fixes.",
-        "testStrategy": "Verify the Task Master functionality by executing the test suite and ensuring all tests pass. Additionally, perform manual testing to cover scenarios that may not be fully automated. Review the output logs for any errors and ensure that the system behaves as expected under various conditions. Confirm that all user stories related to Task Master are validated through the tests.",
+        "title": "Implement Policy Drift Monitoring and GOV.UK Scraping System",
+        "description": "Build an automated system to monitor HMRC policy changes by scraping GOV.UK pages, detecting changes, and updating the application accordingly.",
+        "details": "1. **GOV.UK Scraping**: Develop a scraping mechanism using libraries like Puppeteer or Cheerio to extract policy information from key HMRC pages (import duty guidance, VAT return rules, claim form requirements). Ensure the scraper can handle GOV.UK page structure changes. 2. **Change Detection**: Implement a comparison algorithm to detect changes between the scraped policies and stored versions. Use checksums or diff algorithms for efficient comparison. 3. **Update Storage**: Store detected changes in the Updates table with timestamps. Ensure the storage mechanism is efficient and scalable. 4. **Change Classification**: Categorize changes by type (deadline changes, process updates, form changes) using predefined criteria. 5. **Impact Assessment**: Develop a system to determine which claims might be affected by policy changes. Use claim metadata and policy change details for this assessment. 6. **User Notifications**: Integrate with the real-time notification system (Task 8) to alert users whose claims might be impacted by changes. 7. **Change Log Display**: Create a user-friendly interface to display policy changes. Use a clear and concise format for presenting changes. 8. **Rollback Capability**: Implement a feature to revert to previous policy versions if needed. Ensure this feature is accessible to administrators. 9. **Scheduled Monitoring**: Set up a scheduled Supabase Edge Function to run weekly checks for policy updates. Ensure the function is robust and can handle failures gracefully. 10. **Manual Override**: Add functionality to manually trigger policy checks or updates. Ensure this feature is accessible to administrators.",
+        "testStrategy": "1. Verify that the GOV.UK scraper correctly extracts policy information from key HMRC pages. Test with different page structures to ensure robustness. 2. Test the change detection algorithm by comparing known policy versions and verifying that changes are correctly detected. 3. Validate the update storage mechanism by checking that detected changes are correctly stored in the Updates table with timestamps. 4. Test the change classification system by verifying that changes are correctly categorized by type. 5. Validate the impact assessment system by checking that claims affected by policy changes are correctly identified. 6. Test user notifications by verifying that alerts are sent to users whose claims are impacted by changes. 7. Check the change log display by ensuring that policy changes are presented in a clear and user-friendly format. 8. Test the rollback capability by verifying that administrators can revert to previous policy versions. 9. Validate the scheduled monitoring by checking that the Supabase Edge Function runs weekly and correctly detects policy updates. 10. Test the manual override feature by verifying that administrators can manually trigger policy checks or updates.",
         "status": "pending",
         "dependencies": [
-          8,
-          7
+          2,
+          8
         ],
         "priority": "medium",
         "subtasks": []
       },
       {
         "id": 10,
-        "title": "Test DeepSeek Model Task Creation",
-        "description": "Conduct tests to verify the functionality of the DeepSeek model for task creation, ensuring it meets all specified requirements.",
-        "details": "This task involves creating a comprehensive test suite for the DeepSeek model's task creation functionality. The tests should cover critical paths, including task creation with valid and invalid inputs, edge cases such as concurrent modifications, and error handling. Utilize automated testing frameworks like Jest or Mocha for unit tests and consider using Cypress for end-to-end testing. Ensure the model correctly integrates with the Task Master system and handles dependencies as expected. Document any bugs or issues found during testing and provide recommendations for fixes.",
-        "testStrategy": "Verify the DeepSeek model's task creation functionality by executing the test suite and ensuring all tests pass. Perform manual testing to cover scenarios that may not be fully automated, such as user interactions and real-time updates. Review the output logs for errors and validate that the system behaves as expected under various conditions. Compare the model's output against expected results for known test cases.",
+        "title": "Implement Advanced Analytics and Telemetry System",
+        "description": "Build a comprehensive analytics system to track user behavior, claim success rates, and system performance, integrating with the existing Supabase backend and providing real-time dashboards.",
+        "details": "1. **User Behavior Analytics**: Implement tracking for wizard completion rates, drop-off points, and user journeys using Supabase Realtime. 2. **Claim Success Metrics**: Monitor approval rates, decision times, and refund amounts by querying the Outcomes table. 3. **Courier Performance Tracking**: Analyze response times and success rates for MRN/EORI requests by integrating with the Identifiers table. 4. **Evidence Completion Rates**: Track which evidence types are most commonly missing by querying the Evidence table. 5. **Routing Accuracy Metrics**: Monitor how often the HMRC routing logic is correct by comparing routing decisions with actual outcomes. 6. **System Performance Monitoring**: Track API response times, error rates, and uptime using Supabase Edge Functions. 7. **A/B Testing Framework**: Implement a system to test different UI elements and user flows, storing results in the Analytics table. 8. **Conversion Funnel Analysis**: Track users from homepage to completed claims by integrating with the Users and Claims tables. 9. **Revenue Analytics**: Monitor pricing tier adoption and revenue metrics by querying the Users and Claims tables. 10. **Data Export**: Implement functionality to export analytics data for business intelligence, ensuring data is anonymized and privacy-compliant.",
+        "testStrategy": "1. Verify that user behavior analytics correctly track wizard completion rates, drop-off points, and user journeys. 2. Test claim success metrics by checking that approval rates, decision times, and refund amounts are accurately monitored. 3. Validate courier performance tracking by ensuring response times and success rates for MRN/EORI requests are correctly analyzed. 4. Check evidence completion rates by verifying that missing evidence types are accurately tracked. 5. Test routing accuracy metrics by comparing routing decisions with actual outcomes. 6. Verify system performance monitoring by checking that API response times, error rates, and uptime are correctly tracked. 7. Validate the A/B testing framework by ensuring different UI elements and user flows are tested and results are stored. 8. Check conversion funnel analysis by tracking users from homepage to completed claims. 9. Test revenue analytics by verifying that pricing tier adoption and revenue metrics are accurately monitored. 10. Validate data export functionality by ensuring analytics data is correctly exported and anonymized.",
         "status": "pending",
         "dependencies": [
-          9
+          2,
+          8
         ],
         "priority": "medium",
         "subtasks": []
       },
       {
         "id": 11,
-        "title": "Test Qwen Free Model Task Creation",
-        "description": "Conduct tests to verify the functionality of the Qwen free model for task creation, ensuring it meets all specified requirements.",
-        "details": "This task involves creating a comprehensive test suite for the Qwen free model's task creation functionality. The tests should cover critical paths, including task creation with valid and invalid inputs, edge cases such as concurrent modifications, and error handling. Utilize automated testing frameworks like Jest or Mocha for unit tests and consider using Cypress for end-to-end testing. Ensure the model correctly integrates with the Task Master system and handles dependencies as expected. Document any bugs or issues found during testing and provide recommendations for fixes.",
-        "testStrategy": "Verify the Qwen free model's task creation functionality by executing the test suite and ensuring all tests pass. Perform manual testing to cover scenarios that may not be fully automated, such as user interactions and real-time updates. Review the output logs for errors and validate that the system behaves as expected under various conditions.",
+        "title": "Implement Pricing and Payment System",
+        "description": "Build a comprehensive pricing and payment system to monetize the service, including pricing tiers, payment processing, subscription management, usage tracking, invoice generation, refund handling, tax calculation, payment history, billing notifications, and an admin dashboard.",
+        "details": "1. **Pricing Tiers**: Implement Free triage, £9 basic pack, £19 premium pack pricing using a flexible pricing model. 2. **Payment Processing**: Integrate with Stripe for secure payment handling, including one-time payments and recurring subscriptions. 3. **Subscription Management**: Handle recurring payments for micro-seller plans using Stripe's subscription API. 4. **Usage Tracking**: Monitor feature usage to enforce pricing limits by integrating with the existing Supabase backend. 5. **Invoice Generation**: Generate professional invoices for payments using a library like PDFKit. 6. **Refund Handling**: Process refunds and handle payment disputes using Stripe's refund API. 7. **Tax Calculation**: Calculate VAT and other taxes as required using Stripe's tax calculation features. 8. **Payment History**: Track all payments and transactions in the Supabase database. 9. **Billing Notifications**: Send payment reminders and receipts using Supabase Realtime and Edge Functions. 10. **Admin Dashboard**: Manage pricing, payments, and subscriptions through a dedicated admin interface.",
+        "testStrategy": "1. Verify that pricing tiers are correctly implemented and displayed. 2. Test Stripe integration by processing test payments and subscriptions. 3. Validate subscription management by checking recurring payments and plan changes. 4. Ensure usage tracking accurately monitors feature usage and enforces limits. 5. Check that invoices are correctly generated and formatted. 6. Test refund handling by processing test refunds and disputes. 7. Validate tax calculation by comparing with manual calculations. 8. Verify that payment history is accurately tracked and displayed. 9. Test billing notifications by sending test reminders and receipts. 10. Validate the admin dashboard by managing pricing, payments, and subscriptions.",
         "status": "pending",
         "dependencies": [
-          10
+          2
         ],
         "priority": "medium",
-        "subtasks": []
-      },
-      {
-        "id": 12,
-        "title": "Test Ollama Qwen Free Model",
-        "description": "Conduct tests to verify the functionality of the Ollama Qwen free model, ensuring it meets all specified requirements.",
-        "details": "This task involves creating a comprehensive test suite for the Ollama Qwen free model's functionality. The tests should cover critical paths, including model response accuracy, handling of valid and invalid inputs, edge cases, and error handling. Utilize automated testing frameworks like Jest or Mocha for unit tests and consider using Cypress for end-to-end testing. Ensure the model integrates correctly with the Task Master system and handles dependencies as expected. Document any bugs or issues found during testing and provide recommendations for fixes.",
-        "testStrategy": "Verify the Ollama Qwen free model's functionality by executing the test suite and ensuring all tests pass. Perform manual testing to cover scenarios that may not be fully automated, such as user interactions and real-time updates. Review the output logs for errors and validate that the system behaves as expected under various conditions.",
-        "status": "pending",
-        "dependencies": [
-          11
-        ],
-        "priority": "medium",
-        "subtasks": []
-      },
-      {
-        "id": 13,
-        "title": "Define HMRC Routing Logic",
-        "description": "Implement the core routing logic to direct users to the correct HMRC process based on their inputs.",
-        "status": "pending",
-        "dependencies": [],
-        "priority": "high",
-        "details": "Create a decision tree or state machine that evaluates user inputs (channel, VAT status, claim type) and routes them to the appropriate HMRC process (CDS, C285, BOR286, C&E1179, VAT return, seller refund).",
-        "testStrategy": "Write unit tests for all routing scenarios, including edge cases like invalid inputs or missing data.",
-        "subtasks": []
-      },
-      {
-        "id": 14,
-        "title": "Implement Courier Playbook Templates",
-        "description": "Create templates for courier-specific instructions to help users retrieve MRN/EORI.",
-        "status": "pending",
-        "dependencies": [
-          13
-        ],
-        "priority": "medium",
-        "details": "Develop a system to display courier-specific playbooks (DHL, FedEx, UPS) with contact details, billing portals, and step-by-step instructions for retrieving MRN/EORI.",
-        "testStrategy": "Test each playbook template with sample user inputs to ensure correct display and usability.",
-        "subtasks": []
-      },
-      {
-        "id": 15,
-        "title": "Design Evidence Checklist Enforcement",
-        "description": "Implement a system to enforce HMRC evidence requirements based on the selected claim type.",
-        "status": "pending",
-        "dependencies": [
-          13
-        ],
-        "priority": "high",
-        "details": "Create a checklist system that validates user uploads against HMRC requirements for each claim type (CDS, C285, C&E1179, BOR286).",
-        "testStrategy": "Test each claim type with different evidence combinations to ensure proper validation and error handling.",
-        "subtasks": []
-      },
-      {
-        "id": 16,
-        "title": "Develop Claim Pack Export Functionality",
-        "description": "Implement the ability to generate and export a claim pack as a ZIP or PDF file.",
-        "status": "pending",
-        "dependencies": [
-          13,
-          15
-        ],
-        "priority": "high",
-        "details": "Create a system to compile validated user inputs, evidence, and routing information into a downloadable claim pack.",
-        "testStrategy": "Test the export functionality with different claim types and evidence sets to ensure correct formatting and content.",
-        "subtasks": []
-      },
-      {
-        "id": 17,
-        "title": "Create Dashboard with Claim Tracking",
-        "description": "Build a dashboard to track active claims, their statuses, and deadlines.",
-        "status": "pending",
-        "dependencies": [
-          13,
-          16
-        ],
-        "priority": "medium",
-        "details": "Design a dashboard that displays claim progress, deadlines, and status updates for users.",
-        "testStrategy": "Test the dashboard with multiple claim scenarios to ensure accurate tracking and display.",
-        "subtasks": []
-      },
-      {
-        "id": 18,
-        "title": "Implement Outcome Statistics Display",
-        "description": "Add anonymized outcome telemetry to the dashboard and homepage.",
-        "status": "pending",
-        "dependencies": [
-          17
-        ],
-        "priority": "medium",
-        "details": "Display anonymized statistics such as approval percentage, median days, and average refund amount on the homepage and dashboard.",
-        "testStrategy": "Validate that the statistics are correctly calculated and displayed for different claim types.",
-        "subtasks": []
-      },
-      {
-        "id": 19,
-        "title": "Design Support & Updates Screen",
-        "description": "Create a screen to show last checked government updates and policy diffs.",
-        "status": "pending",
-        "dependencies": [
-          13
-        ],
-        "priority": "medium",
-        "details": "Implement a screen that displays the last checked date for HMRC policies and any changes since the last check.",
-        "testStrategy": "Test the screen with simulated policy changes to ensure accurate display of updates.",
-        "subtasks": []
-      },
-      {
-        "id": 20,
-        "title": "Implement MRN Format Validation",
-        "description": "Enforce MRN format validation (18 characters) before claim export.",
-        "status": "pending",
-        "dependencies": [
-          13
-        ],
-        "priority": "high",
-        "details": "Add a validation step to check that the MRN entered by the user is exactly 18 characters long.",
-        "testStrategy": "Test with valid and invalid MRN inputs to ensure proper validation and error messages.",
-        "subtasks": []
-      },
-      {
-        "id": 21,
-        "title": "Create User Onboarding Flow",
-        "description": "Design a guided onboarding flow for new users to start a claim.",
-        "status": "pending",
-        "dependencies": [
-          13
-        ],
-        "priority": "medium",
-        "details": "Develop a simple onboarding process that guides users through the initial steps of starting a claim.",
-        "testStrategy": "Test the onboarding flow with different user scenarios to ensure smooth navigation.",
-        "subtasks": []
-      },
-      {
-        "id": 22,
-        "title": "Implement Claim Status Tracking",
-        "description": "Add functionality to track the status of each claim (e.g., in progress, completed).",
-        "status": "pending",
-        "dependencies": [
-          17
-        ],
-        "priority": "medium",
-        "details": "Create a system to update and display the status of each claim as it progresses through the wizard.",
-        "testStrategy": "Test the status tracking with multiple claim scenarios to ensure accurate updates.",
-        "subtasks": []
-      },
-      {
-        "id": 23,
-        "title": "Design Reminder System",
-        "description": "Implement a reminder system for claim deadlines and next steps.",
-        "status": "pending",
-        "dependencies": [
-          17
-        ],
-        "priority": "medium",
-        "details": "Develop a system to notify users of upcoming deadlines and next steps in their claim process.",
-        "testStrategy": "Test the reminder system with different deadlines to ensure timely notifications.",
-        "subtasks": []
-      },
-      {
-        "id": 24,
-        "title": "Create Evidence Upload Interface",
-        "description": "Build an interface for users to upload required evidence documents.",
-        "status": "pending",
-        "dependencies": [
-          15
-        ],
-        "priority": "medium",
-        "details": "Design a user-friendly interface for uploading evidence, with validation for file types and sizes.",
-        "testStrategy": "Test the upload interface with different file types and sizes to ensure proper handling.",
-        "subtasks": []
-      },
-      {
-        "id": 25,
-        "title": "Implement User Authentication",
-        "description": "Add user authentication to secure claim data and dashboard access.",
-        "status": "pending",
-        "dependencies": [
-          17
-        ],
-        "priority": "high",
-        "details": "Create a secure login and registration system to protect user data and claim history.",
-        "testStrategy": "Test the authentication system with different user scenarios to ensure security and usability.",
-        "subtasks": []
-      },
-      {
-        "id": 26,
-        "title": "Design Data Model for Claims",
-        "description": "Define the database schema for storing claim data, identifiers, and evidence.",
-        "status": "pending",
-        "dependencies": [],
-        "priority": "high",
-        "details": "Create a relational database schema for claims, identifiers, evidence, outcomes, and updates.",
-        "testStrategy": "Validate the schema with sample data to ensure it meets all requirements.",
-        "subtasks": []
-      },
-      {
-        "id": 27,
-        "title": "Implement Claim Creation Endpoint",
-        "description": "Develop a backend endpoint to create and store new claims.",
-        "status": "pending",
-        "dependencies": [
-          26
-        ],
-        "priority": "high",
-        "details": "Build a REST API endpoint to handle claim creation, including validation and storage in the database.",
-        "testStrategy": "Test the endpoint with different claim inputs to ensure correct storage and validation.",
-        "subtasks": []
-      },
-      {
-        "id": 28,
-        "title": "Create Identifier Retrieval Endpoint",
-        "description": "Develop a backend endpoint to store and retrieve MRN/EORI identifiers.",
-        "status": "pending",
-        "dependencies": [
-          26
-        ],
-        "priority": "medium",
-        "details": "Build an API endpoint to handle the storage and retrieval of MRN/EORI identifiers for each claim.",
-        "testStrategy": "Test the endpoint with different identifier inputs to ensure correct storage and retrieval.",
-        "subtasks": []
-      },
-      {
-        "id": 29,
-        "title": "Implement Evidence Storage Endpoint",
-        "description": "Develop a backend endpoint to store and manage evidence files for claims.",
-        "status": "pending",
-        "dependencies": [
-          26
-        ],
-        "priority": "medium",
-        "details": "Create an API endpoint to handle the storage and management of evidence files, including validation and access control.",
-        "testStrategy": "Test the endpoint with different evidence files to ensure proper handling and storage.",
-        "subtasks": []
-      },
-      {
-        "id": 30,
-        "title": "Design Outcome Tracking Endpoint",
-        "description": "Develop a backend endpoint to track and store claim outcomes.",
-        "status": "pending",
-        "dependencies": [
-          26
-        ],
-        "priority": "medium",
-        "details": "Build an API endpoint to store claim outcomes, including decision status, days to decision, and refund amount.",
-        "testStrategy": "Test the endpoint with different outcome scenarios to ensure accurate tracking.",
-        "subtasks": []
-      },
-      {
-        "id": 31,
-        "title": "Implement Policy Diff Monitoring",
-        "description": "Add functionality to monitor and display changes in HMRC policies.",
-        "status": "pending",
-        "dependencies": [],
-        "priority": "medium",
-        "details": "Create a system to fetch and compare HMRC policy updates, displaying changes to users.",
-        "testStrategy": "Test the policy diff monitoring with simulated policy changes to ensure accurate display.",
-        "subtasks": []
-      },
-      {
-        "id": 32,
-        "title": "Add User Feedback Mechanism",
-        "description": "Implement a way for users to provide feedback on the claim process.",
-        "status": "pending",
-        "dependencies": [
-          25
-        ],
-        "priority": "low",
-        "details": "Design and implement a feedback system to collect user input on the claim process and app usability.",
-        "testStrategy": "Test the feedback mechanism with different user scenarios to ensure proper functionality.",
-        "subtasks": []
-      },
-      {
-        "id": 33,
-        "title": "Initialize Supabase Project",
-        "description": "Set up the Supabase project with required tables and relationships for Users, Claims, Identifiers, Evidence, Outcomes, and Updates.",
-        "details": "Create the following tables in Supabase: Users (with email and role), Claims (with route, status, timestamps), Identifiers (with MRN, EORI, courier, and timestamps), Evidence (with file references, type, and validation status), Outcomes (with decision, days, and refund amount), and Updates (with policy change logs). Define relationships between tables (e.g., Claims to Users, Claims to Identifiers, etc.).",
-        "testStrategy": "Verify that all tables are created with the correct schema and relationships using Supabase dashboard and API calls.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 34,
-        "title": "Implement Supabase Auth Integration",
-        "description": "Integrate Supabase Auth for user login, signup, and logout functionality.",
-        "details": "Use Supabase Auth SDK to implement login, signup, and logout flows. Store user data in the Users table and manage session state in the frontend.",
-        "testStrategy": "Test user signup, login, and logout flows to ensure they work correctly and user data is stored in the Users table.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 35,
-        "title": "Create Claim Management API Endpoints",
-        "description": "Implement API endpoints for creating, updating, listing, and retrieving claims via Supabase RPC or REST.",
-        "details": "Create endpoints for Claims: create, update, list, and get by ID. Use Supabase's REST API or RPC to handle these operations. Ensure that the endpoints validate claim data and update the Claims table accordingly.",
-        "testStrategy": "Test each endpoint with sample data to ensure they create, update, list, and retrieve claims correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 36,
-        "title": "Implement Identifier Management API",
-        "description": "Create API endpoints for adding MRN/EORI and updating courier information for claims.",
-        "details": "Implement endpoints for Identifiers: add MRN/EORI, update courier info. Use Supabase's REST API or RPC to handle these operations. Ensure that the endpoints validate identifier data and update the Identifiers table accordingly.",
-        "testStrategy": "Test the endpoints with sample data to ensure they add and update identifiers correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 37,
-        "title": "Set Up Evidence Upload and Validation",
-        "description": "Implement API endpoints for uploading evidence files and marking mandatory documents as complete.",
-        "details": "Create endpoints for Evidence: upload file, mark mandatory docs complete. Use Supabase Storage to store files and update the Evidence table with file references and validation status.",
-        "testStrategy": "Test file uploads and validation marking to ensure they work correctly and files are stored in Supabase Storage.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 38,
-        "title": "Develop Claim Export Functionality",
-        "description": "Implement a server-side export feature to generate claim packs (PDF/ZIP).",
-        "details": "Create an endpoint for exporting claims. Use a server-side library (e.g., Puppeteer or PDFKit) to generate PDFs and ZIP archives. Store the exported files in Supabase Storage and update the Claims table with the export status.",
-        "testStrategy": "Test the export endpoint with sample claims to ensure the generated files are correct and stored in Supabase Storage.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 39,
-        "title": "Implement Outcome Logging",
-        "description": "Create API endpoints for logging claim outcomes (approved/rejected, decision time, refund amount).",
-        "details": "Implement an endpoint for Outcomes: log decision and refund stats. Use Supabase's REST API or RPC to handle this operation. Ensure that the endpoint validates outcome data and updates the Outcomes table accordingly.",
-        "testStrategy": "Test the endpoint with sample data to ensure outcomes are logged correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 40,
-        "title": "Build Policy Updates Module",
-        "description": "Implement functionality to fetch and store GOV.UK policy updates in the Updates table.",
-        "details": "Create an endpoint to scrape and store GOV.UK policy changes. Use a server-side scheduler (e.g., cron job) to fetch updates weekly. Store the updates in the Updates table and display them in the UI.",
-        "testStrategy": "Test the policy update endpoint to ensure it fetches and stores updates correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 41,
-        "title": "Design and Implement Frontend UI Components",
-        "description": "Create UI components for the homepage, wizard, dashboard, and other screens using Next.js and Shadcn/UI.",
-        "details": "Implement the following components: Navbar, Footer, Hero, How it works, Stats preview, FAQ, CTA, Wizard steps, Branch screens, Courier playbooks, Dashboard, Outcome stats, Support & Updates. Use Shadcn/UI for consistent styling and Lucide icons for visual elements.",
-        "testStrategy": "Test each UI component to ensure it renders correctly and matches the design specifications.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 42,
-        "title": "Implement Claim Wizard Flow",
-        "description": "Develop the multi-step claim wizard with routing logic based on user selections.",
-        "details": "Implement the wizard with the following steps: Channel selection, VAT status, Claim type, Identifiers, Evidence, Review & Export. Use routing logic to enforce HMRC rules (e.g., postal → BOR286, VAT-registered → VAT Return). Store user progress in the Claims table.",
-        "testStrategy": "Test the wizard flow with different user selections to ensure routing logic works correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 43,
-        "title": "Add Validation and Deadlines Logic",
-        "description": "Implement validation rules for MRN format and enforce deadlines for claim submissions.",
-        "details": "Add validation for MRN format (18 characters) and block export until mandatory evidence is uploaded. Implement deadline logic based on claim type (e.g., 3 years for overpayments, 1 year for rejected imports). Store deadlines in the Claims table.",
-        "testStrategy": "Test validation and deadline logic with different claim scenarios to ensure they work correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 44,
-        "title": "Implement Telemetry and Stats Aggregation",
-        "description": "Log claim approval rates, decision times, and refund amounts into the Outcomes table.",
-        "details": "Implement telemetry to log approval rates, median decision days, and average refund amounts. Use Supabase to aggregate and store these stats in the Outcomes table. Display them in the Dashboard and Stats preview.",
-        "testStrategy": "Test telemetry and stats aggregation to ensure they are logged and displayed correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 45,
-        "title": "Add Reminder Timers for HMRC Deadlines",
-        "description": "Implement reminder timers for HMRC deadlines in the Dashboard.",
-        "details": "Add a feature to track and display reminders for HMRC deadlines (e.g., 3 years for overpayments, 1 year for rejected imports). Use a server-side scheduler to trigger reminders and update the Claims table with reminder status.",
-        "testStrategy": "Test reminder timers with different claim scenarios to ensure they trigger correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 46,
-        "title": "Implement Support and Updates UI",
-        "description": "Create UI for displaying policy updates, last checked date, and escalation email templates.",
-        "details": "Implement a Support & Updates section in the Dashboard. Display the last checked date vs GOV.UK, policy diffs, and escalation email templates. Use the Updates table to fetch and display policy changes.",
-        "testStrategy": "Test the Support & Updates UI to ensure it displays policy updates and escalation templates correctly.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 47,
-        "title": "Deploy Application",
-        "description": "Deploy the frontend and backend to Vercel and Supabase cloud respectively.",
-        "details": "Deploy the Next.js frontend to Vercel and the Supabase backend to Supabase cloud. Ensure all API endpoints, database tables, and UI components are correctly deployed and accessible.",
-        "testStrategy": "Test the deployed application to ensure all features work as expected in the production environment.",
-        "status": "pending",
-        "priority": "medium",
-        "dependencies": [],
-        "subtasks": []
-      },
-      {
-        "id": 48,
-        "title": "Create Homepage Component",
-        "description": "Implement the homepage with hero section, stats, and call-to-action (CTA) elements.",
-        "status": "pending",
-        "dependencies": [],
-        "priority": "medium",
-        "details": "Create a responsive homepage component with a hero section, key stats, and a CTA button. Use a modern UI framework like React or Vue.js. Ensure the layout is mobile-friendly and visually appealing.",
-        "testStrategy": "Validate the homepage layout, content, and CTA functionality across different screen sizes.",
-        "subtasks": []
-      },
-      {
-        "id": 49,
-        "title": "Implement Channel Selection Wizard Step 1",
-        "description": "Build the first step of the wizard for selecting the channel (Courier vs Postal).",
-        "status": "pending",
-        "dependencies": [
-          48
-        ],
-        "priority": "medium",
-        "details": "Create a form with options for 'Courier' and 'Postal' channels. Implement conditional rendering based on the selected channel. Use a state management library like Redux or Vuex for managing the wizard state.",
-        "testStrategy": "Verify that the channel selection form renders correctly and that the selected channel triggers the appropriate next step.",
-        "subtasks": []
-      },
-      {
-        "id": 50,
-        "title": "Create BOR286 Postal Screen",
-        "description": "Implement the BOR286 postal screen with form fields and charge reference.",
-        "status": "pending",
-        "dependencies": [
-          49
-        ],
-        "priority": "medium",
-        "details": "Design a form for the BOR286 postal screen, including fields for charge reference and any other required data. Ensure the form is validated before proceeding to the next step.",
-        "testStrategy": "Validate that the form fields are displayed correctly and that the submission process works as expected.",
-        "subtasks": []
-      },
-      {
-        "id": 51,
-        "title": "Implement VAT Status Step 2",
-        "description": "Build the VAT status selection step for the wizard.",
-        "status": "pending",
-        "dependencies": [
-          49
-        ],
-        "priority": "medium",
-        "details": "Create a form with options for 'Yes' (VAT Registered) and 'No' (Not VAT Registered). Implement conditional rendering based on the selected option. Use a state management library for managing the wizard state.",
-        "testStrategy": "Verify that the VAT status form renders correctly and that the selected option triggers the appropriate next step.",
-        "subtasks": []
-      },
-      {
-        "id": 52,
-        "title": "Create VAT Return Info Redirect Screen",
-        "description": "Implement the redirect screen for VAT-registered users.",
-        "status": "pending",
-        "dependencies": [
-          51
-        ],
-        "priority": "medium",
-        "details": "Design a redirect screen that sends users to the VAT return info page. Ensure the redirect is seamless and the user is informed of the next steps.",
-        "testStrategy": "Validate that the redirect screen appears correctly and that the user is redirected to the appropriate page.",
-        "subtasks": []
-      },
-      {
-        "id": 53,
-        "title": "Implement Claim Type Selection Step 3",
-        "description": "Build the claim type selection step for the wizard.",
-        "status": "pending",
-        "dependencies": [
-          51
-        ],
-        "priority": "medium",
-        "details": "Create a form with options for 'Overpayment', 'Rejected', 'Withdrawal', and '£135 or less'. Implement conditional rendering based on the selected claim type. Use a state management library for managing the wizard state.",
-        "testStrategy": "Verify that the claim type form renders correctly and that the selected option triggers the appropriate next step.",
-        "subtasks": []
-      },
-      {
-        "id": 54,
-        "title": "Create Seller Refund Info Screen",
-        "description": "Implement the seller refund info screen for £135 or less claims.",
-        "status": "pending",
-        "dependencies": [
-          53
-        ],
-        "priority": "medium",
-        "details": "Design a screen that asks the user to provide seller refund information. Include a marketplace field and a 'Ask seller' button. Ensure the screen is user-friendly and intuitive.",
-        "testStrategy": "Validate that the seller refund info screen is displayed correctly and that the 'Ask seller' button functions as expected.",
-        "subtasks": []
-      },
-      {
-        "id": 55,
-        "title": "Implement Identifiers Step 4",
-        "description": "Build the identifiers step for the wizard.",
-        "status": "pending",
-        "dependencies": [
-          53
-        ],
-        "priority": "medium",
-        "details": "Create a form for entering identifiers such as MRN and EORI. Ensure the form is validated before proceeding to the next step. Use a state management library for managing the wizard state.",
-        "testStrategy": "Verify that the identifiers form is displayed correctly and that the submission process works as expected.",
-        "subtasks": []
-      },
-      {
-        "id": 56,
-        "title": "Create Playbook Screens",
-        "description": "Implement the DHL, FedEx, and UPS playbook screens.",
-        "status": "pending",
-        "dependencies": [
-          55
-        ],
-        "priority": "medium",
-        "details": "Design and implement three separate playbook screens for DHL, FedEx, and UPS. Each screen should include help content and templates. Ensure the content is clear and easy to understand.",
-        "testStrategy": "Validate that the playbook screens are displayed correctly and that the help content and templates are accessible.",
-        "subtasks": []
-      },
-      {
-        "id": 57,
-        "title": "Implement Evidence Upload Step 5",
-        "description": "Build the evidence upload step for the wizard.",
-        "status": "pending",
-        "dependencies": [
-          56
-        ],
-        "priority": "medium",
-        "details": "Create a step where users can upload evidence. Include a checklist and a file upload feature. Ensure the upload functionality is secure and user-friendly.",
-        "testStrategy": "Verify that the evidence upload step is displayed correctly and that the file upload functionality works as expected.",
         "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-09-12T16:20:57.733Z",
-      "updated": "2025-09-12T16:30:04.683Z",
+      "updated": "2025-09-13T23:20:20.308Z",
       "description": "Tasks for master context"
     }
   },
@@ -719,9 +205,7 @@
         "details": "1. Use the `create-next-app` CLI to initialize a new Next.js project with the App Router and TypeScript template.\n2. Install Tailwind CSS and configure it with the necessary `tailwind.config.js` and `postcss.config.js` files.\n3. Add the Shadcn/UI component library by following their installation instructions, including the necessary dependencies and configuration.\n4. Integrate Lucide icons by installing the `lucide` package and setting up the icon components.\n5. Organize the project structure with folders for components, pages, and utilities, ensuring a clean and scalable architecture.\n6. Verify that all dependencies are correctly installed and the project runs without errors.",
         "testStrategy": "1. Run the Next.js development server and ensure the app starts without errors.\n2. Check that Tailwind CSS is applied correctly by adding a styled component and verifying it renders as expected.\n3. Confirm that Shadcn/UI components are available and can be imported and used in the app.\n4. Verify that Lucide icons are rendered correctly by using an icon component in a page or component.\n5. Ensure the project structure is organized as described, with clear separation of components, pages, and utilities.",
         "status": "done",
-        "dependencies": [
-          1
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -732,9 +216,7 @@
         "details": "1. Create a new file for the homepage component in the appropriate directory (e.g., `app/homepage/page.tsx`).\n2. Implement the hero section with a visually appealing layout, including a headline, subheadline, and a call-to-action button using Shadcn/UI components.\n3. Add a value proposition section that highlights the key benefits of the product or service.\n4. Implement a 'How It Works' section with a step-by-step explanation, using a card layout or similar.\n5. Include a stats preview section with key metrics or numbers, using Shadcn/UI components like cards or badges.\n6. Add an FAQ section with collapsible items, using Shadcn/UI's accordion component.\n7. Implement a pricing section with different plans, using Shadcn/UI's card or table components.\n8. Ensure all sections are responsive and work across different screen sizes.\n9. Use Tailwind CSS for styling and ensure the UI is modern and visually consistent with the rest of the application.",
         "testStrategy": "1. Run the Next.js development server and navigate to the homepage to ensure it renders without errors.\n2. Verify that all sections (hero, value proposition, how it works, stats, FAQ, pricing, and CTA) are visible and correctly styled.\n3. Test the responsiveness of the homepage by resizing the browser window and ensuring the layout adapts appropriately.\n4. Confirm that Shadcn/UI components are used correctly and that the UI looks consistent with the design guidelines.\n5. Check that the call-to-action button is functional and styled as expected.",
         "status": "done",
-        "dependencies": [
-          1
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -745,10 +227,7 @@
         "details": "1. Create a new file for the claim wizard component in the appropriate directory (e.g., `app/claim-wizard/page.tsx`).\n2. Implement the 6 sliding steps as described: Channel selection (Courier vs Postal), VAT status (Yes/No), Claim type (Overpayment/Rejected/Withdrawal/≤£135), Identifiers (MRN/EORI fields), Evidence checklist, and Review & Export.\n3. Add step navigation (e.g., 'Previous' and 'Next' buttons) to allow users to move between steps.\n4. Implement form validation for each step to ensure required fields are filled and data is correct.\n5. Use state management (e.g., React's useState or a state management library) to track the current step and form data.\n6. Ensure the component is responsive and uses Shadcn/UI components for a consistent UI.\n7. Add error handling and feedback for invalid input.",
         "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component to ensure it renders without errors.\n2. Verify that all 6 steps are visible and functional, with proper navigation between them.\n3. Test form validation by submitting incomplete or invalid data and ensure appropriate error messages are displayed.\n4. Confirm that the state management correctly tracks the current step and form data.\n5. Test the responsiveness of the component by resizing the browser window.\n6. Ensure that the component integrates well with the rest of the application and uses Shadcn/UI components consistently.",
         "status": "done",
-        "dependencies": [
-          1,
-          2
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -759,11 +238,7 @@
         "details": "1. Create three new screen components: BOR286PostalScreen, VATReturnInfoScreen, and SellerRefundInfoScreen.\n2. Implement the BOR286 Postal screen with a charge reference form and a PDF link.\n3. Implement the VAT Return Info screen with a guidance message.\n4. Implement the Seller Refund Info screen with marketplace instructions.\n5. Integrate these screens into the claim wizard component, making them accessible based on user selections.\n6. Ensure the screens are styled consistently with Shadcn/UI components and Tailwind CSS.\n7. Add appropriate state management to handle screen transitions and user input.",
         "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component.\n2. Verify that the three branch screens are accessible based on user selections.\n3. Test the functionality of the charge reference form, PDF link, guidance message, and marketplace instructions.\n4. Ensure the screens are styled correctly and responsive.\n5. Confirm that the screens are properly integrated with the claim wizard's state management.",
         "status": "done",
-        "dependencies": [
-          1,
-          2,
-          3
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -774,9 +249,7 @@
         "details": "1. Create three modal components for DHL, FedEx, and UPS, each containing prewritten request templates, self-serve portal links, contact information, and step-by-step instructions for obtaining MRN and EORI numbers.\n2. Implement copy-to-clipboard functionality for the request templates using JavaScript.\n3. Ensure the modals are accessible from the claim wizard component, based on user selections.\n4. Style the modals consistently with Shadcn/UI components.\n5. Add event handlers to open and close the modals based on user interactions.\n6. Ensure the modals are responsive and accessible on all device sizes.",
         "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component.\n2. Verify that the DHL, FedEx, and UPS modals are accessible based on user selections.\n3. Test the copy-to-clipboard functionality for the request templates.\n4. Confirm that the modals display the correct content, including portal links, contact information, and instructions.\n5. Ensure the modals are styled consistently with the rest of the application and are responsive on different screen sizes.",
         "status": "done",
-        "dependencies": [
-          3
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -787,11 +260,7 @@
         "details": "1. Create a new component for the claims dashboard, ensuring it is accessible from the claim wizard or a dedicated route.\n2. Implement a list view of user claims, displaying key information such as claim type, status, and deadline.\n3. Add status indicators (e.g., 'Pending', 'Completed', 'Overdue') to visually represent the claim's state.\n4. Implement reminder timers for HMRC deadlines, showing countdowns or alerts when deadlines are approaching.\n5. Add resume functionality to allow users to continue incomplete claims by loading their progress from the claim wizard.\n6. Include filtering, sorting, and search capabilities to help users navigate the list of claims efficiently.\n7. Ensure the component is styled consistently with Shadcn/UI components and integrates with the existing application state management.\n8. Implement necessary API calls or state management logic to fetch and update claim data.",
         "testStrategy": "1. Run the Next.js development server and navigate to the claims dashboard component.\n2. Verify that the list view of claims is displayed correctly with all relevant information.\n3. Test the status indicators to ensure they reflect the correct state of each claim.\n4. Confirm that the reminder timers for HMRC deadlines are functioning as expected.\n5. Test the resume functionality by starting a claim in the claim wizard, then resuming it from the dashboard.\n6. Verify that filtering, sorting, and search capabilities work as intended.\n7. Ensure the component is responsive and styled consistently with the rest of the application.",
         "status": "done",
-        "dependencies": [
-          3,
-          4,
-          5
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -802,10 +271,7 @@
         "details": "1. Create a new component for the outcome stats, ensuring it can be embedded in the homepage preview and a dedicated stats page.\n2. Implement interactive charts (e.g., using Chart.js or D3.js) to visualize approval rate percentage, median decision days, and average refund amount by courier.\n3. Ensure the component is responsive and adapts to different screen sizes and layouts.\n4. Integrate the component into the homepage's stats preview section and a dedicated stats page.\n5. Use Shadcn/UI components for styling and ensure consistency with the rest of the application.\n6. Add data fetching logic to retrieve the required statistics from the backend or a mock data source.\n7. Implement filtering or sorting options if needed, based on user preferences or data availability.",
         "testStrategy": "1. Run the Next.js development server and navigate to the homepage to verify that the stats preview section renders correctly and displays the expected data.\n2. Navigate to the dedicated stats page and ensure the component is displayed and functions as expected.\n3. Test the responsiveness of the component by resizing the browser window and verifying that the layout adjusts appropriately.\n4. Confirm that the interactive charts update and display the correct data based on the underlying dataset.\n5. Validate that the component is styled consistently with the rest of the application using Shadcn/UI components.",
         "status": "done",
-        "dependencies": [
-          2,
-          6
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -816,10 +282,7 @@
         "details": "1. Create a new page component for the support and updates section.\n2. Implement a section to display the last checked date compared to GOV.UK.\n3. Add a changelog that lists policy differences, including dates and descriptions.\n4. Include escalation email templates for different scenarios.\n5. Develop help documentation with categorized sections (e.g., 'How to Submit a Claim', 'Understanding Refunds').\n6. Implement a search functionality that allows users to search through help documentation and changelog.\n7. Ensure the page is styled consistently with Shadcn/UI components.\n8. Integrate the page into the application's navigation or a dedicated support route.",
         "testStrategy": "1. Run the Next.js development server and navigate to the support and updates page.\n2. Verify that the last checked date is displayed correctly and compared to GOV.UK.\n3. Check that the changelog is updated with policy differences and dates.\n4. Confirm that escalation email templates are visible and correctly formatted.\n5. Test the help documentation sections to ensure they are categorized and accessible.\n6. Use the search functionality to verify that it correctly filters and displays relevant content.\n7. Ensure the page is responsive and styled consistently with the rest of the application.",
         "status": "done",
-        "dependencies": [
-          3,
-          6
-        ],
+        "dependencies": [],
         "priority": "medium",
         "subtasks": []
       },
@@ -828,10 +291,7 @@
         "title": "Implement global navigation with logo, nav links, and footer",
         "description": "Develop a global navigation system with a logo, navigation links (Features, Stats, Start Claim), and a footer that displays the last checked GOV.UK guidance date and a support link. Include a responsive mobile menu and ensure consistent branding throughout the app.",
         "status": "done",
-        "dependencies": [
-          3,
-          6
-        ],
+        "dependencies": [],
         "priority": "medium",
         "details": "1. Create a navigation component that includes a logo, navigation links (Features, Stats, Start Claim), and a responsive mobile menu.\n2. Implement a footer that displays the last checked GOV.UK guidance date and a support link.\n3. Ensure the navigation and footer are consistent with the app's branding, including colors, fonts, and spacing.\n4. Use a responsive design approach to ensure the navigation works on all screen sizes, including mobile.\n5. Integrate the navigation and footer into the main layout of the app, ensuring they are accessible on all pages.\n6. Use Shadcn/UI or a similar component library for consistent UI elements.\n7. Add event handlers for mobile menu toggling and ensure accessibility standards are met.",
         "testStrategy": "1. Run the Next.js development server and navigate to multiple pages of the app to verify that the navigation and footer are consistently displayed.\n2. Check that the mobile menu toggles correctly and is accessible on smaller screens.\n3. Confirm that the last checked GOV.UK guidance date is displayed correctly in the footer.\n4. Verify that the support link in the footer is functional and leads to the correct page.\n5. Ensure the navigation links (Features, Stats, Start Claim) are correctly implemented and lead to the appropriate sections or pages.\n6. Test the responsiveness of the navigation and footer across different screen sizes.",
@@ -1050,10 +510,7 @@
         "title": "Build form validation and routing logic components",
         "description": "Implement MRN format validation (18 characters), evidence checklist enforcement, HMRC routing rules (postal→BOR286, VAT-registered→VAT Return), and deadline calculations (3 years overpayments, 1 year rejected imports, 90 days withdrawal).",
         "status": "done",
-        "dependencies": [
-          3,
-          6
-        ],
+        "dependencies": [],
         "priority": "medium",
         "details": "1. Create a form validation module that enforces MRN format (18 characters) and validates evidence checklist requirements.\n2. Implement HMRC routing logic that maps postal claims to BOR286 and VAT-registered claims to VAT Return.\n3. Add deadline calculation logic for overpayments (3 years), rejected imports (1 year), and withdrawal (90 days) based on claim submission date.\n4. Integrate the validation and routing logic into the claim wizard component, ensuring it works with the existing claims dashboard and courier playbook modals.\n5. Use TypeScript for type safety and ensure the logic is reusable across different claim types.\n6. Add error handling and user feedback for invalid inputs or missing evidence.",
         "testStrategy": "1. Run the Next.js development server and navigate to the claim wizard component.\n2. Submit a claim with an invalid MRN (e.g., 17 characters) and verify that the validation error is displayed.\n3. Submit a claim with missing evidence and ensure the checklist enforcement prevents submission.\n4. Test HMRC routing logic by submitting a postal claim and verifying it is routed to BOR286, and a VAT-registered claim is routed to VAT Return.\n5. Verify deadline calculations by submitting claims with different dates and confirming the calculated deadlines match the expected values.",
