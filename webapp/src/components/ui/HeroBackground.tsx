@@ -1,20 +1,24 @@
 "use client";
 
-import Aurora from './Aurora';
+import LightRays from './LightRays';
 
 export function HeroBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden">
-      {/* ReactBits Aurora background - beautiful gradient waves */}
-      <Aurora
-        colorStops={[
-          '#3b82f6', // Blue
-          '#8b5cf6', // Purple
-          '#ec4899'  // Pink
-        ]}
-        amplitude={0.4}
-        blend={0.7}
-        speed={0.2}
+      {/* ReactBits Light Rays background - beautiful animated light rays */}
+      <LightRays
+        raysOrigin="top-center"
+        raysColor="#3b82f6"
+        raysSpeed={1.2}
+        lightSpread={0.8}
+        rayLength={1.5}
+        followMouse={true}
+        mouseInfluence={0.1}
+        noiseAmount={0.05}
+        distortion={0.02}
+        pulsating={true}
+        fadeDistance={0.8}
+        saturation={1.2}
       />
       
       {/* Additional gradient overlays for depth and branding */}
