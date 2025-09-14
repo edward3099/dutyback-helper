@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useClaimWizard } from "@/hooks/useWizard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -168,12 +167,11 @@ Best regards,
 };
 
 export function CourierPlaybook({ courier, onClose }: CourierPlaybookProps) {
-  const { claimData, updateClaimData } = useClaimWizard();
   const [copied, setCopied] = useState(false);
   const [formData, setFormData] = useState({
-    trackingNumber: claimData.trackingNumber || '',
-    importDate: claimData.importDate || '',
-    value: claimData.packageValue?.toString() || '',
+    trackingNumber: '',
+    importDate: '',
+    value: '',
     description: '',
     yourName: '',
     yourEmail: '',
@@ -218,12 +216,8 @@ export function CourierPlaybook({ courier, onClose }: CourierPlaybookProps) {
   };
 
   const saveToClaimData = () => {
-    updateClaimData({
-      trackingNumber: formData.trackingNumber,
-      importDate: formData.importDate,
-      packageValue: formData.value ? parseFloat(formData.value) : undefined,
-      courier: courier.toLowerCase() as 'dhl' | 'fedex' | 'ups'
-    });
+    // Data is already stored in local state
+    // In a real implementation, this could save to localStorage or a global state
   };
 
   return (

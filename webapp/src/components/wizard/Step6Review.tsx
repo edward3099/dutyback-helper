@@ -5,9 +5,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, FileText, Download, Mail } from "lucide-react";
+import { ClaimPackExport } from "@/components/export/ClaimPackExport";
+import { useState } from "react";
 
 export function Step6Review() {
   const { claimData } = useClaimWizard();
+  const [showExport, setShowExport] = useState(false);
 
   const getChannelDisplay = (channel: string | null) => {
     switch (channel) {
@@ -215,7 +218,11 @@ export function Step6Review() {
 
       {/* Action Buttons */}
       <div className="flex justify-center space-x-4">
-        <Button variant="outline" className="flex items-center">
+        <Button 
+          onClick={() => setShowExport(true)}
+          className="flex items-center"
+          disabled={!isReadyToSubmit()}
+        >
           <Download className="w-4 h-4 mr-2" />
           Download Claim Pack
         </Button>
@@ -224,6 +231,30 @@ export function Step6Review() {
           Email to Me
         </Button>
       </div>
+
+      {/* Export Modal */}
+      {showExport && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold">Export Claim Pack</h2>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowExport(false)}
+                >
+                  Close
+                </Button>
+              </div>
+              <ClaimPackExport 
+                claimData={claimData}
+                evidenceFiles={claimData.evidenceFiles || []}
+                onExportComplete={() => setShowExport(false)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

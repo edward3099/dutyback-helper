@@ -105,23 +105,6 @@ export const ClaimWizardProvider = ({ children }: { children: ReactNode }) => {
     }
   }, []);
 
-
-  const goToNextStep = useCallback(() => {
-    const nextStep = getNextStep(currentStep);
-    if (nextStep >= 1 && nextStep <= 6) {
-      setCurrentStep(nextStep);
-    }
-  }, [currentStep, getNextStep]);
-
-  const updateClaimData = useCallback((updates: Partial<ClaimData>) => {
-    setClaimData(prev => ({ ...prev, ...updates }));
-  }, []);
-
-  const canGoNext = useCallback(() => {
-    // Use enhanced validation for step validation
-    return validation.isStepValid(currentStep);
-  }, [currentStep, validation]);
-
   // Determine if we should show a branch screen based on current selections
   const shouldShowBranchScreen = useCallback(() => {
     // Postal claims go to BOR286
@@ -142,6 +125,34 @@ export const ClaimWizardProvider = ({ children }: { children: ReactNode }) => {
     return null;
   }, [claimData]);
 
+  // Determine the next step based on current step and routing logic
+  const getNextStep = useCallback((step: number) => {
+    // Check if we should show a branch screen
+    const branchScreen = shouldShowBranchScreen();
+    if (branchScreen && step >= 2 && step <= 3) {
+      // Skip to step 4 after branch screen
+      return 4;
+    }
+    
+    // Normal progression
+    return Math.min(step + 1, 6);
+  }, [shouldShowBranchScreen]);
+
+  const goToNextStep = useCallback(() => {
+    const nextStep = getNextStep(currentStep);
+    if (nextStep >= 1 && nextStep <= 6) {
+      setCurrentStep(nextStep);
+    }
+  }, [currentStep, getNextStep]);
+
+  const updateClaimData = useCallback((updates: Partial<ClaimData>) => {
+    setClaimData(prev => ({ ...prev, ...updates }));
+  }, []);
+
+  const canGoNext = useCallback(() => {
+    // Use enhanced validation for step validation
+    return validation.isStepValid(currentStep);
+  }, [currentStep, validation]);
 
   const canGoPrevious = useCallback(() => {
     return currentStep > 1;

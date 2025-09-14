@@ -5,6 +5,7 @@ import { APP_CONFIG } from "@/lib/constants";
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { ToastNotifications } from "@/components/notifications/ToastNotifications";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -38,6 +39,7 @@ export default function RootLayout({
               {children}
             </main>
             <Footer />
+            <ToastNotifications />
           </div>
         </AuthProvider>
       </body>

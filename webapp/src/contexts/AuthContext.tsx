@@ -3,7 +3,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import { User, Session } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
-import { authAPI } from '@/lib/api/supabase'
 
 interface AuthContextType {
   user: User | null
@@ -45,13 +44,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signUp = async (email: string, password: string, userData?: any) => {
     try {
-      const { data, error } = await authAPI.register({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        ...userData
+        options: {
+          data: {
+            full_name: userData?.full_name || '',
+            company_name: userData?.company_name || '',
+            phone: userData?.phone || '',
+            address: userData?.address || null
+          }
+        }
       })
       
       if (error) throw error
+      
+      // Create user profile in public.users table
+      if (data.user) {
+        const { error: profileError } = await supabase
+          .from('users')
+          .insert({
+            id: data.user.id,
+            email: email,
+            full_name: userData?.full_name || '',
+            company_name: userData?.company_name || '',
+            phone: userData?.phone || '',
+            address: userData?.address || null
+          })
+        
+        if (profileError) {
+          console.error('Error creating user profile:', profileError)
+        }
+      }
+      
       return { data, error: null }
     } catch (error: any) {
       return { data: null, error: error.message }
@@ -60,14 +85,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     try {
-      const { data, error } = await authAPI.login({ email, password })
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      })
       
       if (error) throw error
-      
-      // Set session in Supabase client
-      if (data.session) {
-        await supabase.auth.setSession(data.session)
-      }
       
       return { data, error: null }
     } catch (error: any) {
@@ -77,7 +100,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signOut = async () => {
     try {
-      await authAPI.logout()
       await supabase.auth.signOut()
     } catch (error) {
       console.error('Error signing out:', error)
@@ -86,7 +108,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const resetPassword = async (email: string) => {
     try {
-      const { data, error } = await authAPI.resetPassword(email)
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email)
       if (error) throw error
       return { data, error: null }
     } catch (error: any) {
@@ -96,7 +118,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const updatePassword = async (data: { access_token: string; refresh_token: string; new_password: string }) => {
     try {
-      const { data: result, error } = await authAPI.updatePassword(data)
+      const { data: result, error } = await supabase.auth.updateUser({
+        password: data.new_password
+      })
       if (error) throw error
       return { data: result, error: null }
     } catch (error: any) {

@@ -82,8 +82,21 @@ export function Navigation() {
       }
     };
 
+    // Handle custom auth dialog events from payment buttons
+    const handleAuthDialog = (e: CustomEvent) => {
+      const { mode, redirect } = e.detail;
+      setAuthMode(mode);
+      setPendingRoute(redirect);
+      setIsLoginOpen(true);
+    };
+
     document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
+    document.addEventListener('showAuthDialog', handleAuthDialog as EventListener);
+    
+    return () => {
+      document.removeEventListener('click', handleClick);
+      document.removeEventListener('showAuthDialog', handleAuthDialog as EventListener);
+    };
   }, [user, loading]);
 
   const navItems = [
@@ -92,25 +105,30 @@ export function Navigation() {
     { label: 'Courier Help', href: '/courier-playbooks', ariaLabel: 'Courier Playbooks' },
     { label: 'Dashboard', href: '/dashboard', ariaLabel: 'View Claims Dashboard' },
     { label: 'Stats', href: '/stats', ariaLabel: 'View Detailed Statistics' },
+    { label: 'Pricing', href: '/pricing', ariaLabel: 'View Pricing Plans' },
     { label: 'Support', href: '/support', ariaLabel: 'Support & Updates' },
   ];
 
   return (
     <>
-      <PillNav
-        logo="/logo.svg"
-        logoAlt="Dutyback Helper Logo"
-        items={navItems}
-        activeHref="/"
-        className="custom-nav"
-        ease="power2.easeOut"
-        baseColor="#000000"
-        pillColor="#ffffff"
-        hoveredPillTextColor="#ffffff"
-        pillTextColor="#000000"
-        initialLoadAnimation={true}
-        onMobileMenuClick={() => {}}
-      />
+      <div className="relative">
+        <PillNav
+          logo="/logo.svg"
+          logoAlt="Dutyback Helper Logo"
+          items={navItems}
+          activeHref="/"
+          className="custom-nav"
+          ease="power2.easeOut"
+          baseColor="#000000"
+          pillColor="#ffffff"
+          hoveredPillTextColor="#ffffff"
+          pillTextColor="#000000"
+          initialLoadAnimation={true}
+          onMobileMenuClick={() => {}}
+        />
+        
+        {/* Notification Center - Hidden as requested */}
+      </div>
 
       {/* Authentication Dialogs */}
       <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>

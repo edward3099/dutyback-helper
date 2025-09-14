@@ -16,6 +16,7 @@ import { BranchVATReturn } from "@/components/wizard/BranchVATReturn";
 import { BranchSellerRefund } from "@/components/wizard/BranchSellerRefund";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { AlertTriangle, CheckCircle } from "lucide-react";
+import { useAnalytics, useJourneyTracking, usePerformanceTracking } from "@/hooks/useAnalytics";
 
 const steps = [
   { id: 1, title: "Channel", description: "How did you import?" },
@@ -47,12 +48,44 @@ function WizardContent() {
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
+  // Analytics tracking
+  const { trackAction, trackBusiness, trackError } = useAnalytics();
+  const { addStep, complete } = useJourneyTracking('claim_wizard', 'wizard_started');
+  const { trackPageLoad } = usePerformanceTracking();
+
   // Redirect if not authenticated
   React.useEffect(() => {
     if (!authLoading && !user) {
       router.push('/');
     }
   }, [user, authLoading, router]);
+
+  // Track page load performance
+  React.useEffect(() => {
+    const startTime = performance.now();
+    const handleLoad = () => {
+      const loadTime = performance.now() - startTime;
+      trackPageLoad(loadTime);
+    };
+    
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+      return () => window.removeEventListener('load', handleLoad);
+    }
+  }, [trackPageLoad]);
+
+  // Track step changes
+  React.useEffect(() => {
+    addStep(`step_${currentStep}_${steps[currentStep - 1]?.title.toLowerCase().replace(' ', '_')}`, {
+      step: currentStep,
+      step_title: steps[currentStep - 1]?.title,
+      channel: claimData.channel,
+      isVATRegistered: claimData.isVATRegistered,
+      claimType: claimData.claimType
+    });
+  }, [currentStep, addStep, claimData]);
 
   // Check for branch screens when moving to next step
   React.useEffect(() => {
@@ -87,6 +120,14 @@ function WizardContent() {
     setSubmitError(null);
     
     try {
+      // Track claim submission attempt
+      trackAction('claim_submission_attempted', {
+        channel: claimData.channel,
+        isVATRegistered: claimData.isVATRegistered,
+        claimType: claimData.claimType,
+        hasEvidence: !!(claimData.evidenceFiles && claimData.evidenceFiles.length > 0)
+      });
+
       const { data, error } = await claimsAPI.createClaim({
         claim_type: claimData.claimType as 'duty' | 'vat' | 'both',
         channel: claimData.channel as 'courier' | 'postal',
@@ -107,6 +148,18 @@ function WizardContent() {
       
       setSubmitSuccess(true);
       
+      // Track successful claim submission
+      trackBusiness('claim_submitted_successfully', {
+        claimId: data?.id,
+        channel: claimData.channel,
+        isVATRegistered: claimData.isVATRegistered,
+        claimType: claimData.claimType,
+        evidenceCount: claimData.evidenceFiles?.length || 0
+      });
+
+      // Complete the journey
+      complete(true, 'claim_submitted_successfully');
+      
       // Redirect to dashboard after 2 seconds
       setTimeout(() => {
         router.push('/dashboard');
@@ -115,6 +168,25 @@ function WizardContent() {
     } catch (error: any) {
       console.error("Error submitting claim:", error);
       setSubmitError(error.message || 'Failed to submit claim');
+      
+      // Track failed claim submission
+      trackBusiness('claim_submission_failed', {
+        error: error.message,
+        channel: claimData.channel,
+        isVATRegistered: claimData.isVATRegistered,
+        claimType: claimData.claimType
+      });
+
+      // Track error
+      trackError(error, {
+        action: 'claim_submission',
+        channel: claimData.channel,
+        isVATRegistered: claimData.isVATRegistered,
+        claimType: claimData.claimType
+      });
+
+      // Complete the journey with failure
+      complete(false, 'submission_failed');
     } finally {
       setIsSubmitting(false);
     }
