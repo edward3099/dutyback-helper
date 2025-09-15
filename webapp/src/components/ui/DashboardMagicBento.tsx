@@ -4,47 +4,34 @@ import './MagicBento.css';
 
 const DEFAULT_PARTICLE_COUNT = 12;
 const DEFAULT_SPOTLIGHT_RADIUS = 300;
-const DEFAULT_GLOW_COLOR = '132, 0, 255';
+const DEFAULT_GLOW_COLOR = '59, 130, 246'; // Blue color to match dashboard theme
 const MOBILE_BREAKPOINT = 768;
 
-const cardData = [
-  {
-    color: '#060010',
-    title: 'Analytics',
-    description: 'Track user behavior',
-    label: 'Insights'
-  },
-  {
-    color: '#060010',
-    title: 'Dashboard',
-    description: 'Centralized data view',
-    label: 'Overview'
-  },
-  {
-    color: '#060010',
-    title: 'Collaboration',
-    description: 'Work together seamlessly',
-    label: 'Teamwork'
-  },
-  {
-    color: '#060010',
-    title: 'Automation',
-    description: 'Streamline workflows',
-    label: 'Efficiency'
-  },
-  {
-    color: '#060010',
-    title: 'Integration',
-    description: 'Connect favorite tools',
-    label: 'Connectivity'
-  },
-  {
-    color: '#060010',
-    title: 'Security',
-    description: 'Enterprise-grade protection',
-    label: 'Protection'
-  }
-];
+interface MetricCard {
+  id: string;
+  label: string;
+  title: string;
+  description: string;
+  value: string | number;
+  subtitle: string;
+  color: string;
+  icon: React.ReactNode;
+}
+
+interface DashboardMagicBentoProps {
+  metrics: MetricCard[];
+  textAutoHide?: boolean;
+  enableStars?: boolean;
+  enableSpotlight?: boolean;
+  enableBorderGlow?: boolean;
+  disableAnimations?: boolean;
+  spotlightRadius?: number;
+  particleCount?: number;
+  enableTilt?: boolean;
+  glowColor?: string;
+  clickEffect?: boolean;
+  enableMagnetism?: boolean;
+}
 
 const createParticleElement = (x: number, y: number, color = DEFAULT_GLOW_COLOR) => {
   const el = document.createElement('div');
@@ -87,7 +74,7 @@ const ParticleCard = ({
   style,
   particleCount = DEFAULT_PARTICLE_COUNT,
   glowColor = DEFAULT_GLOW_COLOR,
-  enableTilt = true,
+  enableTilt = false,
   clickEffect = false,
   enableMagnetism = false
 }: {
@@ -485,7 +472,8 @@ const useMobileDetection = () => {
   return isMobile;
 };
 
-const MagicBento = ({
+const DashboardMagicBento = ({
+  metrics,
   textAutoHide = true,
   enableStars = true,
   enableSpotlight = true,
@@ -497,19 +485,7 @@ const MagicBento = ({
   glowColor = DEFAULT_GLOW_COLOR,
   clickEffect = true,
   enableMagnetism = true
-}: {
-  textAutoHide?: boolean;
-  enableStars?: boolean;
-  enableSpotlight?: boolean;
-  enableBorderGlow?: boolean;
-  disableAnimations?: boolean;
-  spotlightRadius?: number;
-  particleCount?: number;
-  enableTilt?: boolean;
-  glowColor?: string;
-  clickEffect?: boolean;
-  enableMagnetism?: boolean;
-}) => {
+}: DashboardMagicBentoProps) => {
   const gridRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobileDetection();
   const shouldDisableAnimations = disableAnimations || isMobile;
@@ -526,12 +502,12 @@ const MagicBento = ({
         />
       )}
       <BentoCardGrid gridRef={gridRef}>
-        {cardData.map((card, index) => {
+        {metrics.map((metric, index) => {
           const baseClassName = `card ${textAutoHide ? 'card--text-autohide' : ''} ${enableBorderGlow ? 'card--border-glow' : ''}`;
           const cardProps = {
             className: baseClassName,
             style: {
-              backgroundColor: card.color,
+              backgroundColor: metric.color,
               '--glow-color': glowColor
             } as React.CSSProperties
           };
@@ -539,7 +515,7 @@ const MagicBento = ({
           if (enableStars) {
             return (
               <ParticleCard
-                key={index}
+                key={metric.id}
                 {...cardProps}
                 disableAnimations={shouldDisableAnimations}
                 particleCount={particleCount}
@@ -549,11 +525,14 @@ const MagicBento = ({
                 enableMagnetism={enableMagnetism}
               >
                 <div className="card__header">
-                  <div className="card__label">{card.label}</div>
+                  <div className="card__label">{metric.label}</div>
                 </div>
                 <div className="card__content">
-                  <h2 className="card__title">{card.title}</h2>
-                  <p className="card__description">{card.description}</p>
+                  <h2 className="card__title">{metric.value}</h2>
+                  <p className="card__description">{metric.subtitle}</p>
+                </div>
+                <div className="absolute top-4 right-4 opacity-60">
+                  {metric.icon}
                 </div>
               </ParticleCard>
             );
@@ -561,7 +540,7 @@ const MagicBento = ({
 
           return (
             <div
-              key={index}
+              key={metric.id}
               {...cardProps}
               ref={el => {
                 if (!el) return;
@@ -674,11 +653,14 @@ const MagicBento = ({
               }}
             >
               <div className="card__header">
-                <div className="card__label">{card.label}</div>
+                <div className="card__label">{metric.label}</div>
               </div>
               <div className="card__content">
-                <h2 className="card__title">{card.title}</h2>
-                <p className="card__description">{card.description}</p>
+                <h2 className="card__title">{metric.value}</h2>
+                <p className="card__description">{metric.subtitle}</p>
+              </div>
+              <div className="absolute top-4 right-4 opacity-60">
+                {metric.icon}
               </div>
             </div>
           );
@@ -688,4 +670,4 @@ const MagicBento = ({
   );
 };
 
-export default MagicBento;
+export default DashboardMagicBento;

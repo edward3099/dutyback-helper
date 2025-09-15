@@ -2,18 +2,18 @@
   --hue: 27;
   --sat: 69%;
   --white: hsl(0, 0%, 100%);
-  --blue-primary: rgba(59, 130, 246, 1);
-  --blue-glow: rgba(59, 130, 246, 0.2);
-  --blue-border: rgba(59, 130, 246, 0.8);
-  --border-color: #e5e7eb;
-  --background-light: #ffffff;
-  color-scheme: light;
+  --purple-primary: rgba(132, 0, 255, 1);
+  --purple-glow: rgba(132, 0, 255, 0.2);
+  --purple-border: rgba(132, 0, 255, 0.8);
+  --border-color: #392e4e;
+  --background-dark: #060010;
+  color-scheme: light dark;
 }
 
 .card-grid {
   display: grid;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.5em;
+  padding: 0.75em;
   max-width: 54em;
   font-size: clamp(1rem, 0.9rem + 0.5vw, 1.5rem);
 }
@@ -30,7 +30,7 @@
   padding: 1.25em;
   border-radius: 20px;
   border: 1px solid var(--border-color);
-  background: var(--background-light);
+  background: var(--background-dark);
   font-weight: 300;
   overflow: hidden;
   transition: all 0.3s ease;
@@ -49,7 +49,7 @@
 .card__content {
   display: flex;
   position: relative;
-  color: #1f2937;
+  color: var(--white);
 }
 
 .card__header {
@@ -63,8 +63,6 @@
 
 .card__label {
   font-size: 16px;
-  color: #6b7280;
-  font-weight: 500;
 }
 
 .card__title,
@@ -74,17 +72,15 @@
 }
 
 .card__title {
-  font-weight: 600;
-  font-size: 18px;
+  font-weight: 400;
+  font-size: 16px;
   margin: 0 0 0.25em;
-  color: #1f2937;
 }
 
 .card__description {
-  font-size: 14px;
-  line-height: 1.4;
-  opacity: 0.8;
-  color: #6b7280;
+  font-size: 12px;
+  line-height: 1.2;
+  opacity: 0.9;
 }
 
 .card--text-autohide .card__title,
@@ -127,7 +123,22 @@
 
 @media (min-width: 1024px) {
   .card-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .card:nth-child(3) {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .card:nth-child(4) {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 2;
+  }
+
+  .card:nth-child(6) {
+    grid-column: 4;
+    grid-row: 3;
   }
 }
 
@@ -139,8 +150,8 @@
   padding: 6px;
   background: radial-gradient(
     var(--glow-radius) circle at var(--glow-x) var(--glow-y),
-    rgba(59, 130, 246, calc(var(--glow-intensity) * 0.8)) 0%,
-    rgba(59, 130, 246, calc(var(--glow-intensity) * 0.4)) 30%,
+    rgba(132, 0, 255, calc(var(--glow-intensity) * 0.8)) 0%,
+    rgba(132, 0, 255, calc(var(--glow-intensity) * 0.4)) 30%,
     transparent 60%
   );
   border-radius: inherit;
@@ -163,8 +174,8 @@
 
 .card--border-glow:hover {
   box-shadow:
-    0 4px 20px rgba(59, 130, 246, 0.2),
-    0 0 30px var(--blue-glow);
+    0 4px 20px rgba(46, 24, 78, 0.4),
+    0 0 30px var(--purple-glow);
 }
 
 .particle-container {
@@ -179,15 +190,15 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(132, 0, 255, 0.2);
   border-radius: 50%;
   z-index: -1;
 }
 
 .particle-container:hover {
   box-shadow:
-    0 4px 20px rgba(59, 130, 246, 0.1),
-    0 0 30px var(--blue-glow);
+    0 4px 20px rgba(46, 24, 78, 0.2),
+    0 0 30px var(--purple-glow);
 }
 
 /* Global spotlight styles */

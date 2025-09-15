@@ -6,6 +6,8 @@ import { claimsAPI } from "@/lib/api/supabase";
 import { supabase } from "@/lib/supabase";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { PulsatingButton } from "@/components/magicui/pulsating-button";
+import { RippleButton } from "@/components/ui/RippleButton";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -40,6 +42,7 @@ import {
 } from "lucide-react";
 import { ClaimCard } from "./ClaimCard";
 import AnimatedList from "@/components/ui/AnimatedList";
+import SimpleMagicBento from "@/components/ui/SimpleMagicBento";
 import { useRouter } from "next/navigation";
 
 export interface Claim {
@@ -470,13 +473,16 @@ export function ClaimsDashboard() {
                     : "Get started by creating your first claim to begin recovering your duty refunds."
                   }
                 </p>
-                <Button 
-                  onClick={() => router.push('/wizard')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
-                >
-                  <Plus className="w-5 h-5 mr-2" />
-                  Create Your First Claim
-                </Button>
+                <div className="flex justify-center">
+                  <PulsatingButton 
+                    onClick={() => router.push('/wizard')}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 text-sm"
+                    pulseColor="#3b82f6"
+                    duration="2s"
+                  >
+                    Create Your First Claim
+                  </PulsatingButton>
+                </div>
               </div>
             ) : (
               <div className="divide-y divide-slate-200">
@@ -499,139 +505,98 @@ export function ClaimsDashboard() {
               Your Activity Metrics
             </h2>
             
-            {/* Metrics Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              
-              {/* Total Claims Created */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg p-4 border border-blue-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-blue-700">Total Claims</p>
-                    <p className="text-2xl font-bold text-blue-900">{statusCounts.total}</p>
-                    <p className="text-xs text-blue-600 mt-1">All time</p>
-                  </div>
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <FileText className="w-5 h-5 text-blue-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Evidence Files Uploaded */}
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg p-4 border border-green-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-green-700">Evidence Files</p>
-                    <p className="text-2xl font-bold text-green-900">{currentSubscription.usage.files_uploaded}</p>
-                    <p className="text-xs text-green-600 mt-1">Uploaded this month</p>
-                  </div>
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <Upload className="w-5 h-5 text-green-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Plan Usage */}
-              <div className="bg-gradient-to-br from-purple-50 to-violet-50 rounded-lg p-4 border border-purple-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-purple-700">Plan Usage</p>
-                    <p className="text-2xl font-bold text-purple-900">
-                      {currentSubscription.limits.claims_per_month === -1 
-                        ? "∞" 
-                        : `${currentSubscription.usage.claims_this_month}/${currentSubscription.limits.claims_per_month}`
-                      }
-                    </p>
-                    <p className="text-xs text-purple-600 mt-1">This month</p>
-                  </div>
-                  <div className="p-2 bg-purple-100 rounded-lg">
-                    <BarChart3 className="w-5 h-5 text-purple-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Days Since Last Claim */}
-              <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg p-4 border border-orange-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-orange-700">Last Activity</p>
-                    <p className="text-2xl font-bold text-orange-900">
-                      {claims.length > 0 
-                        ? Math.floor((Date.now() - new Date(claims[0].updated_at).getTime()) / (1000 * 60 * 60 * 24))
-                        : "N/A"
-                      }
-                    </p>
-                    <p className="text-xs text-orange-600 mt-1">Days ago</p>
-                  </div>
-                  <div className="p-2 bg-orange-100 rounded-lg">
-                    <Clock className="w-5 h-5 text-orange-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Draft Claims */}
-              <div className="bg-gradient-to-br from-yellow-50 to-amber-50 rounded-lg p-4 border border-yellow-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-yellow-700">Draft Claims</p>
-                    <p className="text-2xl font-bold text-yellow-900">{statusCounts.draft}</p>
-                    <p className="text-xs text-yellow-600 mt-1">Ready to submit</p>
-                  </div>
-                  <div className="p-2 bg-yellow-100 rounded-lg">
-                    <Edit className="w-5 h-5 text-yellow-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Submitted Claims */}
-              <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg p-4 border border-indigo-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-indigo-700">With HMRC</p>
-                    <p className="text-2xl font-bold text-indigo-900">{statusCounts.submitted + statusCounts.under_review}</p>
-                    <p className="text-xs text-indigo-600 mt-1">Under review</p>
-                  </div>
-                  <div className="p-2 bg-indigo-100 rounded-lg">
-                    <Send className="w-5 h-5 text-indigo-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Average Claim Value */}
-              <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-lg p-4 border border-emerald-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-emerald-700">Avg Claim Value</p>
-                    <p className="text-2xl font-bold text-emerald-900">
-                      £{claims.length > 0 
-                        ? Math.round(claims.reduce((sum, claim) => sum + (claim.total_amount || 0), 0) / claims.length)
-                        : 0
-                      }
-                    </p>
-                    <p className="text-xs text-emerald-600 mt-1">Per claim</p>
-                  </div>
-                  <div className="p-2 bg-emerald-100 rounded-lg">
-                    <PoundSterling className="w-5 h-5 text-emerald-600" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Account Age */}
-              <div className="bg-gradient-to-br from-rose-50 to-pink-50 rounded-lg p-4 border border-rose-200">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-sm font-medium text-rose-700">Account Age</p>
-                    <p className="text-2xl font-bold text-rose-900">
-                      {user ? Math.floor((Date.now() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24)) : 0}
-                    </p>
-                    <p className="text-xs text-rose-600 mt-1">Days</p>
-                  </div>
-                  <div className="p-2 bg-rose-100 rounded-lg">
-                    <Calendar className="w-5 h-5 text-rose-600" />
-                  </div>
-                </div>
-              </div>
-
-            </div>
+            {/* Magic Bento Metrics Grid */}
+            <SimpleMagicBento
+              metrics={[
+                {
+                  id: 'total-claims',
+                  label: 'Total Claims',
+                  title: 'Total Claims',
+                  description: 'All time',
+                  value: statusCounts.total,
+                  subtitle: 'All time',
+                  color: '#f8fafc',
+                  icon: <FileText className="w-5 h-5 text-slate-600" />
+                },
+                {
+                  id: 'evidence-files',
+                  label: 'Evidence Files',
+                  title: 'Evidence Files',
+                  description: 'Uploaded this month',
+                  value: currentSubscription.usage.files_uploaded,
+                  subtitle: 'Uploaded this month',
+                  color: '#dbeafe',
+                  icon: <Upload className="w-5 h-5 text-blue-600" />
+                },
+                {
+                  id: 'plan-usage',
+                  label: 'Plan Usage',
+                  title: 'Plan Usage',
+                  description: 'This month',
+                  value: currentSubscription.limits.claims_per_month === -1 
+                    ? "∞" 
+                    : `${currentSubscription.usage.claims_this_month}/${currentSubscription.limits.claims_per_month}`,
+                  subtitle: 'This month',
+                  color: '#e0e7ff',
+                  icon: <BarChart3 className="w-5 h-5 text-indigo-600" />
+                },
+                {
+                  id: 'last-activity',
+                  label: 'Last Activity',
+                  title: 'Last Activity',
+                  description: 'Days ago',
+                  value: claims.length > 0 
+                    ? Math.floor((Date.now() - new Date(claims[0].updated_at).getTime()) / (1000 * 60 * 60 * 24))
+                    : "N/A",
+                  subtitle: 'Days ago',
+                  color: '#f8fafc',
+                  icon: <Clock className="w-5 h-5 text-slate-600" />
+                },
+                {
+                  id: 'draft-claims',
+                  label: 'Draft Claims',
+                  title: 'Draft Claims',
+                  description: 'Ready to submit',
+                  value: statusCounts.draft,
+                  subtitle: 'Ready to submit',
+                  color: '#dbeafe',
+                  icon: <Edit className="w-5 h-5 text-blue-600" />
+                },
+                {
+                  id: 'with-hmrc',
+                  label: 'With HMRC',
+                  title: 'With HMRC',
+                  description: 'Under review',
+                  value: statusCounts.submitted + statusCounts.under_review,
+                  subtitle: 'Under review',
+                  color: '#f8fafc',
+                  icon: <Send className="w-5 h-5 text-slate-600" />
+                },
+                {
+                  id: 'avg-claim-value',
+                  label: 'Avg Claim Value',
+                  title: 'Avg Claim Value',
+                  description: 'Per claim',
+                  value: `£${claims.length > 0 
+                    ? Math.round(claims.reduce((sum, claim) => sum + (claim.total_amount || 0), 0) / claims.length)
+                    : 0
+                  }`,
+                  subtitle: 'Per claim',
+                  color: '#e0e7ff',
+                  icon: <PoundSterling className="w-5 h-5 text-indigo-600" />
+                },
+                {
+                  id: 'account-age',
+                  label: 'Account Age',
+                  title: 'Account Age',
+                  description: 'Days',
+                  value: user ? Math.floor((Date.now() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24)) : 0,
+                  subtitle: 'Days',
+                  color: '#f8fafc',
+                  icon: <Calendar className="w-5 h-5 text-slate-600" />
+                }
+              ]}
+            />
 
             {/* Additional Insights Row */}
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -704,25 +669,35 @@ export function ClaimsDashboard() {
                 Quick Actions
               </h3>
               <div className="space-y-3">
-                <Button 
+                <RippleButton 
                   onClick={() => router.push('/wizard')}
-                  className="w-full justify-start bg-blue-600 hover:bg-blue-700 text-white"
+                  className="w-full justify-start bg-blue-600 hover:bg-blue-700 text-white border-blue-600"
+                  rippleColor="rgba(255, 255, 255, 0.5)"
                 >
                   <Plus className="w-4 h-4 mr-3" />
                   Start New Claim
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
+                </RippleButton>
+                <RippleButton 
+                  className="w-full justify-start border-2 border-slate-300 bg-white hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-700"
+                  rippleColor="rgba(59, 130, 246, 0.3)"
+                >
                   <Upload className="w-4 h-4 mr-3" />
                   Upload Evidence
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
+                </RippleButton>
+                <RippleButton 
+                  className="w-full justify-start border-2 border-slate-300 bg-white hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-700"
+                  rippleColor="rgba(59, 130, 246, 0.3)"
+                >
                   <Download className="w-4 h-4 mr-3" />
                   Export Claims
-                </Button>
-                <Button variant="outline" className="w-full justify-start">
+                </RippleButton>
+                <RippleButton 
+                  className="w-full justify-start border-2 border-slate-300 bg-white hover:border-blue-600 hover:bg-blue-50 text-slate-700 hover:text-blue-700"
+                  rippleColor="rgba(59, 130, 246, 0.3)"
+                >
                   <BookOpen className="w-4 h-4 mr-3" />
                   View Playbooks
-                </Button>
+                </RippleButton>
               </div>
             </div>
 
@@ -821,7 +796,7 @@ export function ClaimsDashboard() {
                 Your Plan Features
               </h3>
               <div className="space-y-2">
-                {currentSubscription.features.slice(0, 4).map((feature, index) => (
+                {currentSubscription.features.slice(0, 4).map((feature: string, index: number) => (
                   <div key={index} className="flex items-center text-sm text-slate-700">
                     <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
                     {feature}

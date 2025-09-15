@@ -1,6 +1,6 @@
 .pill-nav-container {
-  position: absolute;
-  top: 1em;
+  position: relative;
+  top: 0;
   left: 0;
   z-index: 99;
 }
@@ -21,9 +21,9 @@
   width: 100%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
   box-sizing: border-box;
-  padding-left: 1rem;
+  padding: 0 1rem;
   position: relative;
 }
 
@@ -37,7 +37,7 @@
 }
 
 .pill-nav-items {
-  position: fixed;
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -45,7 +45,7 @@
   height: var(--nav-h);
   background: transparent;
   border-radius: 9999px;
-  top: 1em;
+  top: 0;
   z-index: 100;
 }
 

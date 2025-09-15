@@ -1,0 +1,136 @@
+# Dutyback Helper - Project Intelligence
+
+## Project Overview
+Dutyback Helper is a Next.js webapp that guides UK consumers through HMRC import duty/VAT reclaim processes. Built with Supabase backend, Stripe payments, and comprehensive wizard-based user flows.
+
+## Critical Implementation Paths
+
+### Wizard Routing Logic
+The core business logic is in the wizard system. Key routing rules:
+- Postal → BOR286 branch
+- VAT-registered + import VAT → VAT Return branch  
+- ≤£135 + VAT charged at checkout → Seller Refund branch
+- Otherwise → CDS/C285/C&E1179 based on claim type
+
+### File Upload Pattern
+Evidence documents use Supabase Storage with validation:
+```typescript
+const { data, error } = await supabase.storage
+  .from('evidence')
+  .upload(filePath, file);
+```
+
+### Payment Flow
+Stripe integration with webhook handling:
+```typescript
+const session = await stripe.checkout.sessions.create({
+  // payment configuration
+});
+```
+
+## User Preferences & Workflow
+
+### Development Approach
+- Iterative improvement: Multiple wizard variants (enhanced, polished)
+- Heavy use of animations and 3D graphics for engagement
+- Comprehensive component library (75+ components)
+- Focus on user experience and accessibility
+
+### Code Organization
+- Feature-based component organization
+- Custom hooks for complex logic (useWizard, useFormValidation)
+- React Context for state management
+- TypeScript strict mode enabled
+
+## Project-Specific Patterns
+
+### Component Structure
+```
+src/
+├── app/           # App Router pages
+├── components/    # Feature-organized components
+├── contexts/      # React contexts
+├── hooks/         # Custom hooks
+├── lib/           # Utilities and API clients
+└── types/         # TypeScript definitions
+```
+
+### Key Dependencies
+- Next.js 15.5.3 with App Router
+- Supabase for backend services
+- Shadcn/UI for component library
+- Stripe for payments
+- Framer Motion/GSAP for animations
+
+### Validation Patterns
+- MRN format: 18-character validation
+- Evidence checklists: HMRC requirement enforcement
+- File uploads: Type and size validation
+- Wizard progression: Block until requirements met
+
+## Known Challenges
+
+### Technical Challenges
+- Complex HMRC routing logic that changes frequently
+- File upload security and validation
+- Real-time updates with Supabase
+- Payment webhook reliability
+
+### Business Challenges
+- Policy drift (HMRC rules change often)
+- Courier contact information updates
+- User education on complex processes
+- Small claim economics (£10-£60 range)
+
+## Evolution of Project Decisions
+
+### Architecture Evolution
+- Started with basic Next.js setup
+- Added Supabase for backend services
+- Integrated Stripe for payments
+- Implemented comprehensive UI component library
+- Added real-time features and analytics
+
+### UI/UX Evolution
+- Multiple wizard iterations for better UX
+- Heavy investment in animations and visual appeal
+- Focus on mobile responsiveness
+- Accessibility considerations throughout
+
+## Tool Usage Patterns
+
+### Development Tools
+- Turbopack for faster builds
+- ESLint for code quality
+- TypeScript for type safety
+- Hot reload for rapid iteration
+
+### Testing Approach
+- Manual testing of user journeys
+- Component-level testing needed
+- Integration testing for payment flows
+- End-to-end testing for critical paths
+
+## Critical Success Factors
+1. **Routing Accuracy**: 100% correct HMRC process routing
+2. **Evidence Completeness**: All mandatory documents captured
+3. **User Experience**: Smooth, intuitive wizard flow
+4. **Payment Reliability**: Seamless Stripe integration
+5. **Real-time Updates**: Live claim status tracking
+
+## Development Environment
+- Port: 3001 (configured in package.json)
+- Build tool: Turbopack
+- Package manager: npm
+- Version control: Git with proper .gitignore
+
+## Memory Bank Integration
+This project uses a comprehensive Memory Bank system:
+- `projectbrief.md`: Core requirements and goals
+- `productContext.md`: User experience and business logic
+- `systemPatterns.md`: Technical architecture and patterns
+- `techContext.md`: Technology stack and constraints
+- `activeContext.md`: Current work focus and next steps
+- `progress.md`: What works, what's left, known issues
+
+Always read the Memory Bank files at the start of each session to understand the current project state and context.

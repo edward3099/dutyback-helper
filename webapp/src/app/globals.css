@@ -41,6 +41,33 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --animate-pulse: pulse var(--duration) ease-out infinite;
+  --animate-rippling: rippling 600ms ease-out;
+}
+
+@keyframes pulsating-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 var(--pulse-color);
+  }
+  50% {
+    box-shadow: 0 0 0 8px var(--pulse-color);
+  }
+}
+
+@keyframes rippling {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* Override Tailwind's animate-pulse for PulsatingButton */
+.animate-pulse {
+  animation: pulsating-pulse var(--duration) ease-out infinite !important;
 }
 
 :root {
